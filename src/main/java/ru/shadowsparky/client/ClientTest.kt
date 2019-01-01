@@ -39,7 +39,7 @@ class ClientTest {
                 val array = ByteArray(length)
                 inStream!!.read(array)
                 log.printInfo(array.toString())
-                experiment.exFrame(array)
+//                experiment.exFrame(array)
             }
 //            val image = experiment.exFrame(array)
 //            experiment.ex2_sample()

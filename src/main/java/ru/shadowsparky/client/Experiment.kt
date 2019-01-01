@@ -2,7 +2,9 @@ package ru.shadowsparky.client
 
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.image.Image
+import org.bytedeco.javacpp.avcodec
 import org.bytedeco.javacpp.opencv_core
+import org.bytedeco.javacv.FFmpegFrameGrabber
 import org.bytedeco.javacv.Frame
 import org.bytedeco.javacv.Frame.DEPTH_BYTE
 import org.bytedeco.javacv.OpenCVFrameConverter
@@ -35,6 +37,27 @@ class Experiment {
     }
 
     fun toByteArray() : ByteArray = Files.readAllBytes(File(VIDEO_PATH).toPath())
+
+    @Deprecated("Unsuccessfully @ FrameGrabberException")
+    fun grabVideoFile() {
+        val grabber = FFmpegFrameGrabber(File(VIDEO_PATH))
+        grabber.videoCodec = avcodec.AV_CODEC_ID_H264
+        grabber.format = "flv"
+//        grabber.setFrameRate(FRAME_RATE)
+
+        grabber.start()
+//        val converter = Java2DFrameConverter()
+        val width = grabber.imageWidth
+        val height = grabber.imageHeight
+        val length = grabber.lengthInTime
+        log.printInfo("width: $width; $height; $length")
+//        log.printInfo("Grabber initialized")
+//        log.printInfo("frame grabbed")
+//        val converter = JavaFXFrameConverter()
+//        log.printInfo("Converter created")
+//        return converter.convert(frame)
+    }
+
     @Deprecated("CRASHED")
     fun exFrame(bytes: ByteArray): opencv_core.Mat? {
         log.printInfo("Frame experiment started")
