@@ -1,6 +1,12 @@
 package ru.shadowsparky.client
 
+import javafx.scene.image.Image
+import org.bytedeco.javacv.Frame
+import org.bytedeco.javacv.Frame.DEPTH_BYTE
+import org.bytedeco.javacv.JavaFXFrameConverter
+import org.jcodec.api.FrameGrab
 import org.jcodec.codecs.h264.H264Decoder
+import org.jcodec.common.io.NIOUtils
 import org.jcodec.common.model.ColorSpace
 import org.jcodec.common.model.Picture
 import org.jcodec.scale.AWTUtil
@@ -11,14 +17,6 @@ import java.io.File
 import java.nio.ByteBuffer
 import java.nio.file.Files
 import javax.imageio.ImageIO
-import java.awt.image.BufferedImage
-import org.jcodec.api.FrameGrab
-import org.jcodec.common.io.NIOUtils
-
-
-
-
-
 
 class Experiment {
     private val log = Injection.provideLogger()
@@ -33,6 +31,14 @@ class Experiment {
 
     fun toByteArray() : ByteArray = Files.readAllBytes(File(VIDEO_PATH).toPath())
 
+    fun exFrame() : Image {
+        val frame = Frame(1280, 720, DEPTH_BYTE, 3)
+        frame.image = arrayOf(mp4ToByteBuffer(toByteArray()))
+        val converter = JavaFXFrameConverter()
+        return converter.convert(frame)
+    }
+
+    @Deprecated("Пример не работает. Null pointer")
     fun ex1(buffer: ByteBuffer) {
         val decoder = H264Decoder()
         buffer.rewind()
@@ -41,7 +47,7 @@ class Experiment {
         val bufferedImage = AWTUtil.toBufferedImage(pic)
         log.printInfo("$bufferedImage")
     }
-
+    @Deprecated("Пример не работает")
     fun ex2_sample() {
         log.printInfo("Ex 2 start...")
         val frameNumber = 42
@@ -53,7 +59,7 @@ class Experiment {
         ImageIO.write(bufferedImage, "png", File(IMAGES_PATH))
         log.printInfo("image wrote")
     }
-
+    @Deprecated("Пример не работает")
     fun ex3_sample() {
         val file = File(VIDEO_PATH)
         log.printInfo("File handled")

@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 /**
  * @author Dmitriy Gerashenko <d.a.gerashenko@gmail.com>
  */
+@Deprecated
 public class TestMain extends Application {
 
     private static final Logger LOG = Logger.getLogger(TestMain.class.getName());

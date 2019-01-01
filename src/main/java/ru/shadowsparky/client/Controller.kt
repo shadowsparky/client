@@ -2,31 +2,21 @@ package ru.shadowsparky.client
 
 import javafx.fxml.FXML
 import javafx.scene.control.Button
+import javafx.scene.image.ImageView
 
 class Controller {
     @FXML private lateinit var button: Button
+    @FXML private lateinit var imageView: ImageView
     private val clientTest = ClientTest()
     private val ex = Experiment()
     init {
-        ex.ex3_sample()
-//        clientTest.start()
-//        Thread {
-//            while (true) {
-//                ex.mp4ToPng(clientTest.getAvailableBuffer())
-//            }
-//        }.start()
-//        ex.mp4ToPng()
-//        ex.mp4ToByteBuffer()
-//        clientTest.connectToServer()
-//        clientTest.streamUp()
-//        clientTest.enableDataHandling()
-//        Thread.sleep(5000)
-//        clientTest.disableDataHandling()
-//        clientTest.decoder()
+//        ex.ex3_sample()
     }
 
     @FXML fun initialize() {
         button.setOnAction {
         }
+        val image = ex.exFrame()
+//        imageView.image = image
     }
 }
