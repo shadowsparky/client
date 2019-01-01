@@ -10,13 +10,14 @@ class Controller {
     private val clientTest = ClientTest()
     private val ex = Experiment()
     init {
+        clientTest.start()
 //        ex.ex3_sample()
     }
 
     @FXML fun initialize() {
         button.setOnAction {
         }
-        val image = ex.exFrame()
-//        imageView.image = image
+//        val image = ex.exFrame()
+//        imageView.image  image
     }
 }

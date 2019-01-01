@@ -4,7 +4,6 @@ import ru.shadowsparky.client.Extras.Companion.HOST_2
 import ru.shadowsparky.client.Extras.Companion.PORT
 import java.io.DataInputStream
 import java.net.Socket
-import kotlin.math.exp
 
 class ClientTest {
     private var socket: Socket? = null
@@ -33,15 +32,17 @@ class ClientTest {
         dataHandlingFlag = true
         log.printInfo("Handler enabled...")
         val experiment = Experiment()
-        while (true) {
+//        while (true) {
 //            val length = inStream!!.readInt()
 //            log.printInfo("length = $length")
             val array = ByteArray(2048000)
             inStream!!.read(array)
+            log.printInfo(array.toString())
+            val image = experiment.exFrame(array)
 //            experiment.ex2_sample()
 //            test.add(array)
 //            decoder()
-        }
+//        }
     }.start()
 
     fun disableDataHandling() {

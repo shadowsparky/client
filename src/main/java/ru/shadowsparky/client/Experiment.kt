@@ -31,10 +31,14 @@ class Experiment {
 
     fun toByteArray() : ByteArray = Files.readAllBytes(File(VIDEO_PATH).toPath())
 
-    fun exFrame() : Image {
+    fun exFrame(bytes: ByteArray) : Image {
+        log.printInfo("Frame experiment started")
         val frame = Frame(1280, 720, DEPTH_BYTE, 3)
-        frame.image = arrayOf(mp4ToByteBuffer(toByteArray()))
+        log.printInfo("Frame created")
+        frame.image = arrayOf(mp4ToByteBuffer(bytes))
+        log.printInfo("Frame image attached")
         val converter = JavaFXFrameConverter()
+        log.printInfo("Converter created")
         return converter.convert(frame)
     }
 
