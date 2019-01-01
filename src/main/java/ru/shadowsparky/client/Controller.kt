@@ -8,7 +8,7 @@ class Controller {
     private val clientTest = ClientTest()
     private val ex = Experiment()
     init {
-        ex.ex2_sample()
+        ex.ex3_sample()
 //        clientTest.start()
 //        Thread {
 //            while (true) {

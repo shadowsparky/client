@@ -13,6 +13,9 @@ import java.nio.file.Files
 import javax.imageio.ImageIO
 import java.awt.image.BufferedImage
 import org.jcodec.api.FrameGrab
+import org.jcodec.common.io.NIOUtils
+
+
 
 
 
@@ -43,12 +46,25 @@ class Experiment {
         log.printInfo("Ex 2 start...")
         val frameNumber = 42
         log.printInfo("Ex 2 frame number initialized")
-        val picture = FrameGrab.getFrameFromFile(File(VIDEO_PATH), frameNumber)
+        val picture = FrameGrab.getFrameAtSec(File(VIDEO_PATH), 0.0)
         log.printInfo("picture handled")
         val bufferedImage = AWTUtil.toBufferedImage(picture)
         log.printInfo("buffered image handled")
         ImageIO.write(bufferedImage, "png", File(IMAGES_PATH))
         log.printInfo("image wrote")
+    }
+
+    fun ex3_sample() {
+        val file = File(VIDEO_PATH)
+        log.printInfo("File handled")
+        val grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(file))
+        log.printInfo("Frame grab created")
+        var picture: Picture
+        picture = grab.nativeFrame
+        while (true) {
+            log.printInfo(picture.width.toString() + "x" + picture.height + " " + picture.color)
+            picture = grab.nativeFrame
+        }
     }
 
     fun mp4ToPng(byteArray: ByteArray) {
