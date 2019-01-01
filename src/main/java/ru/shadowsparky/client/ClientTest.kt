@@ -32,17 +32,20 @@ class ClientTest {
         dataHandlingFlag = true
         log.printInfo("Handler enabled...")
         val experiment = Experiment()
-//        while (true) {
-//            val length = inStream!!.readInt()
-//            log.printInfo("length = $length")
-            val array = ByteArray(2048000)
-            inStream!!.read(array)
-            log.printInfo(array.toString())
-            val image = experiment.exFrame(array)
+        while (true) {
+            val length = inStream!!.readInt()
+            log.printInfo("length = $length")
+            if (length > 0) {
+                val array = ByteArray(length)
+                inStream!!.read(array)
+                log.printInfo(array.toString())
+                experiment.exFrame(array)
+            }
+//            val image = experiment.exFrame(array)
 //            experiment.ex2_sample()
 //            test.add(array)
 //            decoder()
-//        }
+        }
     }.start()
 
     fun disableDataHandling() {

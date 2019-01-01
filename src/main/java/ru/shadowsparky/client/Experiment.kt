@@ -1,22 +1,27 @@
 package ru.shadowsparky.client
 
+import javafx.embed.swing.SwingFXUtils
 import javafx.scene.image.Image
+import org.bytedeco.javacpp.opencv_core
 import org.bytedeco.javacv.Frame
 import org.bytedeco.javacv.Frame.DEPTH_BYTE
-import org.bytedeco.javacv.JavaFXFrameConverter
+import org.bytedeco.javacv.OpenCVFrameConverter
 import org.jcodec.api.FrameGrab
 import org.jcodec.codecs.h264.H264Decoder
 import org.jcodec.common.io.NIOUtils
 import org.jcodec.common.model.ColorSpace
 import org.jcodec.common.model.Picture
 import org.jcodec.scale.AWTUtil
+import org.opencv.core.Mat
 import java.awt.Point
 import java.awt.Transparency
 import java.awt.image.*
+import java.awt.image.BufferedImage
 import java.io.File
 import java.nio.ByteBuffer
 import java.nio.file.Files
 import javax.imageio.ImageIO
+
 
 class Experiment {
     private val log = Injection.provideLogger()
@@ -30,17 +35,34 @@ class Experiment {
     }
 
     fun toByteArray() : ByteArray = Files.readAllBytes(File(VIDEO_PATH).toPath())
-
-    fun exFrame(bytes: ByteArray) : Image {
+    @Deprecated("CRASHED")
+    fun exFrame(bytes: ByteArray): opencv_core.Mat? {
         log.printInfo("Frame experiment started")
         val frame = Frame(1280, 720, DEPTH_BYTE, 3)
         log.printInfo("Frame created")
         frame.image = arrayOf(mp4ToByteBuffer(bytes))
         log.printInfo("Frame image attached")
-        val converter = JavaFXFrameConverter()
+//        val converter = JavaFXFrameConverter()
         log.printInfo("Converter created")
+        val converter = OpenCVFrameConverter.ToMat()
         return converter.convert(frame)
     }
+
+    private fun mat2Image(frame: Mat): Image {
+        var type = BufferedImage.TYPE_BYTE_GRAY
+        if (frame.channels() > 1) {
+            type = BufferedImage.TYPE_3BYTE_BGR
+        }
+        val bufferSize = frame.channels() * frame.cols() * frame.rows()
+        val b = ByteArray(bufferSize)
+        frame.get(0, 0, b) // get all the pixels
+        val image = BufferedImage(frame.cols(), frame.rows(), type)
+        val targetPixels = (image.raster.dataBuffer as DataBufferByte).data
+        System.arraycopy(b, 0, targetPixels, 0, b.size)
+        return SwingFXUtils.toFXImage(image, null)
+
+    }
+
 
     @Deprecated("Пример не работает. Null pointer")
     fun ex1(buffer: ByteBuffer) {
