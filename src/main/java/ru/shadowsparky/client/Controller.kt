@@ -8,7 +8,8 @@ class Controller {
     private val clientTest = ClientTest()
     private val ex = Experiment()
     init {
-        clientTest.start()
+        ex.ex2_sample()
+//        clientTest.start()
 //        Thread {
 //            while (true) {
 //                ex.mp4ToPng(clientTest.getAvailableBuffer())

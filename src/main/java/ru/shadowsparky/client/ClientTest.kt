@@ -38,7 +38,7 @@ class ClientTest {
 //            log.printInfo("length = $length")
             val array = ByteArray(2048000)
             inStream!!.read(array)
-            experiment.ex1(experiment.mp4ToByteBuffer(array))
+//            experiment.ex2_sample()
 //            test.add(array)
 //            decoder()
         }

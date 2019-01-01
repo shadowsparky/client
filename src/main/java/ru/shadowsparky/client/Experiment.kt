@@ -11,6 +11,10 @@ import java.io.File
 import java.nio.ByteBuffer
 import java.nio.file.Files
 import javax.imageio.ImageIO
+import java.awt.image.BufferedImage
+import org.jcodec.api.FrameGrab
+
+
 
 
 class Experiment {
@@ -36,7 +40,15 @@ class Experiment {
     }
 
     fun ex2_sample() {
-
+        log.printInfo("Ex 2 start...")
+        val frameNumber = 42
+        log.printInfo("Ex 2 frame number initialized")
+        val picture = FrameGrab.getFrameFromFile(File(VIDEO_PATH), frameNumber)
+        log.printInfo("picture handled")
+        val bufferedImage = AWTUtil.toBufferedImage(picture)
+        log.printInfo("buffered image handled")
+        ImageIO.write(bufferedImage, "png", File(IMAGES_PATH))
+        log.printInfo("image wrote")
     }
 
     fun mp4ToPng(byteArray: ByteArray) {
