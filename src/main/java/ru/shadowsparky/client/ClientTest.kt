@@ -39,7 +39,8 @@ class ClientTest {
                 val array = ByteArray(length)
                 inStream!!.read(array)
                 log.printInfo(array.toString())
-//                experiment.exFrame(array)
+                val result = experiment.decodeFromVideo(array, 0)
+                log.printInfo("RESULT = $result")
             }
 //            val image = experiment.exFrame(array)
 //            experiment.ex2_sample()

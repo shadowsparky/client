@@ -10,10 +10,7 @@ class Controller {
     private val clientTest = ClientTest()
     private val ex = Experiment()
     init {
-        ex.grabVideoFile()
-//        clientTest.start()
-//        clientTest.start()
-//        ex.ex3_sample()
+        clientTest.start()
 
     }
 
