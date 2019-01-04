@@ -1,5 +1,6 @@
 package ru.shadowsparky.client
 
+import org.bytedeco.javacpp.opencv_highgui.cvShowImage
 import ru.shadowsparky.client.Extras.Companion.HOST_2
 import ru.shadowsparky.client.Extras.Companion.PORT
 import java.io.DataInputStream
@@ -33,14 +34,17 @@ class ClientTest {
         log.printInfo("Handler enabled...")
         val experiment = Experiment()
         while (true) {
+//            val length = 2048000
             val length = inStream!!.readInt()
-            log.printInfo("length = $length")
+//            log.printInfo("length = $length")
             if (length > 0) {
-                val array = ByteArray(length)
-                inStream!!.read(array)
-                log.printInfo(array.toString())
+                val array = ByteArray(2048000)
+                inStream!!.read(array, 0, length)
+                log.printInfo("$array $length")
                 val result = experiment.decodeFromVideo(array, 0)
-                log.printInfo("RESULT = $result")
+                cvShowImage("Original content", result)
+//                Thread.sleep(1000)
+//                log.printInfo("RESULT = $result")
             }
 //            val image = experiment.exFrame(array)
 //            experiment.ex2_sample()
