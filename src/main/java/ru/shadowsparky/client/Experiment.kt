@@ -40,8 +40,8 @@ class Experiment {
             val codec = avcodec.avcodec_find_decoder(avcodec.AV_CODEC_ID_H264)
             if (codec != null) {
                 videoCodecContext = avcodec.avcodec_alloc_context3(codec)
-                videoCodecContext.width(1280)
-                videoCodecContext.height(720)
+                videoCodecContext.width(320)
+                videoCodecContext.height(480)
                 videoCodecContext.pix_fmt(avutil.AV_PIX_FMT_YUV420P)
                 videoCodecContext.codec_type(avutil.AVMEDIA_TYPE_VIDEO)
                 videoCodecContext.extradata(videoData)
@@ -52,10 +52,12 @@ class Experiment {
                     videoCodecContext.time_base().den(1000)
                 }
             } else {
-//                log.printError("CODEC IS NULL")
+                log.printError("CODEC IS NULL")
+                return null
             }
         } else {
-//            log.printError("FRAME FLAG NOT NULL")
+            log.printError("FRAME FLAG NOT NULL")
+            return null
         }
         val decodedPicture: avutil.AVFrame = avutil.av_frame_alloc()
         val processedPicture: avutil.AVFrame = avutil.av_frame_alloc()
@@ -68,9 +70,9 @@ class Experiment {
                 val proccessPictureBuffer = BytePointer(avutil.av_malloc(size.toLong()))
                 avcodec.avpicture_fill(avcodec.AVPicture(processedPicture), proccessPictureBuffer, fmt, width, height)
                 log.printInfo(processedPicture.toString())
-                returnImageFrame = opencv_core.IplImage.createHeader(1280, 720, 8, 1)
+                returnImageFrame = opencv_core.IplImage.createHeader(320, 480, 8, 1)
                 returnImageFrame!!.imageData(videoData)
-                receivedVideoPacket!!.data(videoData)
+                receivedVideoPacket.data(videoData)
                 receivedVideoPacket.size(videoData.capacity().toInt())
                 receivedVideoPacket.pts(timestamp)
             } else {

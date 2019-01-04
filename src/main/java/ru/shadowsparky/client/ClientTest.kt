@@ -32,17 +32,17 @@ class ClientTest {
     fun enableDataHandling() = Thread {
         dataHandlingFlag = true
         log.printInfo("Handler enabled...")
-        val experiment = Experiment()
+        decoder()
+//        val experiment = Experiment()
         while (true) {
 //            val length = 2048000
             val length = inStream!!.readInt()
 //            log.printInfo("length = $length")
-            if (length > 0) {
+            if ((length > 0) and (length < 2048000)) {
                 val array = ByteArray(2048000)
                 inStream!!.read(array, 0, length)
-                log.printInfo("$array $length")
-                val result = experiment.decodeFromVideo(array, 0)
-                cvShowImage("Original content", result)
+                test.add(EncodedBuffer(array, length))
+//                log.printInfo("$array $length")
 //                Thread.sleep(1000)
 //                log.printInfo("RESULT = $result")
             }
@@ -58,7 +58,16 @@ class ClientTest {
         dataHandlingFlag = false
     }
 
-    fun decoder() = log.printInfo(String(test.take()))
+    fun decoder() = Thread {
+        while (true) {
+            val experiment = Experiment()
+            val buffer = getAvailableBuffer()
+            val result = experiment.decodeFromVideo(buffer.data, 0)
+            if (result != null)
+                cvShowImage("Original content", result)
+            log.printInfo("array: ${buffer.data} size: ${buffer.data.size} length = ${buffer.length}")
+        }
+    }.start()
 
     fun getAvailableBuffer() = test.take()
 
