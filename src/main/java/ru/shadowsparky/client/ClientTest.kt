@@ -1,6 +1,5 @@
 package ru.shadowsparky.client
 
-import org.bytedeco.javacpp.opencv_highgui.cvShowImage
 import ru.shadowsparky.client.Extras.Companion.HOST_2
 import ru.shadowsparky.client.Extras.Companion.PORT
 import java.io.DataInputStream
@@ -12,6 +11,7 @@ class ClientTest {
     private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
     private var dataHandlingFlag = false
+    private var count = 0
 
     fun start() {
         connectToServer()
@@ -59,13 +59,21 @@ class ClientTest {
     }
 
     fun decoder() = Thread {
+        val experiment = Experiment()
+        experiment.startRecord()
         while (true) {
-            val experiment = Experiment()
             val buffer = getAvailableBuffer()
-            val result = experiment.decodeFromVideo(buffer.data, 0)
-            if (result != null)
-                cvShowImage("Original content", result)
-            log.printInfo("array: ${buffer.data} size: ${buffer.data.size} length = ${buffer.length}")
+            experiment.decodeFromVideo(buffer.data)
+            count++
+            if (count == 20) {
+                experiment.stopRecord()
+                log.printInfo("Record stop")
+                return@Thread
+            }
+//            val result = experiment.decodeFromVideo(buffer.data, 0)
+//            if (result != null)
+//                cvShowImage("Original content", result)
+//            log.printInfo("array: ${buffer.data} size: ${buffer.data.size} length = ${buffer.length}")
         }
     }.start()
 

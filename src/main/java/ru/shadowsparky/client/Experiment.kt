@@ -1,23 +1,66 @@
 package ru.shadowsparky.client
 
 import org.bytedeco.javacpp.*
-import org.bytedeco.javacpp.opencv_highgui.cvShowImage
-import org.bytedeco.javacv.OpenCVFrameConverter
+import org.bytedeco.javacv.FFmpegFrameRecorder
+import org.bytedeco.javacv.Frame
 import java.io.File
 import java.nio.ByteBuffer
 import java.nio.file.Files
 import java.util.*
 
 
+
+
 class Experiment {
     private val log = Injection.provideLogger()
     private val FRAME_RATE = 60
-    private val VIDEO_PATH = "/home/eugene/Downloads/video.mp4"
+    private val VIDEO_PATH = "/home/eugene/Downloads/videdo.mp4"
     private val IMAGES_PATH = "/home/eugene/Downloads/images/image.png"
+    private val recorder = FFmpegFrameRecorder.createDefault(File(VIDEO_PATH), 720, 1280)
+    private var frame = Frame(720, 1280, Frame.DEPTH_BYTE, 2)
+//    private val context = avformat.AVFormatContext()
 
     fun mp4ToByteBuffer(bytes: ByteArray) : ByteBuffer {
         log.printInfo("$bytes size:${bytes.size}")
         return ByteBuffer.wrap(bytes)
+    }
+
+    fun startRecord() {
+        recorder.frameNumber = 60
+        recorder.frameRate = (60).toDouble()
+        recorder.videoCodec = avcodec.AV_CODEC_ID_H264
+        recorder.start()
+    }
+
+    fun stopRecord() {
+        recorder.stop()
+    }
+
+    private fun pushFrame(frame: Frame) {
+        try {
+            recorder.record(frame)
+        } catch (e: Exception) {
+            log.printError("${e.printStackTrace()}")
+        }
+    }
+
+    fun decodeFromVideo(data: ByteArray) {
+        frame.image[0] = ByteBuffer.wrap(data)
+        val buffer = (frame.image[0].position(0) as ByteBuffer)
+//        try {
+            buffer.clear()
+            buffer.put(data)
+//        } catch (e: BufferOverflowException) {
+//            log.printError("${e.printStackTrace()}")
+//            Log.i(TAG, "recordError BufferOverflowException $e")
+//            frame = Frame(720, 1280, Frame.DEPTH_BYTE, 2)
+//            val frameToRecord = FFmpegFrameRecorder.FrameToRecord(timestamp, frame)
+//            (frame.image[0].position(0) as ByteBuffer).put(data)
+//        }
+
+//        buffer.put(data)
+//        ((frame.image[0].position(0)) as ByteBuffer).put(data)
+        pushFrame(frame)
     }
 
 //    fun av_init_packet(packet: avcodec.AVPacket) {
@@ -30,6 +73,7 @@ class Experiment {
 //        packet.stream_index(0)
 //    }
 
+    @Deprecated("Нет результата")
     fun decodeFromVideo(data: ByteArray, timestamp: Long) : opencv_core.IplImage? {
         val receivedVideoPacket: avcodec.AVPacket = avcodec.AVPacket()//? = null
         var returnImageFrame: opencv_core.IplImage? = null
@@ -81,9 +125,10 @@ class Experiment {
                 var pointer = IntArray(10)
                 val decodedFrameLength = avcodec.avcodec_receive_frame(videoCodecContext, decodedPicture)
                 val sendPacket = avcodec.avcodec_send_packet(videoCodecContext, receivedVideoPacket)
-                val converter = OpenCVFrameConverter.ToIplImage()
-                returnImageFrame.imageData(decodedPicture.data(decodedPicture.pkt_size()))
-                cvShowImage("Original Content", returnImageFrame)
+
+//                val converter = OpenCVFrameConverter.ToIplImage()
+//                returnImageFrame.imageData(decodedPicture.data(decodedPicture.pkt_size()))
+//                cvShowImage("Original Content", returnImageFrame)
 //                log.printInfo("$decodedFrameLength $sendPacket")
 //                img_convert()
 //                ("supreme original", decodedPicture)
