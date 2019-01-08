@@ -32,25 +32,20 @@ class ClientTest {
     fun enableDataHandling() = Thread {
         dataHandlingFlag = true
         log.printInfo("Handler enabled...")
-        decoder()
-//        val experiment = Experiment()
+//        decoder()
+        val experiment = Experiment()
+        experiment.startProcess()
         while (true) {
-//            val length = 2048000
-            val length = inStream!!.readInt()
-//            log.printInfo("length = $length")
-            if ((length > 0) and (length < 2048000)) {
-                val array = ByteArray(2048000)
-                inStream!!.read(array, 0, length)
-                test.add(EncodedBuffer(array, length))
-//                log.printInfo("$array $length")
-//                Thread.sleep(1000)
-//                log.printInfo("RESULT = $result")
-            }
+            val array = ByteArray(1024)
+            inStream!!.read(array)
+            experiment.pushToProc(array)
+//            test.add(EncodedBuffer(array, 1))
+        }
 //            val image = experiment.exFrame(array)
 //            experiment.ex2_sample()
 //            test.add(array)
 //            decoder()
-        }
+//        }
     }.start()
 
     fun disableDataHandling() {
@@ -59,24 +54,13 @@ class ClientTest {
     }
 
     fun decoder() = Thread {
-        val experiment = Experiment()
-        experiment.startRecord()
-        while (true) {
-            val buffer = getAvailableBuffer()
-            experiment.decodeFromVideo(buffer.data)
-            count++
-            if (count == 20) {
-                experiment.stopRecord()
-                log.printInfo("Record stop")
-                return@Thread
-            }
-//            val result = experiment.decodeFromVideo(buffer.data, 0)
-//            if (result != null)
-//                cvShowImage("Original content", result)
-//            log.printInfo("array: ${buffer.data} size: ${buffer.data.size} length = ${buffer.length}")
-        }
+//        val experiment = Experiment()
+//        experiment.startProcess()
+//        while (true) {
+//            val buffer = getAvailableBuffer()
+//            experiment.pushToProc(buffer.data)
+//        }
     }.start()
 
     fun getAvailableBuffer() = test.take()
-
 }
