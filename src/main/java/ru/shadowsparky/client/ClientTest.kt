@@ -2,12 +2,12 @@ package ru.shadowsparky.client
 
 import ru.shadowsparky.client.Extras.Companion.HOST_2
 import ru.shadowsparky.client.Extras.Companion.PORT
-import java.io.DataInputStream
+import java.io.InputStream
 import java.net.Socket
 
 class ClientTest {
     private var socket: Socket? = null
-    private var inStream: DataInputStream? = null
+    private var inStream: InputStream? = null
     private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
     private var dataHandlingFlag = false
@@ -24,7 +24,7 @@ class ClientTest {
     }.start()
 
     fun streamUp() {
-        inStream = DataInputStream(socket!!.getInputStream())
+        inStream = socket!!.getInputStream()
         log.printInfo("Data Input Stream is UP")
         enableDataHandling()
     }
@@ -36,9 +36,12 @@ class ClientTest {
         val experiment = Experiment()
         experiment.startProcess()
         while (true) {
-            val array = ByteArray(1024)
-            inStream!!.read(array)
-            experiment.pushToProc(array)
+//            test.
+
+            val array = ByteArray(240000)
+            val c = inStream!!.read(array)
+            log.printInfo("Readed $array")
+            experiment.pushToProc(array, c)
 //            test.add(EncodedBuffer(array, 1))
         }
 //            val image = experiment.exFrame(array)

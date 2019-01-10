@@ -1,32 +1,48 @@
 package ru.shadowsparky.client
 
-import java.io.DataInputStream
-import java.io.DataOutputStream
+import java.io.BufferedReader
+import java.io.ByteArrayOutputStream
+import java.io.InputStreamReader
+import java.io.OutputStream
 
 
 class Experiment {
     private val log = Injection.provideLogger()
     private lateinit var process: Process
-    private lateinit var mOut: DataOutputStream
-    private lateinit var mIn: DataInputStream
-    private lateinit var mError: DataInputStream
+    private lateinit var mOut: OutputStream
+    private lateinit var mIn: BufferedReader
+    private lateinit var mError: BufferedReader
 
-    fun startProcess() {
+    fun startProcess() = Thread{
         process = ProcessBuilder("ffplay", "-framerate", "60", "-").start()
-        mOut = DataOutputStream(process.outputStream)
-    }
-
-    fun pushToProc(data: ByteArray) {
+        mOut = process.outputStream
+        mIn = BufferedReader(InputStreamReader(process.inputStream))
+        mError = BufferedReader(InputStreamReader(process.errorStream))
+//        inputReader()
+    }.start()
+    @Deprecated("Без результата")
+    @Synchronized fun pushToProc(data: ByteArray, c: Int) = Thread {
         if (process.isAlive) {
-            log.printInfo("writing... $data ${data.size}")
-            mOut.write(data)
-            log.printInfo("data wrote")
+            var bytes = ByteArrayOutputStream()
+            log.printInfo("$data $c")
+            bytes.write(data, 0, c)
+            bytes.writeTo(mOut)
+            bytes.close()
+            process.waitFor()
         } else {
+            mOut.close()
             log.printInfo("Process killed")
         }
-    }
+    }.start()
 
     fun inputReader() = Thread {
+        var line: String
+        while (true) {
+//            line = mIn.readLine()
+//            log.printInfo("Process Input: $line")
+//            line = mError.readLine()
+//            log.printError("Process Error: $line")
+        }
 //        while (true) {
 //            val mInData = ByteArray(1024)
 //            val mErrorData = ByteArray(1024)
