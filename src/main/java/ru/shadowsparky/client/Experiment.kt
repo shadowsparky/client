@@ -1,38 +1,42 @@
 package ru.shadowsparky.client
 
-import java.io.BufferedReader
-import java.io.ByteArrayOutputStream
-import java.io.InputStreamReader
-import java.io.OutputStream
+import java.io.FileOutputStream
 
 
 class Experiment {
     private val log = Injection.provideLogger()
-    private lateinit var process: Process
-    private lateinit var mOut: OutputStream
-    private lateinit var mIn: BufferedReader
-    private lateinit var mError: BufferedReader
+    private val fos = FileOutputStream("/home/eugene/Desktop/test/output.mpg", true)
+
+    fun writeToFile(bytes: ByteArray) {
+        fos.write(bytes)
+        fos.flush()
+    }
+
+    fun close() {
+        fos.close()
+    }
+//    private lateinit var process: Process
 
     fun startProcess() = Thread{
-        process = ProcessBuilder("ffplay", "-framerate", "60", "-").start()
-        mOut = process.outputStream
-        mIn = BufferedReader(InputStreamReader(process.inputStream))
-        mError = BufferedReader(InputStreamReader(process.errorStream))
+//        process = ProcessBuilder("ffplay", "-framerate", "60", "-").start()
+
+//        mOut = process.outputStream
+//        mIn = BufferedReader(InputStreamReader(process.inputStream))
+//        mError = BufferedReader(InputStreamReader(process.errorStream))
 //        inputReader()
     }.start()
-    @Deprecated("Без результата")
+
     @Synchronized fun pushToProc(data: ByteArray, c: Int) = Thread {
-        if (process.isAlive) {
-            var bytes = ByteArrayOutputStream()
-            log.printInfo("$data $c")
-            bytes.write(data, 0, c)
-            bytes.writeTo(mOut)
-            bytes.close()
-            process.waitFor()
-        } else {
-            mOut.close()
-            log.printInfo("Process killed")
-        }
+//        if (process.isAlive) {
+//            var bytes = ByteArrayOutputStream()
+//            log.printInfo("$data $c")
+//            bytes.write(data, 0, c)
+//            bytes.close()
+//            process.waitFor()
+//        } else {
+//            mOut.close()
+//            log.printInfo("Process killed")
+//        }
     }.start()
 
     fun inputReader() = Thread {
