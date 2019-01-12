@@ -2,6 +2,7 @@ package ru.shadowsparky.client
 
 import ru.shadowsparky.client.Extras.Companion.HOST_2
 import ru.shadowsparky.client.Extras.Companion.PORT
+import java.io.ByteArrayOutputStream
 import java.io.DataInputStream
 import java.net.Socket
 
@@ -30,30 +31,17 @@ class ClientTest {
     }
 
     fun enableDataHandling() = Thread {
-        dataHandlingFlag = true
-        log.printInfo("Handler enabled...")
-//        decoder()
-        val experiment = Experiment()
-        experiment.startProcess()
-        while (true) {
-//            val length = inStream!!.readInt()
-//            if (length > 0) {
-                val array = ByteArray(2096)
-//                log.printInfo("$array $length")
+        val ex = Experiment()
+        val buffer = ByteArrayOutputStream()
+        while(true) {
+            buffer.reset()
+            for (i: Int in 1..1000) {
+                val array = ByteArray(1024)
                 inStream!!.read(array)
-                experiment.writeToFile(array)
-//            } else {
-//                log.printInfo("Error handle...")
-//            }
+                buffer.write(array)
+            }
+            ex.pushToProc(buffer.toByteArray())
         }
-//        experiment.close()
-//        log.printInfo("Closed")
-
-//            val image = experiment.exFrame(array)
-//            experiment.ex2_sample()
-//            test.add(array)
-//            decoder()
-//        }
     }.start()
 
     fun disableDataHandling() {
