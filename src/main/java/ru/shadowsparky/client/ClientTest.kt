@@ -2,13 +2,12 @@ package ru.shadowsparky.client
 
 import ru.shadowsparky.client.Extras.Companion.HOST_2
 import ru.shadowsparky.client.Extras.Companion.PORT
-import java.io.ByteArrayOutputStream
-import java.io.DataInputStream
+import java.io.BufferedInputStream
 import java.net.Socket
 
 class ClientTest {
     private var socket: Socket? = null
-    private var inStream: DataInputStream? = null
+    private var inStream: BufferedInputStream? = null
     private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
     private var dataHandlingFlag = false
@@ -25,22 +24,20 @@ class ClientTest {
     }.start()
 
     fun streamUp() {
-        inStream = DataInputStream(socket!!.getInputStream())
+        inStream = BufferedInputStream(socket!!.getInputStream())
         log.printInfo("Data Input Stream is UP")
         enableDataHandling()
     }
 
     fun enableDataHandling() = Thread {
         val ex = Experiment()
-        val buffer = ByteArrayOutputStream()
         while(true) {
-            buffer.reset()
-            for (i: Int in 1..1000) {
-                val array = ByteArray(1024)
-                inStream!!.read(array)
-                buffer.write(array)
+            val buffer = ByteArray(1024)
+            if (inStream!!.read(buffer, 0, 1024) != -1) {
+                ex.pushToProc(buffer)
+            } else {
+                log.printError("Reading error; read is -1")
             }
-            ex.pushToProc(buffer.toByteArray())
         }
     }.start()
 
