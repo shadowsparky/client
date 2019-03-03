@@ -6,6 +6,6 @@ class Injection {
     companion object {
         private val logger = Logger()
         fun provideLogger() = logger
-        fun provideLinkedBlockingQueue() = LinkedBlockingQueue<EncodedBuffer>()
+        fun provideLinkedBlockingQueue() = LinkedBlockingQueue<ByteArray>()
     }
 }
