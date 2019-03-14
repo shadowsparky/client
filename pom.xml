@@ -13,6 +13,12 @@
     </properties>
 
     <dependencies>
+        <!-- javacv -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>1.4.4</version>
+        </dependency>
         <!-- Kotlin dependencies -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
