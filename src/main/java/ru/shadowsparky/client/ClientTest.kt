@@ -2,18 +2,16 @@ package ru.shadowsparky.client
 
 import ru.shadowsparky.client.Extras.Companion.HOST
 import ru.shadowsparky.client.Extras.Companion.PORT
-import java.io.BufferedInputStream
-import java.io.DataInputStream
+import ru.shadowsparky.screencast.TransferByteArray
+import java.io.ObjectInputStream
 import java.net.Socket
-import java.nio.ByteBuffer
 
 class ClientTest {
     private var socket: Socket? = null
-    private var inStream: DataInputStream? = null
+    private var inStream: ObjectInputStream? = null
     private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
     private var dataHandlingFlag = false
-    private var count = 0
 
     fun start() {
         connectToServer()
@@ -32,13 +30,20 @@ class ClientTest {
     }
 
     fun enableDataHandling() = Thread {
-        val inStream = DataInputStream(socket!!.getInputStream())
-//        val inS = BufferedInputStream(socket!!.getInputStream())
+        val inStream = ObjectInputStream(socket!!.getInputStream())
+        log.printInfo("Data Handling enabled")
         while(true) {
-            if (inStream.available() > 0) {
-                val length = inStream.readInt()
-                log.printInfo(length.toString())
+//            if (inStream.available() > 0) {
+            val buf = inStream.readObject()
+            if (buf is TransferByteArray) {
+                log.printInfo("${buf.data} ${buf.length}")
+                test.add(buf)
+            } else {
+                buf.toString()
             }
+//                val buf = inStream.readObject() as TransferByteArray
+//                log.printInfo("${buf.data} ${buf.length}")
+//            }
         }
     }.start()
 
@@ -51,7 +56,7 @@ class ClientTest {
         val experiment = Experiment()
         while (true) {
             val buffer = getAvailableBuffer()
-            experiment.decode(buffer)
+            experiment.decode(buffer.data)
         }
     }.start()
 
