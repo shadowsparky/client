@@ -7,14 +7,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.shadowsparky.client.Controller">
-      <Button
-         fx:id="button"
-         mnemonicParsing="false"
-         text="Button"/>
 
       <ImageView
          fx:id="imageView"
-         fitHeight="100"
-         fitWidth="100"/>
+         fitHeight="2000"
+         fitWidth="2000"/>
 
 </GridPane>

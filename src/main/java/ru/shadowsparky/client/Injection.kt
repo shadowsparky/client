@@ -8,5 +8,6 @@ class Injection {
         private val logger = Logger()
         fun provideLogger() = logger
         fun provideLinkedBlockingQueue() = LinkedBlockingQueue<TransferByteArray>()
+        fun provideConverter() = Converter()
     }
 }
