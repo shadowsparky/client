@@ -17,7 +17,7 @@ class Controller : ImageCallback {
     }
 
     override fun handleImage(image: Image) {
-        val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize(image.width, image.height, true, true, true, false))
+        val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize((1280).toDouble(), (720).toDouble(), true, true, true, false))
         val background = Background(bImage)
         main.background = background
     }
