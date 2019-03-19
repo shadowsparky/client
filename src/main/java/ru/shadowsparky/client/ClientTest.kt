@@ -4,13 +4,13 @@ import ru.shadowsparky.client.Extras.Companion.HOST
 import ru.shadowsparky.client.Extras.Companion.PORT
 import ru.shadowsparky.screencast.TransferByteArray
 import java.io.ObjectInputStream
-import java.lang.RuntimeException
 import java.net.Socket
 
 class ClientTest(val callback: ImageCallback) {
     private var socket: Socket? = null
     private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
+    private val host = Injection.provideIpV4()
     private var dataHandlingFlag = false
 
     fun start() {
@@ -50,8 +50,10 @@ class ClientTest(val callback: ImageCallback) {
 
     fun decoder() = Thread {
         val experiment = Experiment(callback)
+//        experiment.createProcess()
         while (true) {
             val buffer = getAvailableBuffer()
+//            experiment.writeToPipe(buffer.data)
             experiment.decode(buffer.data)
         }
     }.start()
