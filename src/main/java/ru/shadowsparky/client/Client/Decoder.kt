@@ -2,19 +2,20 @@
  * Created by shadowsparky in 2019
  */
 
-package ru.shadowsparky.client
+package ru.shadowsparky.client.Client
 
 import org.bytedeco.javacpp.*
 import org.bytedeco.javacpp.avcodec.*
 import org.bytedeco.javacpp.avutil.*
 import org.bytedeco.javacpp.opencv_core.CV_8UC3
 import org.bytedeco.javacpp.swscale.SWS_BICUBIC
+import ru.shadowsparky.client.Utils.ImageCallback
+import ru.shadowsparky.client.Utils.Injection
 import ru.shadowsparky.screencast.PreparingData
 import java.io.DataOutputStream
 import java.nio.ByteBuffer
 
-
-class Experiment(val callback: ImageCallback, val pData: PreparingData) {
+class Decoder(val callback: ImageCallback, val pData: PreparingData) {
     private val log = Injection.provideLogger()
     private var codec = avcodec_find_decoder(AV_CODEC_ID_H264)
     private var c = AVCodecContext()
@@ -28,7 +29,6 @@ class Experiment(val callback: ImageCallback, val pData: PreparingData) {
     private var buffer: BytePointer
     private var convert_ctx: swscale.SwsContext? = null
 
-
     init {
         c = avcodec_alloc_context3(codec)
         avcodec_open2(c, codec, avutil.AVDictionary())
@@ -37,6 +37,7 @@ class Experiment(val callback: ImageCallback, val pData: PreparingData) {
         av_image_fill_arrays(RGBPicture.data(), RGBPicture.linesize(), buffer, AV_PIX_FMT_RGB24, pData.width, pData.height, 1)
     }
 
+    @Deprecated("you will die")
     fun createProcess() {
         process = ProcessBuilder()
                 .command("ffplay", "-framerate", "60", "-window_title", "PIPE OUT", "-")
@@ -44,10 +45,10 @@ class Experiment(val callback: ImageCallback, val pData: PreparingData) {
         mOut = DataOutputStream(process!!.outputStream)
     }
 
+    @Deprecated("you will die")
     fun writeToPipe(data: ByteArray) {
         mOut!!.write(data)
     }
-
 
     fun decode(data: ByteArray) {
         packet.data(BytePointer(ByteBuffer.wrap(data)))
@@ -79,6 +80,6 @@ class Experiment(val callback: ImageCallback, val pData: PreparingData) {
         val mats = opencv_core.Mat(pData.height, pData.width, CV_8UC3, RGBPicture.data(0), RGBPicture.linesize(0).toLong())
         val image = converter.Mat2Image(mats)
         callback.handleImage(image)
-        log.printInfo("Success ${image.width} ${image.height}")
+        log.printInfo("Success")
     }
 }

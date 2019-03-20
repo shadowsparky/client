@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane
+        fx:id="videoPane"
+        style="-fx-background-color: #000"
+        xmlns="http://javafx.com/javafx/8.0.172-ea"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="ru.shadowsparky.client.Controllers.VideoController"
+/>
