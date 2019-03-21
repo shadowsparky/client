@@ -11,16 +11,27 @@ import ru.shadowsparky.client.Utils.Injection
 import ru.shadowsparky.screencast.DisableHandling
 import ru.shadowsparky.screencast.PreparingData
 import ru.shadowsparky.screencast.TransferByteArray
-import java.io.BufferedInputStream
-import java.io.ObjectInputStream
+import java.io.*
 import java.net.Socket
+import java.net.SocketException
 
-class Client(val callback: ImageCallback, val handler: ConnectionHandler) {
+class Client(
+        private val callback: ImageCallback,
+        private val handler: ConnectionHandler
+) {
     private var socket: Socket? = null
     private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
     private var pData: PreparingData? = null
-    private var handling: Boolean = false
+    var handling: Boolean = false
+        set(value) {
+            if (value) {
+                log.printInfo("Handling enabled")
+            } else {
+                socket?.close()
+            }
+            field = value
+        }
 
     fun start() {
         connectToServer()
@@ -29,6 +40,7 @@ class Client(val callback: ImageCallback, val handler: ConnectionHandler) {
     private fun connectToServer() = Thread {
         try {
             socket = Socket("192.168.31.221", PORT)
+            socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
             return@Thread
@@ -46,45 +58,45 @@ class Client(val callback: ImageCallback, val handler: ConnectionHandler) {
         }
     }
 
-    private fun setHanding(flag: Boolean) {
-        handling = flag
-        if (handling) {
-            log.printInfo("Handling enabled")
-        } else {
-            log.printInfo("Handling disabled")
-        }
-    }
-
     @Throws(RuntimeException::class)
     private fun enableDataHandling() = Thread {
-        setHanding(true)
+        handling = true
         val inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
         val obj = inStream.readObject()
         if (obj is PreparingData) {
             if (obj.key == "key")
                 pData = obj
         } else {
-            setHanding(false)
-            log.printInfo("Handling disabled. Corrupted Data")
+            handling = false
+            log.printInfo("Handling disabled by: Preparing Data Not Found. Corrupted data")
         }
         log.printInfo("Data Handling enabled")
         decoder()
         handler.onSuccess()
-        while (handling) {
-            val buf = inStream.readObject()
-            if (buf is TransferByteArray) {
-                log.printInfo("${buf.data} ${buf.length}")
-                test.add(buf)
-            } else if (buf is DisableHandling) {
-                if (buf.action == "disable")
-                    setHanding(false)
+        try {
+            while (handling) {
+                val buf = inStream.readObject()
+                if (buf is TransferByteArray) {
+                    log.printInfo("${buf.data} ${buf.length}")
+                    test.add(buf)
+                } else {
+                    throw RuntimeException("Corrupted Data")
+                }
             }
+        } catch (e: SocketException) {
+            handling = false
+            log.printInfo("Handling disabled by: SocketException. ${e.message}")
+            return@Thread
+        } catch (e: RuntimeException) {
+            handling = false
+            log.printInfo("Handling disabled by: RuntimeException. ${e.message}")
+            handler.onError(e)
         }
     }.start()
 
     private fun decoder() = Thread {
         val experiment = Decoder(callback, pData!!)
-        while (true) {
+        while (handling) {
             val buffer = getAvailableBuffer()
             experiment.decode(buffer.data)
         }

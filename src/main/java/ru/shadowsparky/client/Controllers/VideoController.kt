@@ -6,10 +6,12 @@ import javafx.scene.layout.*
 import javafx.stage.WindowEvent
 import ru.shadowsparky.client.Client.Client
 import ru.shadowsparky.client.Utils.ImageCallback
+import ru.shadowsparky.client.Utils.Injection
 
 class VideoController : ImageCallback {
     private var client: Client? = null
     @FXML private lateinit var videoPane: GridPane
+    private val log = Injection.provideLogger()
 
     override fun handleImage(image: Image) {
         val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize((1280).toDouble(), (720).toDouble(), true, true, true, false))
@@ -18,7 +20,8 @@ class VideoController : ImageCallback {
     }
 
     fun onDestroy(event: WindowEvent) {
-
+        log.printInfo("Window destroyed")
+        client!!.handling = false
     }
 
     fun attachClient(client: Client) {

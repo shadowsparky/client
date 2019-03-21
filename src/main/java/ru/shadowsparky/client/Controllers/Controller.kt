@@ -30,9 +30,11 @@ class Controller : ConnectionHandler  {
     override fun onError(e: Exception) = Platform.runLater {
         if (e is ConnectException) {
             log.printError("При соединении произошла ошибка. Сервер не найден")
-            if (stage != null)
-                stage!!.hide()
+        } else if (e is RuntimeException) {
+            log.printError("Соединение было разорвано. Были получены битые данные")
         }
+        if (stage != null)
+            stage!!.hide()
     }
 
     @FXML fun initialize() {
