@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <GridPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.shadowsparky.client.Controllers.Controller">
    <columnConstraints>
       <ColumnConstraints />
@@ -14,6 +16,12 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Button mnemonicParsing="false" text="test" fx:id="button" />
+      <JFXButton
+              style="-jfx-button-type: RAISED;
+              -fx-background-color: green;
+              -fx-text-fill: white;"
+              mnemonicParsing="false"
+              text="TESTTEST"
+              fx:id="button" />
    </children>
 </GridPane>

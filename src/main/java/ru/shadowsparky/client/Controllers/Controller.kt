@@ -4,6 +4,7 @@
 
 package ru.shadowsparky.client.Controllers
 
+import com.jfoenix.controls.JFXButton
 import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
@@ -20,11 +21,12 @@ import ru.shadowsparky.client.Utils.Injection
 import java.net.ConnectException
 
 class Controller : ConnectionHandler  {
-    @FXML private lateinit var button: Button
+    @FXML private lateinit var button: JFXButton
     private val log = Injection.provideLogger()
     private var stage: Stage? = null
 
     override fun onSuccess() = Platform.runLater {
+        button.isDisable = true
         stage!!.show()
     }
 
@@ -36,6 +38,7 @@ class Controller : ConnectionHandler  {
         }
         if (stage != null)
             stage!!.hide()
+        button.isDisable = false
     }
 
     @FXML fun initialize() {

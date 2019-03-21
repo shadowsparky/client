@@ -14,7 +14,7 @@ class VideoController : ImageCallback {
     private val log = Injection.provideLogger()
 
     override fun handleImage(image: Image) {
-        val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize((1280).toDouble(), (720).toDouble(), true, true, true, false))
+        val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize(100.0, 100.0, true, true, true, false))
         val background = Background(bImage)
         videoPane.background = background
     }
