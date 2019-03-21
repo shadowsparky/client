@@ -21,7 +21,8 @@ import java.net.SocketException
 
 class Client(
         private val callback: ImageCallback,
-        private val handler: ConnectionHandler
+        private val handler: ConnectionHandler,
+        private val addr: String
 ) {
     private var socket: Socket? = null
     private val test = Injection.provideLinkedBlockingQueue()
@@ -45,7 +46,7 @@ class Client(
 
     private fun connectToServer() = GlobalScope.launch {
         try {
-            socket = Socket("192.168.31.221", PORT)
+            socket = Socket(addr, PORT)
             inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {

@@ -20,6 +20,29 @@
             <version>1.4.4</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.gluonhq/charm-down-common -->
+        <dependency>
+            <groupId>com.gluonhq</groupId>
+            <artifactId>charm-down-common</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.gluonhq/charm-glisten -->
+        <dependency>
+            <groupId>com.gluonhq</groupId>
+            <artifactId>charm-glisten</artifactId>
+            <version>4.4.4</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.gluonhq/charm-down-core -->
+        <dependency>
+            <groupId>com.gluonhq</groupId>
+            <artifactId>charm-down-core</artifactId>
+            <version>3.8.6</version>
+        </dependency>
+
+
         <dependency>
             <groupId>com.jfoenix</groupId>
             <artifactId>jfoenix</artifactId>

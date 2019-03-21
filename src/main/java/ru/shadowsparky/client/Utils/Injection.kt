@@ -21,7 +21,7 @@ class Injection {
         fun provideLogger() = logger
         fun provideLinkedBlockingQueue() = LinkedBlockingQueue<TransferByteArray>()
         fun provideConverter() = Converter()
-        fun provideClient(callback: ImageCallback, handler: ConnectionHandler) = Client(callback, handler)
+        fun provideClient(callback: ImageCallback, handler: ConnectionHandler, addr: String) = Client(callback, handler, addr)
         fun provideDecoder(callback: ImageCallback, pData: PreparingData) = Decoder(callback, pData)
 
         @Throws(RuntimeException::class)
