@@ -49,7 +49,7 @@ class Controller : ConnectionHandler  {
             val screen = Screen.getPrimary()
             stage!!.title = "Я хочу сдохнуть"
             stage!!.scene = Scene(root, screen.visualBounds.width, screen.visualBounds.height)
-            stage!!.initStyle(StageStyle.UNDECORATED);
+            stage!!.initStyle(StageStyle.UNDECORATED)
             stage!!.isResizable = false
             stage!!.isMaximized = true
             stage!!.scene.window.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, controller::onDestroy)

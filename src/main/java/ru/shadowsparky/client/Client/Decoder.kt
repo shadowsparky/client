@@ -53,16 +53,15 @@ class Decoder(val callback: ImageCallback, val pData: PreparingData) {
     fun decode(data: ByteArray) {
         packet.data(BytePointer(ByteBuffer.wrap(data)))
         packet.size(data.size)
-        log.printInfo(data.size.toString())
-        var len = 0
-        len = avcodec_send_packet(c, packet)
+//        log.printInfo(data.size.toString())
+        var len = avcodec_send_packet(c, packet)
         if (len != 0) {
-            log.printInfo("avcodec send packet error")
+//            log.printInfo("avcodec send packet error")
             return
         }
         len = avcodec_receive_frame(c, picture)
         if (len != 0) {
-            log.printInfo("avcodec receive frame error")
+//            log.printInfo("avcodec receive frame error")
             return
         }
         convert_ctx = swscale.sws_getContext(
@@ -80,6 +79,6 @@ class Decoder(val callback: ImageCallback, val pData: PreparingData) {
         val mats = opencv_core.Mat(pData.height, pData.width, CV_8UC3, RGBPicture.data(0), RGBPicture.linesize(0).toLong())
         val image = converter.Mat2Image(mats)
         callback.handleImage(image)
-        log.printInfo("Success")
+//        log.printInfo("Success")
     }
 }

@@ -4,14 +4,18 @@
 
 package ru.shadowsparky.client.Client
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import ru.shadowsparky.client.Extras.Companion.PORT
 import ru.shadowsparky.client.Utils.ConnectionHandler
 import ru.shadowsparky.client.Utils.ImageCallback
 import ru.shadowsparky.client.Utils.Injection
-import ru.shadowsparky.screencast.DisableHandling
 import ru.shadowsparky.screencast.PreparingData
 import ru.shadowsparky.screencast.TransferByteArray
-import java.io.*
+import java.io.BufferedInputStream
+import java.io.EOFException
+import java.io.ObjectInputStream
 import java.net.Socket
 import java.net.SocketException
 
@@ -23,12 +27,14 @@ class Client(
     private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
     private var pData: PreparingData? = null
+    private var inStream: ObjectInputStream? = null
     var handling: Boolean = false
         set(value) {
             if (value) {
                 log.printInfo("Handling enabled")
             } else {
                 socket?.close()
+                inStream?.close()
             }
             field = value
         }
@@ -37,17 +43,18 @@ class Client(
         connectToServer()
     }
 
-    private fun connectToServer() = Thread {
+    private fun connectToServer() = GlobalScope.launch {
         try {
             socket = Socket("192.168.31.221", PORT)
+            inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
-            return@Thread
+            return@launch
         }
         log.printInfo("Connected to the Server")
         streamUp()
-    }.start()
+    }
 
     private fun streamUp() {
         log.printInfo("Data Input Stream is UP")
@@ -59,10 +66,9 @@ class Client(
     }
 
     @Throws(RuntimeException::class)
-    private fun enableDataHandling() = Thread {
+    private fun enableDataHandling() = GlobalScope.launch(Dispatchers.IO) {
         handling = true
-        val inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
-        val obj = inStream.readObject()
+        val obj = inStream!!.readObject()
         if (obj is PreparingData) {
             if (obj.key == "key")
                 pData = obj
@@ -75,36 +81,33 @@ class Client(
         handler.onSuccess()
         try {
             while (handling) {
-                val buf = inStream.readObject()
+                val buf = inStream!!.readObject()
                 if (buf is TransferByteArray) {
-                    log.printInfo("${buf.data} ${buf.length}")
                     test.add(buf)
                 } else {
                     throw RuntimeException("Corrupted Data")
                 }
             }
         } catch (e: SocketException) {
-            handling = false
             log.printInfo("Handling disabled by: SocketException. ${e.message}")
-            return@Thread
         } catch (e: RuntimeException) {
-            handling = false
             log.printInfo("Handling disabled by: RuntimeException. ${e.message}")
             handler.onError(e)
         } catch (e: EOFException) {
-            handling = false
             log.printInfo("Handling disabled by: EOFException. ${e.message}")
             handler.onError(e)
+        } finally {
+            handling = false
         }
-    }.start()
+    }
 
-    private fun decoder() = Thread {
+    private fun decoder() = GlobalScope.launch(Dispatchers.IO) {
         val experiment = Decoder(callback, pData!!)
         while (handling) {
             val buffer = getAvailableBuffer()
             experiment.decode(buffer.data)
         }
-    }.start()
+    }
 
     private fun getAvailableBuffer() = test.take()!!
 }
