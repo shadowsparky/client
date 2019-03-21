@@ -91,6 +91,10 @@ class Client(
             handling = false
             log.printInfo("Handling disabled by: RuntimeException. ${e.message}")
             handler.onError(e)
+        } catch (e: EOFException) {
+            handling = false
+            log.printInfo("Handling disabled by: EOFException. ${e.message}")
+            handler.onError(e)
         }
     }.start()
 
