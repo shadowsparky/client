@@ -12,15 +12,12 @@ import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.stage.Screen
 import javafx.stage.Stage
+import javafx.stage.StageStyle
 import javafx.stage.WindowEvent
 import ru.shadowsparky.client.Client.Client
 import ru.shadowsparky.client.Utils.ConnectionHandler
 import ru.shadowsparky.client.Utils.Injection
-import java.lang.Exception
 import java.net.ConnectException
-import javafx.stage.Screen.getPrimary
-
-
 
 class Controller : ConnectionHandler  {
     @FXML private lateinit var button: Button
@@ -52,6 +49,7 @@ class Controller : ConnectionHandler  {
             val screen = Screen.getPrimary()
             stage!!.title = "Я хочу сдохнуть"
             stage!!.scene = Scene(root, screen.visualBounds.width, screen.visualBounds.height)
+            stage!!.initStyle(StageStyle.UNDECORATED);
             stage!!.isResizable = false
             stage!!.isMaximized = true
             stage!!.scene.window.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, controller::onDestroy)
