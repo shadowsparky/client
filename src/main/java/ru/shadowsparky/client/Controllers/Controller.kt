@@ -5,7 +5,7 @@
 package ru.shadowsparky.client.Controllers
 
 import com.jfoenix.controls.JFXButton
-import com.jfoenix.controls.JFXSnackbar
+import com.jfoenix.controls.JFXTextField
 import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
@@ -18,24 +18,23 @@ import javafx.stage.Stage
 import javafx.stage.StageStyle
 import javafx.stage.WindowEvent
 import ru.shadowsparky.client.Client.Client
+import ru.shadowsparky.client.Utils.ADBTest
 import ru.shadowsparky.client.Utils.ConnectionHandler
 import ru.shadowsparky.client.Utils.Injection
-import ru.vas7n.va.widgets.MaskField
 import java.io.EOFException
 import java.net.ConnectException
 
-
 class Controller : ConnectionHandler  {
-    @FXML private lateinit var button: JFXButton
+    @FXML private lateinit var connButton: JFXButton
     private val logger = Injection.provideLogger()
     @FXML private lateinit var log: Label
-    @FXML private lateinit var addr: MaskField
+    @FXML private lateinit var addr: JFXTextField
     @FXML private lateinit var pane: GridPane
 
     private var stage: Stage? = null
 
     override fun onSuccess() = Platform.runLater {
-        button.isDisable = true
+        connButton.isDisable = true
         stage!!.show()
         log.text = "Соединение было успешно установлено"
     }
@@ -48,7 +47,7 @@ class Controller : ConnectionHandler  {
             else -> log.text = "Соединение было разорвано.\n Произошла неизвестная ошибка"
         }
         stage?.hide()
-        button.isDisable = false
+        connButton.isDisable = false
     }
 
     private fun connect() {
@@ -56,6 +55,7 @@ class Controller : ConnectionHandler  {
         val fxmlLoader = FXMLLoader(javaClass.classLoader.getResource("Video.fxml"))
         val root = fxmlLoader.load<Parent>()
         val controller = fxmlLoader.getController<VideoController>()
+        ADBTest.executeCommand(listOf("adb", "forward", "tcp:1488", "tcp:1337"))
         controller.attachClient(Client(controller, this, addr.text))
         controller.start()
         stage = Stage()
@@ -73,11 +73,12 @@ class Controller : ConnectionHandler  {
     }
 
     @FXML fun initialize() {
-        button.setOnAction {
-            if ((addr.text.isNotEmpty()) and (!addr.text.contains('_'))) {
+        //val test = ADBTest()
+        connButton.setOnAction {
+//            if ((addr.text.isNotEmpty()) and (!addr.text.contains('_'))) {
                 connect()
-            } else
-                blankAddrHandler()
+//            } else
+//                blankAddrHandler()
         }
     }
 }

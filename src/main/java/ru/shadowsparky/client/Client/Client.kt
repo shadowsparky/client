@@ -7,7 +7,7 @@ package ru.shadowsparky.client.Client
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import ru.shadowsparky.client.Extras.Companion.PORT
+import ru.shadowsparky.client.Utils.Extras.Companion.PORT
 import ru.shadowsparky.client.Utils.ConnectionHandler
 import ru.shadowsparky.client.Utils.ImageCallback
 import ru.shadowsparky.client.Utils.Injection
@@ -46,7 +46,7 @@ class Client(
 
     private fun connectToServer() = GlobalScope.launch {
         try {
-            socket = Socket(addr, PORT)
+            socket = Socket(addr, 1488)
             inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
@@ -88,6 +88,7 @@ class Client(
                 } else {
                     throw RuntimeException("Corrupted Data")
                 }
+                log.printInfo("${buf.data} ${buf.length}")
             }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")

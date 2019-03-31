@@ -2,7 +2,7 @@
  * Created by shadowsparky in 2019
  */
 
-package ru.shadowsparky.client
+package ru.shadowsparky.client.Utils
 
 import javafx.embed.swing.SwingFXUtils
 import javafx.scene.image.Image

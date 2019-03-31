@@ -246,18 +246,16 @@ class MaskField : JFXTextField() {
         val plainStart = interpretMaskPositionInPlainPosition(start)
         val plainEnd = interpretMaskPositionInPlainPosition(end)
 
-        var plainText1 = ""
-        if (getPlainText().length > plainStart)
-            plainText1 = getPlainText().substring(0, plainStart)
+        val plainText1 = if (getPlainText().length > plainStart)
+            getPlainText().substring(0, plainStart)
         else
-            plainText1 = getPlainText()
+            getPlainText()
 
 
-        var plainText2 = ""
-        if (getPlainText().length > plainEnd)
-            plainText2 = getPlainText().substring(plainEnd)
+        val plainText2 = if (getPlainText().length > plainEnd)
+            getPlainText().substring(plainEnd)
         else
-            plainText2 = ""
+            ""
 
 
         setPlainText(plainText1 + text + plainText2)
