@@ -9,6 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import ru.shadowsparky.client.Utils.Extras.Companion.PORT
 import ru.shadowsparky.client.Utils.ConnectionHandler
+import ru.shadowsparky.client.Utils.Extras
 import ru.shadowsparky.client.Utils.ImageCallback
 import ru.shadowsparky.client.Utils.Injection
 import ru.shadowsparky.screencast.PreparingData
@@ -22,7 +23,8 @@ import java.net.SocketException
 class Client(
         private val callback: ImageCallback,
         private val handler: ConnectionHandler,
-        private val addr: String
+        private val addr: String,
+        private val port: Int = PORT
 ) {
     private var socket: Socket? = null
     private val test = Injection.provideLinkedBlockingQueue()
@@ -46,7 +48,7 @@ class Client(
 
     private fun connectToServer() = GlobalScope.launch {
         try {
-            socket = Socket(addr, 1488)
+            socket = Socket(addr, port)
             inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {

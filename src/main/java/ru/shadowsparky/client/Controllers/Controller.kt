@@ -5,6 +5,7 @@
 package ru.shadowsparky.client.Controllers
 
 import com.jfoenix.controls.JFXButton
+import com.jfoenix.controls.JFXListView
 import com.jfoenix.controls.JFXTextField
 import javafx.application.Platform
 import javafx.fxml.FXML
@@ -20,9 +21,15 @@ import javafx.stage.WindowEvent
 import ru.shadowsparky.client.Client.Client
 import ru.shadowsparky.client.Utils.ADBTest
 import ru.shadowsparky.client.Utils.ConnectionHandler
+import ru.shadowsparky.client.Utils.Extras
 import ru.shadowsparky.client.Utils.Injection
 import java.io.EOFException
+import java.lang.UnsupportedOperationException
 import java.net.ConnectException
+
+enum class ConnectionType {
+    adb, wifi
+}
 
 class Controller : ConnectionHandler  {
     @FXML private lateinit var connButton: JFXButton
@@ -30,6 +37,8 @@ class Controller : ConnectionHandler  {
     @FXML private lateinit var log: Label
     @FXML private lateinit var addr: JFXTextField
     @FXML private lateinit var pane: GridPane
+    @FXML private lateinit var adbConn: JFXButton
+    @FXML private lateinit var adbDevices: JFXListView<Label>
 
     private var stage: Stage? = null
 
@@ -50,13 +59,16 @@ class Controller : ConnectionHandler  {
         connButton.isDisable = false
     }
 
-    private fun connect() {
+    private fun connect(type: ConnectionType) {
         log.text = "Пытаюсь подключиться..."
         val fxmlLoader = FXMLLoader(javaClass.classLoader.getResource("Video.fxml"))
         val root = fxmlLoader.load<Parent>()
         val controller = fxmlLoader.getController<VideoController>()
-        ADBTest.executeCommand(listOf("adb", "forward", "tcp:1488", "tcp:1337"))
-        controller.attachClient(Client(controller, this, addr.text))
+        if (type == ConnectionType.adb) {
+            ADBTest.executeCommand(listOf("adb", "forward", "tcp:${Extras.FORWARD_PORT}", "tcp:${Extras.PORT}"))
+            controller.attachClient(Client(controller, this, "127.0.0.1", Extras.FORWARD_PORT))
+        } else
+            controller.attachClient(Client(controller, this, addr.text))
         controller.start()
         stage = Stage()
         val screen = Screen.getPrimary()
@@ -75,10 +87,14 @@ class Controller : ConnectionHandler  {
     @FXML fun initialize() {
         //val test = ADBTest()
         connButton.setOnAction {
-//            if ((addr.text.isNotEmpty()) and (!addr.text.contains('_'))) {
-                connect()
-//            } else
-//                blankAddrHandler()
+            if (addr.text.isNotEmpty()) {
+                connect(ConnectionType.wifi)
+            } else
+                blankAddrHandler()
+        }
+
+        adbConn.setOnAction {
+            throw UnsupportedOperationException("Временно не работает")
         }
     }
 }
