@@ -8,6 +8,7 @@ import ru.shadowsparky.client.Client.Client
 import ru.shadowsparky.client.Client.Decoder
 import ru.shadowsparky.screencast.PreparingData
 import ru.shadowsparky.screencast.TransferByteArray
+import se.vidstige.jadb.JadbConnection
 import java.lang.RuntimeException
 import java.util.concurrent.LinkedBlockingQueue
 
@@ -18,6 +19,7 @@ class Injection {
         fun provideLogger() = logger
         fun provideLinkedBlockingQueue() = LinkedBlockingQueue<TransferByteArray>()
         fun provideConverter() = Converter()
+        fun provideAdb() = JadbConnection()
         fun provideClient(callback: ImageCallback, handler: ConnectionHandler, addr: String) = Client(callback, handler, addr)
         fun provideDecoder(callback: ImageCallback, pData: PreparingData) = Decoder(callback, pData)
 

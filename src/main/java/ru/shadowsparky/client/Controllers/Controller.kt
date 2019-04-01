@@ -19,10 +19,8 @@ import javafx.stage.Stage
 import javafx.stage.StageStyle
 import javafx.stage.WindowEvent
 import ru.shadowsparky.client.Client.Client
-import ru.shadowsparky.client.Utils.ADBTest
-import ru.shadowsparky.client.Utils.ConnectionHandler
-import ru.shadowsparky.client.Utils.Extras
-import ru.shadowsparky.client.Utils.Injection
+import ru.shadowsparky.client.Utils.*
+import se.vidstige.jadb.JadbConnection
 import java.io.EOFException
 import java.lang.UnsupportedOperationException
 import java.net.ConnectException
@@ -34,16 +32,19 @@ enum class ConnectionType {
 class Controller : ConnectionHandler  {
     @FXML private lateinit var connButton: JFXButton
     private val logger = Injection.provideLogger()
+    private val adb = Injection.provideAdb()
     @FXML private lateinit var log: Label
     @FXML private lateinit var addr: JFXTextField
     @FXML private lateinit var pane: GridPane
     @FXML private lateinit var adbConn: JFXButton
     @FXML private lateinit var adbDevices: JFXListView<Label>
+    private var selectedDevice: String? = null
 
     private var stage: Stage? = null
 
     override fun onSuccess() = Platform.runLater {
         connButton.isDisable = true
+        adbConn.isDisable = true
         stage!!.show()
         log.text = "Соединение было успешно установлено"
     }
@@ -57,6 +58,7 @@ class Controller : ConnectionHandler  {
         }
         stage?.hide()
         connButton.isDisable = false
+        adbConn.isDisable = false
     }
 
     private fun connect(type: ConnectionType) {
@@ -65,7 +67,6 @@ class Controller : ConnectionHandler  {
         val root = fxmlLoader.load<Parent>()
         val controller = fxmlLoader.getController<VideoController>()
         if (type == ConnectionType.adb) {
-            ADBTest.executeCommand(listOf("adb", "forward", "tcp:${Extras.FORWARD_PORT}", "tcp:${Extras.PORT}"))
             controller.attachClient(Client(controller, this, "127.0.0.1", Extras.FORWARD_PORT))
         } else
             controller.attachClient(Client(controller, this, addr.text))
@@ -85,7 +86,12 @@ class Controller : ConnectionHandler  {
     }
 
     @FXML fun initialize() {
-        //val test = ADBTest()
+        ADBTest.executeCommand(listOf("adb", "devices", "-l"))
+        val out = ADBTest.getOutput()
+        val devices = ADBTest.parseDevices(out)
+        devices.forEach {
+            adbDevices.items.add(Label(it.toString()))
+        }
         connButton.setOnAction {
             if (addr.text.isNotEmpty()) {
                 connect(ConnectionType.wifi)
@@ -94,7 +100,19 @@ class Controller : ConnectionHandler  {
         }
 
         adbConn.setOnAction {
-            throw UnsupportedOperationException("Временно не работает")
+            selectedDevice = adbDevices.selectionModel?.selectedItem?.text
+            if (selectedDevice != null) {
+                log.text = ""
+                val device = ADBDevice.parseDevice(selectedDevice!!)
+                if (device != null) {
+                    ADBTest.executeCommand(listOf("adb", "-s", device.id, "forward", "tcp:${Extras.FORWARD_PORT}", "tcp:${Extras.PORT}"))
+                    if (ADBTest.getOutput().isEmpty()) {
+                        connect(ConnectionType.adb)
+                    }
+                }
+            } else {
+                log.text = "Вы должны выбрать устройство"
+            }
         }
     }
 }

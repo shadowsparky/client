@@ -89,7 +89,7 @@ class Client(
                     test.add(buf)
                 } else {
                     throw RuntimeException("Corrupted Data")
-                }
+                  }
                 log.printInfo("${buf.data} ${buf.length}")
             }
         } catch (e: SocketException) {
