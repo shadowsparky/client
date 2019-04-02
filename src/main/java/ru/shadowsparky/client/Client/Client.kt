@@ -15,6 +15,7 @@ import ru.shadowsparky.client.Utils.Injection
 import ru.shadowsparky.screencast.PreparingData
 import ru.shadowsparky.screencast.TransferByteArray
 import java.io.BufferedInputStream
+import java.io.DataInputStream
 import java.io.EOFException
 import java.io.ObjectInputStream
 import java.net.Socket
@@ -31,6 +32,7 @@ class Client(
     private val log = Injection.provideLogger()
     private var pData: PreparingData? = null
     private var inStream: ObjectInputStream? = null
+    private var inDataStream: DataInputStream? = null
     var handling: Boolean = false
         set(value) {
             if (value) {
@@ -38,6 +40,7 @@ class Client(
             } else {
                 socket?.close()
                 inStream?.close()
+                
             }
             field = value
         }
@@ -50,6 +53,7 @@ class Client(
         try {
             socket = Socket(addr, port)
             inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
+            inDataStream = DataInputStream(BufferedInputStream(socket!!.getInputStream()))
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
@@ -84,13 +88,19 @@ class Client(
         handler.onSuccess()
         try {
             while (handling) {
-                val buf = inStream!!.readObject()
-                if (buf is TransferByteArray) {
-                    test.add(buf)
-                } else {
-                    throw RuntimeException("Corrupted Data")
-                  }
-                log.printInfo("${buf.data} ${buf.length}")
+                val len = inDataStream!!.readInt()
+                if (len > 0) {
+                    val buf = ByteArray(len)
+                    inDataStream!!.readFully(buf, 0, buf.size)
+                    test.add(TransferByteArray(buf, buf.size))
+                }
+//                val buf = inStream!!.readObject()
+//                if (buf is TransferByteArray) {
+//                    test.add(buf)
+//                } else {
+//                    throw RuntimeException("Corrupted Data")
+//                  }
+//                log.printInfo("${buf.data} ${buf.length}")
             }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")
