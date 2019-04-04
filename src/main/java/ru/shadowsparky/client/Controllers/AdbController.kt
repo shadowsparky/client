@@ -69,6 +69,7 @@ class AdbController : Controllerable, Loadingable, ConnectionHandler {
     }
 
     override fun onError(e: Exception) = Platform.runLater {
+        initDevices()
         val error = when (e) {
             is ConnectException -> "При соединении произошла ошибка.\nСервер не найден"
             is RuntimeException -> "Соединение было разорвано.\nБыли получены битые данные"

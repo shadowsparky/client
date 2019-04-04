@@ -15,7 +15,7 @@ class Launcher() {
     private var stage: Stage? = null
 
     fun launch(type: ConnectionType, handler: ConnectionHandler, addr: String? = null) {
-        val fxmlLoader = FXMLLoader(javaClass.classLoader.getResource("Video.fxml"))
+        val fxmlLoader = FXMLLoader(javaClass.classLoader.getResource("video.fxml"))
         val root = fxmlLoader.load<Parent>()
         val controller = fxmlLoader.getController<VideoController>()
         if (type == ConnectionType.adb) {
