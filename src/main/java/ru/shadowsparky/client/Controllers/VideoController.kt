@@ -17,7 +17,6 @@ class VideoController() : ImageCallback {
     private var stage: Stage? = null
 
     override fun handleImage(image: Image) {
-        log.printInfo("Handled image with width: ${image.width} and height ${image.height}")
         val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize(100.0, 100.0, true, true, true, false))
         val background = Background(bImage)
         videoPane.background = background

@@ -29,6 +29,8 @@ class Client(
     private val log = Injection.provideLogger()
     private var inStream: ObjectInputStream? = null
     private var decoder: Decoder? = null
+    private var inDataStream: DataInputStream? = null
+    private lateinit var pData: PreparingData
     var handling: Boolean = false
         set(value) {
             if (value) {
@@ -49,7 +51,7 @@ class Client(
         try {
             socket = Socket(addr, port)
             inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
-//            inDataStream = DataInputStream(BufferedInputStream(socket!!.getInputStream()))
+            inDataStream = DataInputStream(BufferedInputStream(socket!!.getInputStream()))
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
@@ -73,9 +75,10 @@ class Client(
         handling = true
         val obj = inStream!!.readObject()
         if (obj is PreparingData) {
-            if (obj.key == "key")
+            if (obj.key == "key") {
+                pData = obj
                 log.printInfo("True Password")
-            else {
+             } else {
                 log.printInfo("Incorrect password")
                 handling = false
                 return@launch
@@ -89,13 +92,18 @@ class Client(
         decoder()
         handler.onSuccess()
         try {
-            decoder = Decoder(callback)
             while (handling) {
-                val buf = inStream!!.readObject()
-                if (buf is TransferByteArray) {
-                    test.add(buf)
-                } else
-                    throw RuntimeException("Corrupted Data")
+                val len = inDataStream!!.readInt()
+                if (len > 0) {
+                    val buf = ByteArray(len)
+                    inDataStream!!.readFully(buf, 0, buf.size)
+                    test.add(TransferByteArray(buf, buf.size))
+                }
+//                val buf = inStream!!.readObject()
+//                if (buf is TransferByteArray) {
+//                    test.add(buf)
+//                } else
+//                    throw RuntimeException("Corrupted Data")
             }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")
@@ -107,12 +115,14 @@ class Client(
             handler.onError(e)
         } catch (e: OptionalDataException) {
             log.printInfo("Handling disabled by: OptionalDataException. ${e.message}")
+            handler.onError(e)
         } finally {
             handling = false
         }
     }
 
     private fun decoder() = GlobalScope.launch(Dispatchers.IO) {
+        decoder = Decoder(callback, pData)
         while (handling) {
             val buffer = getAvailableBuffer()
             decoder?.decode(buffer.data)
