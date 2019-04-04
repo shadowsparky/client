@@ -20,8 +20,9 @@ public class Main extends Application {
         primaryStage.setMinWidth(440);
         primaryStage.setScene(new Scene(root, 440, 350));
         primaryStage.show();
+        System.setProperty("org.bytedeco.javacpp.maxphysicalbytes", "0");
+        System.setProperty("org.bytedeco.javacpp.maxbytes", "0");
     }
-
 
     public static void main(String[] args) {
         launch(args);

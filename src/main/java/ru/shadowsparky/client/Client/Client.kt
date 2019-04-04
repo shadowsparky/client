@@ -27,10 +27,8 @@ class Client(
     private var socket: Socket? = null
     private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
-//    private var pData: PreparingData? = null
     private var inStream: ObjectInputStream? = null
     private var decoder: Decoder? = null
-//    private var inDataStream: DataInputStream? = null
     var handling: Boolean = false
         set(value) {
             if (value) {
@@ -76,36 +74,26 @@ class Client(
         val obj = inStream!!.readObject()
         if (obj is PreparingData) {
             if (obj.key == "key")
-                log.printInfo("test")
-//                pData = obj
+                log.printInfo("True Password")
+            else {
+                log.printInfo("Incorrect password")
+                handling = false
+                return@launch
+            }
         } else {
             handling = false
             log.printInfo("Handling disabled by: Preparing Data Not Found. Corrupted data")
+            return@launch
         }
         log.printInfo("Data Handling enabled")
-//        decoder()
+        decoder()
         handler.onSuccess()
         try {
             decoder = Decoder(callback)
-//            decoder = Decoder(callback, pData!!)
             while (handling) {
-//                val len = inDataStream!!.readInt()
-//                if (len > 0) {
-//                    val buf = ByteArray(len)
-//                    inDataStream!!.readFully(buf, 0, buf.size)
-//                    test.add(TransferByteArray(buf, buf.size))
-//                }
                 val buf = inStream!!.readObject()
                 if (buf is TransferByteArray) {
-//                    test.add(buf)
-//
-                    decoder?.decode(buf.data)
-                } else if (buf is PreparingData) {
-//                    decoder = null
-//                    decoder?.dispose()
-//                    log.printInfo("Preparing data... ${buf.width} ${buf.height}")
-//                    pData = buf
-//                    decoder = Decoder(callback, pData!!)
+                    test.add(buf)
                 } else
                     throw RuntimeException("Corrupted Data")
             }

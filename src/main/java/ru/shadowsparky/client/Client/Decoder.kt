@@ -35,6 +35,9 @@ class Decoder(
     init {
         c = avcodec_alloc_context3(codec)
         avcodec_open2(c, codec, avutil.AVDictionary())
+        bytes = av_image_get_buffer_size(AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
+        buffer = BytePointer(avutil.av_malloc(bytes!!.toLong()))
+        av_image_fill_arrays(RGBPicture.data(), RGBPicture.linesize(), buffer, AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
     }
 
     fun dispose() {
@@ -72,11 +75,6 @@ class Decoder(
         if (len != 0) {
             return
         }
-
-        bytes = av_image_get_buffer_size(AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
-        buffer = BytePointer(avutil.av_malloc(bytes!!.toLong()))
-        av_image_fill_arrays(RGBPicture.data(), RGBPicture.linesize(), buffer, AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
-
         convert_ctx = swscale.sws_getContext(
                 c.width(),
                 c.height(),
