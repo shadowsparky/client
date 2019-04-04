@@ -14,10 +14,7 @@ import ru.shadowsparky.client.Utils.ImageCallback
 import ru.shadowsparky.client.Utils.Injection
 import ru.shadowsparky.screencast.PreparingData
 import ru.shadowsparky.screencast.TransferByteArray
-import java.io.BufferedInputStream
-import java.io.DataInputStream
-import java.io.EOFException
-import java.io.ObjectInputStream
+import java.io.*
 import java.net.Socket
 import java.net.SocketException
 
@@ -30,9 +27,10 @@ class Client(
     private var socket: Socket? = null
     private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
-    private var pData: PreparingData? = null
+//    private var pData: PreparingData? = null
     private var inStream: ObjectInputStream? = null
-    private var inDataStream: DataInputStream? = null
+    private var decoder: Decoder? = null
+//    private var inDataStream: DataInputStream? = null
     var handling: Boolean = false
         set(value) {
             if (value) {
@@ -53,7 +51,7 @@ class Client(
         try {
             socket = Socket(addr, port)
             inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
-            inDataStream = DataInputStream(BufferedInputStream(socket!!.getInputStream()))
+//            inDataStream = DataInputStream(BufferedInputStream(socket!!.getInputStream()))
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
@@ -78,29 +76,38 @@ class Client(
         val obj = inStream!!.readObject()
         if (obj is PreparingData) {
             if (obj.key == "key")
-                pData = obj
+                log.printInfo("test")
+//                pData = obj
         } else {
             handling = false
             log.printInfo("Handling disabled by: Preparing Data Not Found. Corrupted data")
         }
         log.printInfo("Data Handling enabled")
-        decoder()
+//        decoder()
         handler.onSuccess()
         try {
+            decoder = Decoder(callback)
+//            decoder = Decoder(callback, pData!!)
             while (handling) {
-                val len = inDataStream!!.readInt()
-                if (len > 0) {
-                    val buf = ByteArray(len)
-                    inDataStream!!.readFully(buf, 0, buf.size)
-                    test.add(TransferByteArray(buf, buf.size))
-                }
-//                val buf = inStream!!.readObject()
-//                if (buf is TransferByteArray) {
+//                val len = inDataStream!!.readInt()
+//                if (len > 0) {
+//                    val buf = ByteArray(len)
+//                    inDataStream!!.readFully(buf, 0, buf.size)
+//                    test.add(TransferByteArray(buf, buf.size))
+//                }
+                val buf = inStream!!.readObject()
+                if (buf is TransferByteArray) {
 //                    test.add(buf)
-//                } else {
-//                    throw RuntimeException("Corrupted Data")
-//                  }
-//                log.printInfo("${buf.data} ${buf.length}")
+//
+                    decoder?.decode(buf.data)
+                } else if (buf is PreparingData) {
+//                    decoder = null
+//                    decoder?.dispose()
+//                    log.printInfo("Preparing data... ${buf.width} ${buf.height}")
+//                    pData = buf
+//                    decoder = Decoder(callback, pData!!)
+                } else
+                    throw RuntimeException("Corrupted Data")
             }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")
@@ -110,16 +117,17 @@ class Client(
         } catch (e: EOFException) {
             log.printInfo("Handling disabled by: EOFException. ${e.message}")
             handler.onError(e)
+        } catch (e: OptionalDataException) {
+            log.printInfo("Handling disabled by: OptionalDataException. ${e.message}")
         } finally {
             handling = false
         }
     }
 
     private fun decoder() = GlobalScope.launch(Dispatchers.IO) {
-        val experiment = Decoder(callback, pData!!)
         while (handling) {
             val buffer = getAvailableBuffer()
-            experiment.decode(buffer.data)
+            decoder?.decode(buffer.data)
         }
     }
 

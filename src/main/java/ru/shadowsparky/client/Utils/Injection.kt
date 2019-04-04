@@ -21,7 +21,7 @@ class Injection {
         fun provideConverter() = Converter()
         fun provideAdb() = JadbConnection()
         fun provideClient(callback: ImageCallback, handler: ConnectionHandler, addr: String) = Client(callback, handler, addr)
-        fun provideDecoder(callback: ImageCallback, pData: PreparingData) = Decoder(callback, pData)
+        fun provideDecoder(callback: ImageCallback  ) = Decoder(callback)
 
         @Throws(RuntimeException::class)
         fun provideIpV4() = mNetworkUtils.getIpv4()

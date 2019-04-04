@@ -6,6 +6,7 @@ package ru.shadowsparky.client.Controllers
 
 import com.jfoenix.controls.JFXButton
 import com.jfoenix.controls.JFXListView
+import com.jfoenix.controls.JFXTabPane
 import com.jfoenix.controls.JFXTextField
 import javafx.application.Platform
 import javafx.fxml.FXML
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.scene.control.Label
+import javafx.scene.control.Tab
 import javafx.scene.layout.GridPane
 import javafx.stage.Screen
 import javafx.stage.Stage
@@ -38,7 +40,10 @@ class Controller : ConnectionHandler  {
     @FXML private lateinit var pane: GridPane
     @FXML private lateinit var adbConn: JFXButton
     @FXML private lateinit var adbDevices: JFXListView<Label>
+    @FXML private lateinit var adbTab: Tab
+    @FXML private lateinit var tabPane: JFXTabPane
     private var selectedDevice: String? = null
+
 
     private var stage: Stage? = null
 
@@ -68,17 +73,18 @@ class Controller : ConnectionHandler  {
         val controller = fxmlLoader.getController<VideoController>()
         if (type == ConnectionType.adb) {
             controller.attachClient(Client(controller, this, "127.0.0.1", Extras.FORWARD_PORT))
-        } else
+        } else if (type == ConnectionType.wifi)
             controller.attachClient(Client(controller, this, addr.text))
         controller.start()
         stage = Stage()
         val screen = Screen.getPrimary()
         stage!!.title = "Я хочу сдохнуть"
         stage!!.scene = Scene(root, screen.visualBounds.width, screen.visualBounds.height)
-        stage!!.initStyle(StageStyle.UNDECORATED)
-        stage!!.isResizable = false
-        stage!!.isMaximized = true
+//        stage!!.initStyle(StageStyle.UNDECORATED)
+//        stage!!.isResizable = false
+//        stage!!.isMaximized = true
         stage!!.scene.window.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, controller::onDestroy)
+        controller.attachStage(stage)
     }
 
     private fun blankAddrHandler() {
@@ -86,11 +92,21 @@ class Controller : ConnectionHandler  {
     }
 
     @FXML fun initialize() {
-        ADBTest.executeCommand(listOf("adb", "devices", "-l"))
-        val out = ADBTest.getOutput()
-        val devices = ADBTest.parseDevices(out)
-        devices.forEach {
-            adbDevices.items.add(Label(it.toString()))
+        adbTab.selectedProperty().addListener { _ ->
+            adbDevices.items.clear()
+            logger.printInfo("Devices updated")
+            ADBTest.executeCommand(listOf("adb", "devices", "-l"))
+            val out = ADBTest.getOutput()
+            val devices = ADBTest.parseDevices(out)
+            devices.forEach {
+                adbDevices.items.add(Label(it.toString()))
+            }
+            if (devices.size == 0) {
+                adbDevices.items.add(Label("Нет устройств"))
+                adbDevices.isDisable = true
+            } else {
+                adbDevices.isDisable = false
+            }
         }
         connButton.setOnAction {
             if (addr.text.isNotEmpty()) {

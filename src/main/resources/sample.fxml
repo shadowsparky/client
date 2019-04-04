@@ -16,7 +16,7 @@
 <GridPane fx:id="pane" maxHeight="482.0" maxWidth="500.0" minHeight="350.0" minWidth="500.0" prefHeight="350.0" prefWidth="493.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.shadowsparky.client.Controllers.Controller">
 
    <children>
-      <JFXTabPane prefHeight="100" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+      <JFXTabPane fx:id="tabPane" prefHeight="100" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
          <Tab style="-fx-background-color: GREEN;" text="Wifi">
             <GridPane>
                <columnConstraints>
@@ -50,7 +50,7 @@
                <JFXTextField fx:id="addr" labelFloat="true" maxHeight="40.0" maxWidth="400.0" minHeight="40.0" minWidth="400.0" prefHeight="40.0" prefWidth="400.0" promptText="Введите IP адрес сервера" text="192.168.31.221" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             </GridPane>
          </Tab>
-         <Tab style="-fx-background-color: GREEN;" text="ADB">
+         <Tab fx:id="adbTab" style="-fx-background-color: GREEN;" text="ADB">
             <GridPane>
                <columnConstraints>
                   <ColumnConstraints maxWidth="229.0" minWidth="10.0" percentWidth="10.0" prefWidth="229.0" />
