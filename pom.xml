@@ -33,6 +33,13 @@
             <version>8.0.8</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.jfxtras/jmetro -->
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jmetro</artifactId>
+            <version>5.3</version>
+        </dependency>
+
         <!-- Kotlin dependencies -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

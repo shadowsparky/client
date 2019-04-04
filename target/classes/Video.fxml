@@ -2,11 +2,9 @@
 <?import javafx.scene.layout.GridPane?>
 
 <GridPane
-
         fx:id="videoPane"
-        style="-fx-background-color: #000"
+        style="-fx-background-color: black"
         xmlns="http://javafx.com/javafx/8.0.172-ea"
         xmlns:fx="http://javafx.com/fxml/1"
-
         fx:controller="ru.shadowsparky.client.Controllers.VideoController"
 />

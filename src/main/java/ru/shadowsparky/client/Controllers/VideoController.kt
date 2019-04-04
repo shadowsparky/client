@@ -7,10 +7,11 @@ import javafx.scene.layout.*
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
 import ru.shadowsparky.client.Client.Client
+import ru.shadowsparky.client.Utils.Controllerable
 import ru.shadowsparky.client.Utils.ImageCallback
 import ru.shadowsparky.client.Utils.Injection
 
-class VideoController() : ImageCallback {
+class VideoController() : ImageCallback, Controllerable {
     private var client: Client? = null
     @FXML private lateinit var videoPane: GridPane
     private val log = Injection.provideLogger()

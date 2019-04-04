@@ -4,9 +4,18 @@
 
 package ru.shadowsparky.client.Client
 
+import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
+import javafx.scene.Scene
+import javafx.stage.Screen
+import javafx.stage.Stage
+import javafx.stage.StageStyle
+import javafx.stage.WindowEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import ru.shadowsparky.client.Controllers.ConnectionType
+import ru.shadowsparky.client.Controllers.VideoController
 import ru.shadowsparky.client.Utils.Extras.Companion.PORT
 import ru.shadowsparky.client.Utils.ConnectionHandler
 import ru.shadowsparky.client.Utils.Extras
@@ -30,6 +39,7 @@ class Client(
     private var inStream: ObjectInputStream? = null
     private var decoder: Decoder? = null
     private var inDataStream: DataInputStream? = null
+    private fun getAvailableBuffer() = test.take()!!
     private lateinit var pData: PreparingData
     var handling: Boolean = false
         set(value) {
@@ -99,11 +109,6 @@ class Client(
                     inDataStream!!.readFully(buf, 0, buf.size)
                     test.add(TransferByteArray(buf, buf.size))
                 }
-//                val buf = inStream!!.readObject()
-//                if (buf is TransferByteArray) {
-//                    test.add(buf)
-//                } else
-//                    throw RuntimeException("Corrupted Data")
             }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")
@@ -128,6 +133,4 @@ class Client(
             decoder?.decode(buffer.data)
         }
     }
-
-    private fun getAvailableBuffer() = test.take()!!
 }

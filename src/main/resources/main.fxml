@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:id="root" prefHeight="300" prefWidth="300" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.shadowsparky.client.Controllers.MainController">
+   <top>
+      <TabPane fx:id="tabPane">
+         <Tab closable="false" text="WIFI" />
+         <Tab closable="false" text="ADB" />
+         <Tab closable="false" text="Settings" />
+      </TabPane>
+   </top>
+</BorderPane>
