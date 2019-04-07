@@ -1,4 +1,4 @@
-package ru.shadowsparky.client.Utils.ADB
+package ru.shadowsparky.client.utils.adb
 
 enum class ADBStatus {
     OK,

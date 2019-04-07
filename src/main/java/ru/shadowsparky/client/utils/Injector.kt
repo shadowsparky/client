@@ -1,4 +1,4 @@
-package ru.shadowsparky.client.Utils
+package ru.shadowsparky.client.utils
 
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node

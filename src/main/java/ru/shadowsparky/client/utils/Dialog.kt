@@ -1,4 +1,4 @@
-package ru.shadowsparky.client.Utils
+package ru.shadowsparky.client.utils
 
 import com.jfoenix.controls.JFXDialog
 import com.jfoenix.controls.JFXDialogLayout

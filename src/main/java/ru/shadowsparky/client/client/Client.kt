@@ -2,15 +2,15 @@
  * Created by shadowsparky in 2019
  */
 
-package ru.shadowsparky.client.Client
+package ru.shadowsparky.client.client
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import ru.shadowsparky.client.Utils.Resultable
-import ru.shadowsparky.client.Utils.Extras.Companion.PORT
-import ru.shadowsparky.client.Utils.ImageCallback
-import ru.shadowsparky.client.Utils.Injection
+import ru.shadowsparky.client.utils.Resultable
+import ru.shadowsparky.client.utils.Extras.Companion.PORT
+import ru.shadowsparky.client.utils.ImageCallback
+import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.screencast.PreparingData
 import java.io.*
 import java.net.Socket

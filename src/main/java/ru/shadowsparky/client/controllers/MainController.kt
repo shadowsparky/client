@@ -2,16 +2,15 @@
  * Created by shadowsparky in 2019
  */
 
-package ru.shadowsparky.client.Controllers
+package ru.shadowsparky.client.controllers
 
 import javafx.fxml.FXML
 import javafx.scene.control.TabPane
 import javafx.scene.layout.BorderPane
-import org.jcodec.api.NotImplementedException
-import ru.shadowsparky.client.Utils.Controllerable
-import ru.shadowsparky.client.Utils.Injection
-import ru.shadowsparky.client.Utils.Injector
-import ru.shadowsparky.client.Utils.LayoutConsts
+import ru.shadowsparky.client.utils.Controllerable
+import ru.shadowsparky.client.utils.Injection
+import ru.shadowsparky.client.utils.Injector
+import ru.shadowsparky.client.utils.LayoutConsts
 
 enum class ConnectionType {
     adb, wifi
@@ -36,8 +35,8 @@ class MainController : Controllerable {
                     log.printInfo("Wifi Clicked")
                     injector?.injectScreen(LayoutConsts.WIFI_LAYOUT, WifiController())
                 }
-                "ADB" -> {
-                    log.printInfo("ADB Clicked")
+                "adb" -> {
+                    log.printInfo("adb Clicked")
                     injector?.injectScreen(LayoutConsts.ADB_LAYOUT_FXML, AdbController())
                 }
                 "Settings" -> {

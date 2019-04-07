@@ -1,4 +1,4 @@
-package ru.shadowsparky.client.Utils
+package ru.shadowsparky.client.utils
 
 interface Loadingable {
     fun setLoading(flag: Boolean)

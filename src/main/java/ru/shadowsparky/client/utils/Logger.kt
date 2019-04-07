@@ -2,7 +2,7 @@
  * Created by shadowsparky in 2019
  */
 
-package ru.shadowsparky.client.Utils
+package ru.shadowsparky.client.utils
 
 import java.util.logging.Level
 import java.util.logging.Logger

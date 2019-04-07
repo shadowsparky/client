@@ -1,4 +1,4 @@
-package ru.shadowsparky.client.Utils
+package ru.shadowsparky.client.utils
 
 object LayoutConsts {
     val ADB_LAYOUT_FXML = "adb_layout.fxml"

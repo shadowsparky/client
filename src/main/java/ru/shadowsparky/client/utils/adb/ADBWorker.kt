@@ -1,10 +1,10 @@
 @file:Suppress("UNREACHABLE_CODE")
 
-package ru.shadowsparky.client.Utils.ADB
+package ru.shadowsparky.client.utils.adb
 
 import org.apache.commons.io.IOUtils
-import ru.shadowsparky.client.Utils.Extras
-import ru.shadowsparky.client.Utils.Injection
+import ru.shadowsparky.client.utils.Extras
+import ru.shadowsparky.client.utils.Injection
 import java.nio.charset.Charset
 
 class ADBWorker {
@@ -22,11 +22,22 @@ class ADBWorker {
         val result = executeCommand(listOf("adb", "shell", "input", "tap", "$x", "$y"))
         if (result.isEmpty())
             return ADBResult(ADBStatus.OK)
-        else
-            return ADBResult(ADBStatus.ERROR, result)
+        return ADBResult(ADBStatus.ERROR, result)
     }
 
-    // TODO: Проверка на "битые" девайсы и существование ADB
+    fun invokeHomeButton() : ADBResult {
+        throw NotImplementedError()
+    }
+
+    fun invokeBackButton() : ADBResult {
+        throw NotImplementedError()
+    }
+
+    fun invokeShowApplicationsButtion() : ADBResult {
+        throw NotImplementedError()
+    }
+
+    // TODO: Проверка на "битые" девайсы и существование adb
     fun getDevices() : ADBResult {
         val result = executeCommand(listOf("adb", "devices", "-l"))
         if (result.isNotEmpty())

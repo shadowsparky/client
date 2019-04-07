@@ -1,4 +1,4 @@
-package ru.shadowsparky.client.Utils
+package ru.shadowsparky.client.utils
 
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
@@ -7,9 +7,9 @@ import javafx.stage.Screen
 import javafx.stage.Stage
 import javafx.stage.StageStyle
 import javafx.stage.WindowEvent
-import ru.shadowsparky.client.Client.Client
-import ru.shadowsparky.client.Controllers.ConnectionType
-import ru.shadowsparky.client.Controllers.VideoController
+import ru.shadowsparky.client.client.Client
+import ru.shadowsparky.client.controllers.ConnectionType
+import ru.shadowsparky.client.controllers.VideoController
 
 class Launcher() {
     private var stage: Stage? = null

@@ -1,6 +1,6 @@
-package ru.shadowsparky.client.Utils
+package ru.shadowsparky.client.utils
 
-import ru.shadowsparky.client.Utils.ADB.ADBDevice
+import ru.shadowsparky.client.utils.adb.ADBDevice
 
 object Parser {
     private val log = Injection.provideLogger()

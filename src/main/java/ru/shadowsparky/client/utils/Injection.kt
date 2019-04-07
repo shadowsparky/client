@@ -2,11 +2,11 @@
  * Created by shadowsparky in 2019
  */
 
-package ru.shadowsparky.client.Utils
+package ru.shadowsparky.client.utils
 
 import javafx.scene.layout.BorderPane
-import ru.shadowsparky.client.Client.Client
-import ru.shadowsparky.client.Utils.ADB.ADBWorker
+import ru.shadowsparky.client.client.Client
+import ru.shadowsparky.client.utils.adb.ADBWorker
 import ru.shadowsparky.screencast.TransferByteArray
 import java.lang.RuntimeException
 import java.util.concurrent.LinkedBlockingQueue

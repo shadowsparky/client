@@ -2,17 +2,15 @@
  * Created by shadowsparky in 2019
  */
 
-package ru.shadowsparky.client.Client
+package ru.shadowsparky.client.client
 
 import org.bytedeco.javacpp.*
 import org.bytedeco.javacpp.avcodec.*
 import org.bytedeco.javacpp.avutil.*
-import org.bytedeco.javacpp.opencv_core.CV_8UC1
 import org.bytedeco.javacpp.opencv_core.CV_8UC3
 import org.bytedeco.javacpp.swscale.SWS_BICUBIC
-import ru.shadowsparky.client.Utils.ImageCallback
-import ru.shadowsparky.client.Utils.Injection
-import ru.shadowsparky.screencast.PreparingData
+import ru.shadowsparky.client.utils.ImageCallback
+import ru.shadowsparky.client.utils.Injection
 import java.io.DataOutputStream
 import java.nio.ByteBuffer
 

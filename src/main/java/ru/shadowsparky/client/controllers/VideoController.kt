@@ -1,4 +1,4 @@
-package ru.shadowsparky.client.Controllers
+package ru.shadowsparky.client.controllers
 
 import javafx.application.Platform
 import javafx.fxml.FXML
@@ -7,12 +7,11 @@ import javafx.scene.input.MouseEvent
 import javafx.scene.layout.*
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
-import ru.shadowsparky.client.Client.Client
-import ru.shadowsparky.client.Utils.ADB.ADBStatus
-import ru.shadowsparky.client.Utils.ADB.ADBWorker
-import ru.shadowsparky.client.Utils.Controllerable
-import ru.shadowsparky.client.Utils.ImageCallback
-import ru.shadowsparky.client.Utils.Injection
+import ru.shadowsparky.client.client.Client
+import ru.shadowsparky.client.utils.adb.ADBStatus
+import ru.shadowsparky.client.utils.Controllerable
+import ru.shadowsparky.client.utils.ImageCallback
+import ru.shadowsparky.client.utils.Injection
 
 class VideoController() : ImageCallback, Controllerable {
     private var client: Client? = null

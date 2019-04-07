@@ -1,4 +1,4 @@
-package ru.shadowsparky.client.Controllers
+package ru.shadowsparky.client.controllers
 
 import javafx.application.Platform
 import javafx.fxml.FXML
@@ -7,9 +7,8 @@ import javafx.scene.control.Label
 import javafx.scene.control.ListView
 import javafx.scene.control.ProgressBar
 import javafx.scene.layout.StackPane
-import ru.shadowsparky.client.Utils.*
-import ru.shadowsparky.client.Utils.ADB.ADBDevice
-import ru.shadowsparky.client.Utils.ADB.ADBStatus
+import ru.shadowsparky.client.utils.*
+import ru.shadowsparky.client.utils.adb.ADBStatus
 import java.io.EOFException
 import java.net.ConnectException
 

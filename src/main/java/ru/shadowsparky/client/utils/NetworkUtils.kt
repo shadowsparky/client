@@ -2,9 +2,9 @@
  * Created by shadowsparky in 2019
  */
 
-package ru.shadowsparky.client.Utils
+package ru.shadowsparky.client.utils
 
-import ru.shadowsparky.client.Utils.Extras.Companion.NOT_FOUND_IPV4
+import ru.shadowsparky.client.utils.Extras.Companion.NOT_FOUND_IPV4
 import java.lang.RuntimeException
 import java.net.Inet4Address
 import java.net.NetworkInterface
