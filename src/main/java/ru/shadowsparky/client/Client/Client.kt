@@ -4,21 +4,11 @@
 
 package ru.shadowsparky.client.Client
 
-import javafx.fxml.FXMLLoader
-import javafx.scene.Parent
-import javafx.scene.Scene
-import javafx.stage.Screen
-import javafx.stage.Stage
-import javafx.stage.StageStyle
-import javafx.stage.WindowEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import ru.shadowsparky.client.Controllers.ConnectionType
-import ru.shadowsparky.client.Controllers.VideoController
-import ru.shadowsparky.client.Utils.Extras.Companion.PORT
 import ru.shadowsparky.client.Utils.ConnectionHandler
-import ru.shadowsparky.client.Utils.Extras
+import ru.shadowsparky.client.Utils.Extras.Companion.PORT
 import ru.shadowsparky.client.Utils.ImageCallback
 import ru.shadowsparky.client.Utils.Injection
 import ru.shadowsparky.screencast.PreparingData
@@ -30,7 +20,7 @@ import java.net.SocketException
 class Client(
         private val callback: ImageCallback,
         private val handler: ConnectionHandler,
-        private val addr: String,
+        val addr: String,
         private val port: Int = PORT
 ) {
     private var socket: Socket? = null
@@ -39,6 +29,7 @@ class Client(
     private var inStream: ObjectInputStream? = null
     private var decoder: Decoder? = null
     private var inDataStream: DataInputStream? = null
+    private var outStream: ObjectOutputStream? = null
     private fun getAvailableBuffer() = test.take()!!
     private lateinit var pData: PreparingData
     var handling: Boolean = false
@@ -48,6 +39,7 @@ class Client(
             } else {
                 socket?.close()
                 inStream?.close()
+                decoder?.dispose()
                 
             }
             field = value
@@ -99,15 +91,17 @@ class Client(
             return@launch
         }
         log.printInfo("Data Handling enabled")
-        decoder()
+//        decoder()
         handler.onSuccess()
         try {
+            decoder = Decoder(callback)
             while (handling) {
                 val len = inDataStream!!.readInt()
                 if (len > 0) {
                     val buf = ByteArray(len)
                     inDataStream!!.readFully(buf, 0, buf.size)
-                    test.add(TransferByteArray(buf, buf.size))
+                    decoder?.decode(buf)
+//                    test.add(TransferByteArray(buf, buf.size))
                 }
             }
         } catch (e: SocketException) {
@@ -127,10 +121,10 @@ class Client(
     }
 
     private fun decoder() = GlobalScope.launch(Dispatchers.IO) {
-        decoder = Decoder(callback, pData)
-        while (handling) {
-            val buffer = getAvailableBuffer()
-            decoder?.decode(buffer.data)
-        }
+//        decoder = Decoder(callback, pData)
+//        while (handling) {
+//            val buffer = getAvailableBuffer()
+//            decoder?.decode(buffer.data)
+//        }
     }
 }

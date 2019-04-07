@@ -11,6 +11,7 @@ import org.jcodec.api.NotImplementedException
 import ru.shadowsparky.client.Utils.Controllerable
 import ru.shadowsparky.client.Utils.Injection
 import ru.shadowsparky.client.Utils.Injector
+import ru.shadowsparky.client.Utils.LayoutConsts
 
 enum class ConnectionType {
     adb, wifi
@@ -24,7 +25,7 @@ class MainController : Controllerable {
 
     @FXML fun initialize() {
         injector = Injection.provideInjector(root)
-        injector?.injectScreen("wifi_layout.fxml", WifiController())
+        injector?.injectScreen(LayoutConsts.WIFI_LAYOUT, WifiController())
         initTab()
     }
 
@@ -33,14 +34,14 @@ class MainController : Controllerable {
             when(nv.text) {
                 "WIFI" -> {
                     log.printInfo("Wifi Clicked")
-                    injector?.injectScreen("wifi_layout.fxml", WifiController())
+                    injector?.injectScreen(LayoutConsts.WIFI_LAYOUT, WifiController())
                 }
                 "ADB" -> {
                     log.printInfo("ADB Clicked")
-                    injector?.injectScreen("adb_layout.fxml", AdbController())
+                    injector?.injectScreen(LayoutConsts.ADB_LAYOUT_FXML, AdbController())
                 }
                 "Settings" -> {
-                    throw NotImplementedException("Данный раздел находится в разработке")
+//                    throw NotImplementedException("Данный раздел находится в разработке")
                 }
             }
         }

@@ -22,7 +22,7 @@
             <ColumnConstraints minWidth="10.0" percentWidth="100.0" prefWidth="100.0" />
         </columnConstraints>
         <children>
-            <TextField fx:id="addr" alignment="CENTER" maxHeight="$DEFALUT_HEIGHT" maxWidth="$DEFALUT_WIDTH" minHeight="$DEFALUT_HEIGHT" minWidth="$DEFALUT_WIDTH" prefHeight="$DEFALUT_HEIGHT" prefWidth="$DEFALUT_WIDTH" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <TextField fx:id="addr" text="192.168.31.221" alignment="CENTER" maxHeight="$DEFALUT_HEIGHT" maxWidth="$DEFALUT_WIDTH" minHeight="$DEFALUT_HEIGHT" minWidth="$DEFALUT_WIDTH" prefHeight="$DEFALUT_HEIGHT" prefWidth="$DEFALUT_WIDTH" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                 <GridPane.margin>
                     <Insets bottom="$DEFALUT_HEIGHT" />
                 </GridPane.margin>

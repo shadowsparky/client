@@ -17,8 +17,8 @@ import java.io.DataOutputStream
 import java.nio.ByteBuffer
 
 class Decoder(
-        private val callback: ImageCallback,
-        private val pData: PreparingData
+        private val callback: ImageCallback//,
+//        private var pData: PreparingData
 ) {
     private val log = Injection.provideLogger()
     private var codec = avcodec_find_decoder(AV_CODEC_ID_H264)
@@ -32,13 +32,12 @@ class Decoder(
     private var bytes: Int? = null
     private var buffer: BytePointer? = null
     private var convert_ctx: swscale.SwsContext? = null
+    private var saved_width: Int = 0
+    private var saved_height: Int = 0
 
     init {
         c = avcodec_alloc_context3(codec)
         avcodec_open2(c, codec, avutil.AVDictionary())
-        bytes = av_image_get_buffer_size(AV_PIX_FMT_RGB24, pData.width, pData.height, 1)
-        buffer = BytePointer(avutil.av_malloc(bytes!!.toLong()))
-        av_image_fill_arrays(RGBPicture.data(), RGBPicture.linesize(), buffer, AV_PIX_FMT_RGB24, pData.width, pData.height, 1)
     }
 
     fun dispose() {
@@ -64,6 +63,17 @@ class Decoder(
         mOut!!.write(data)
     }
 
+    fun intelliParams() {
+        if ((saved_width != c.width()) and (saved_height != c.height())) {
+            bytes = av_image_get_buffer_size(AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
+            buffer = BytePointer(avutil.av_malloc(bytes!!.toLong()))
+            av_image_fill_arrays(RGBPicture.data(), RGBPicture.linesize(), buffer, AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
+            saved_width = c.width()
+            saved_height = c.height()
+            log.printInfo("Orientation changed!")
+        }
+    }
+
 
     @Synchronized fun decode(data: ByteArray) {
         packet.data(BytePointer(ByteBuffer.wrap(data)))
@@ -76,6 +86,7 @@ class Decoder(
         if (len != 0) {
             return
         }
+        intelliParams()
         convert_ctx = swscale.sws_getContext(
                 c.width(),
                 c.height(),

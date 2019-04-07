@@ -15,7 +15,7 @@ class Launcher() {
     private var stage: Stage? = null
 
     fun launch(type: ConnectionType, handler: ConnectionHandler, addr: String? = null) {
-        val fxmlLoader = FXMLLoader(javaClass.classLoader.getResource("video.fxml"))
+        val fxmlLoader = FXMLLoader(javaClass.classLoader.getResource(LayoutConsts.VIDEO_FXML))
         val root = fxmlLoader.load<Parent>()
         val controller = fxmlLoader.getController<VideoController>()
         if (type == ConnectionType.adb) {
@@ -26,7 +26,7 @@ class Launcher() {
         stage = Stage()
         val screen = Screen.getPrimary()
         stage?.title = "Screencast"
-        stage?.scene = Scene(root, screen.visualBounds.width, screen.visualBounds.height)
+        stage?.scene = Scene(root)
         stage?.initStyle(StageStyle.UNDECORATED)
         stage?.isResizable = false
         stage?.isMaximized = true
