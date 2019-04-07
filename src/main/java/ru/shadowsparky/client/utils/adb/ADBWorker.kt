@@ -1,3 +1,7 @@
+/*
+ * Created by shadowsparky in 2019
+ */
+
 @file:Suppress("UNREACHABLE_CODE")
 
 package ru.shadowsparky.client.utils.adb

@@ -1,3 +1,7 @@
+/*
+ * Created by shadowsparky in 2019
+ */
+
 package ru.shadowsparky.client.utils
 
 import com.jfoenix.controls.JFXDialog
@@ -7,9 +11,10 @@ import javafx.scene.control.Label
 import javafx.scene.layout.StackPane
 
 class Dialog(val root: StackPane) {
-    fun showDialog(title: String, text: String) {
+    fun showDialog(title: String, text: String, showTitle: Boolean = false) {
         val content = JFXDialogLayout()
-//        content.setHeading(Label(title))
+        if (showTitle)
+            content.setHeading(Label(title))
         content.setBody(Label(text))
         val diag = JFXDialog(root, content, JFXDialog.DialogTransition.CENTER)
         val button = Button("Хорошо")
