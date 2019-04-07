@@ -7,19 +7,18 @@ package ru.shadowsparky.client.Client
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import ru.shadowsparky.client.Utils.ConnectionHandler
+import ru.shadowsparky.client.Utils.Resultable
 import ru.shadowsparky.client.Utils.Extras.Companion.PORT
 import ru.shadowsparky.client.Utils.ImageCallback
 import ru.shadowsparky.client.Utils.Injection
 import ru.shadowsparky.screencast.PreparingData
-import ru.shadowsparky.screencast.TransferByteArray
 import java.io.*
 import java.net.Socket
 import java.net.SocketException
 
 class Client(
         private val callback: ImageCallback,
-        private val handler: ConnectionHandler,
+        private val handler: Resultable,
         val addr: String,
         private val port: Int = PORT
 ) {
@@ -29,8 +28,6 @@ class Client(
     private var inStream: ObjectInputStream? = null
     private var decoder: Decoder? = null
     private var inDataStream: DataInputStream? = null
-    private var outStream: ObjectOutputStream? = null
-    private fun getAvailableBuffer() = test.take()!!
     private lateinit var pData: PreparingData
     var handling: Boolean = false
         set(value) {
@@ -64,15 +61,9 @@ class Client(
     }
 
     private fun streamUp() {
-        log.printInfo("Data Input Stream is UP")
-        try {
-            enableDataHandling()
-        } catch (e: RuntimeException) {
-            log.printInfo("${e.message}")
-        }
+        enableDataHandling()
     }
 
-    @Throws(RuntimeException::class)
     private fun enableDataHandling() = GlobalScope.launch(Dispatchers.IO) {
         handling = true
         val obj = inStream!!.readObject()
@@ -101,7 +92,6 @@ class Client(
                     val buf = ByteArray(len)
                     inDataStream!!.readFully(buf, 0, buf.size)
                     decoder?.decode(buf)
-//                    test.add(TransferByteArray(buf, buf.size))
                 }
             }
         } catch (e: SocketException) {
@@ -118,13 +108,5 @@ class Client(
         } finally {
             handling = false
         }
-    }
-
-    private fun decoder() = GlobalScope.launch(Dispatchers.IO) {
-//        decoder = Decoder(callback, pData)
-//        while (handling) {
-//            val buffer = getAvailableBuffer()
-//            decoder?.decode(buffer.data)
-//        }
     }
 }

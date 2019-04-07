@@ -8,10 +8,12 @@ import javafx.scene.control.ListView
 import javafx.scene.control.ProgressBar
 import javafx.scene.layout.StackPane
 import ru.shadowsparky.client.Utils.*
+import ru.shadowsparky.client.Utils.ADB.ADBDevice
+import ru.shadowsparky.client.Utils.ADB.ADBStatus
 import java.io.EOFException
 import java.net.ConnectException
 
-class AdbController : Controllerable, Loadingable, ConnectionHandler {
+class AdbController : Controllerable, Loadingable, Resultable {
     @FXML private lateinit var addr: ListView<Label>
     @FXML private lateinit var connect: Button
     @FXML private lateinit var loading: ProgressBar
@@ -19,6 +21,7 @@ class AdbController : Controllerable, Loadingable, ConnectionHandler {
     private val log = Injection.provideLogger()
     private val launcher = Injection.provideLauncher()
     private lateinit var dialog: Dialog
+    private val adb = Injection.provideAdb()
     private var selectedDevice: String? = null
 
     @FXML fun initialize() {
@@ -28,12 +31,14 @@ class AdbController : Controllerable, Loadingable, ConnectionHandler {
         connect.setOnAction {
             selectedDevice = addr.selectionModel?.selectedItem?.text
             if (selectedDevice != null) {
-                val device = ADBDevice.parseDevice(selectedDevice!!)
+                val device = Parser.deviceToStr(selectedDevice!!)
                 if (device != null) {
-                    ADBTest.executeCommand(listOf("adb", "-s", device.id, "forward", "tcp:${Extras.FORWARD_PORT}", "tcp:${Extras.PORT}"))
-                    if (ADBTest.getOutput().isEmpty()) {
+                    val result = adb.forwardPort(device.id)
+                    if (result.status == ADBStatus.OK) {
                         launcher.launch(ConnectionType.adb, this)
                         connect.isDisable = true
+                    } else {
+                        dialog.showDialog("Ошибка", result.info)
                     }
                 }
             } else {
@@ -44,17 +49,20 @@ class AdbController : Controllerable, Loadingable, ConnectionHandler {
 
     private fun initDevices() {
         addr.items.clear()
-        ADBTest.executeCommand(listOf("adb", "devices", "-l"))
-        val out = ADBTest.getOutput()
-        val devices = ADBTest.parseDevices(out)
-        devices.forEach {
-            addr.items.add(Label(it.toString()))
-        }
-        if (devices.size == 0) {
-            addr.items.add(Label("Нет устройств"))
-            addr.isDisable = true
+        val result = adb.getDevices()
+        if (result.status == ADBStatus.OK) {
+            val devices = Parser.strToDevices(result.info)
+            devices.forEach {
+                addr.items.add(Label(it.toString()))
+            }
+            if (devices.size == 0) {
+                addr.items.add(Label("Нет устройств"))
+                addr.isDisable = true
+            } else {
+                addr.isDisable = false
+            }
         } else {
-            addr.isDisable = false
+            dialog.showDialog("Ошибка", "Во время чтения подключенных устройств произошла ошибка")
         }
     }
 
@@ -64,7 +72,7 @@ class AdbController : Controllerable, Loadingable, ConnectionHandler {
 
     override fun onSuccess() = Platform.runLater {
         setLoading(false)
-        dialog.showDialog("Очень важная информация", "Соединение успешно установлено")
+        //dialog.showDialog("Очень важная информация", "Соединение успешно установлено")
         launcher.show()
     }
 

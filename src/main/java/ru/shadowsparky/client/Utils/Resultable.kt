@@ -6,7 +6,7 @@ package ru.shadowsparky.client.Utils
 
 import java.lang.Exception
 
-interface ConnectionHandler {
+interface Resultable {
     fun onSuccess()
     fun onError(e: Exception)
 }

@@ -10,7 +10,7 @@ import ru.shadowsparky.client.Utils.*
 import java.io.EOFException
 import java.net.ConnectException
 
-class WifiController : Controllerable, Loadingable, ConnectionHandler {
+class WifiController : Controllerable, Loadingable, Resultable {
     @FXML private lateinit var addr: TextField
     @FXML private lateinit var connect: Button
     @FXML private lateinit var loading: ProgressBar

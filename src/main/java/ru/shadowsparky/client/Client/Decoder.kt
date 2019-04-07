@@ -75,7 +75,7 @@ class Decoder(
     }
 
 
-    @Synchronized fun decode(data: ByteArray) {
+    fun decode(data: ByteArray) {
         packet.data(BytePointer(ByteBuffer.wrap(data)))
         packet.size(data.size)
         var len = avcodec_send_packet(c, packet)
