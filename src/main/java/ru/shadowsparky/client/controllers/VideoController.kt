@@ -7,20 +7,21 @@
 package ru.shadowsparky.client.controllers
 
 import javafx.application.Platform
-import javafx.event.EventType
 import javafx.fxml.FXML
 import javafx.scene.image.Image
-import javafx.scene.input.*
+import javafx.scene.input.KeyCode
+import javafx.scene.input.MouseButton
+import javafx.scene.input.MouseEvent
 import javafx.scene.layout.*
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
 import ru.shadowsparky.client.client.Client
-import ru.shadowsparky.client.utils.adb.ADBStatus
 import ru.shadowsparky.client.utils.Controllerable
 import ru.shadowsparky.client.utils.ImageCallback
 import ru.shadowsparky.client.utils.Injection
+import ru.shadowsparky.client.utils.adb.ADBStatus
 
-class VideoController() : ImageCallback, Controllerable {
+class VideoController : ImageCallback, Controllerable {
     private var client: Client? = null
     @FXML private lateinit var videoPane: GridPane
     private val log = Injection.provideLogger()
@@ -80,9 +81,6 @@ class VideoController() : ImageCallback, Controllerable {
                 MouseButton.MIDDLE -> adb.invokeHomeButton()
             }
         }
-//        stage!!.scene!!.setOnScroll {
-//            log.printInfo(it.eventType.name)
-//        }
     }
 
     fun attachStage(stage: Stage?) {
