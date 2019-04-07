@@ -7,6 +7,7 @@ package ru.shadowsparky.client.controllers
 import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.image.Image
+import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.*
 import javafx.stage.Stage
@@ -49,13 +50,19 @@ class VideoController() : ImageCallback, Controllerable {
     //FIXME Неправильно работает в вертикальном режиме
     fun enableClicking() {
         videoPane.addEventHandler(MouseEvent.MOUSE_CLICKED) {
-            val x = infelicity_width * it.x
-            val y = infelicity_height * it.y
-            val res = adb.tapToScreen(x, y)
-            if (res.status == ADBStatus.ERROR) {
-                log.printError("TAP ERROR: ${res.info}")
+            if (it.button == MouseButton.PRIMARY) {
+                val x = infelicity_width * it.x
+                val y = infelicity_height * it.y
+                val res = adb.tapToScreen(x, y)
+                if (res.status == ADBStatus.ERROR) {
+                    log.printError("TAP ERROR: ${res.info}")
+                }
+                log.printInfo("coordX: $x coordY: $y || VideoPane: ${videoPane.width} ${videoPane.height}")
+            } else if (it.button == MouseButton.SECONDARY){
+                adb.invokeBackButton()
+            } else if (it.button == MouseButton.MIDDLE) {
+                adb.invokeHomeButton()
             }
-            log.printInfo("coordX: $x coordY: $y || VideoPane: ${videoPane.width} ${videoPane.height}")
         }
     }
 

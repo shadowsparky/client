@@ -22,6 +22,7 @@ class Injection {
         fun provideClient(callback: ImageCallback, handler: Resultable, addr: String) = Client(callback, handler, addr)
         fun provideInjector(root: BorderPane) = Injector(root)
         fun provideLauncher() = Launcher()
+        fun provideExecutor() = ConsoleExecutor()
         @Throws(RuntimeException::class)
         fun provideIpV4() = mNetworkUtils.getIpv4()
     }

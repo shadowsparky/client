@@ -35,12 +35,12 @@ class MainController : Controllerable {
                     log.printInfo("Wifi Clicked")
                     injector?.injectScreen(LayoutConsts.WIFI_LAYOUT, WifiController())
                 }
-                "adb" -> {
-                    log.printInfo("adb Clicked")
+                "ADB" -> {
+                    log.printInfo("Adb Clicked")
                     injector?.injectScreen(LayoutConsts.ADB_LAYOUT_FXML, AdbController())
                 }
                 "Settings" -> {
-//                    throw NotImplementedException("Данный раздел находится в разработке")
+                    throw NotImplementedError()
                 }
             }
         }
