@@ -51,6 +51,26 @@ class ADBWorker {
         return baseEmptyChecking(result)
     }
 
+    fun invokeScrollDown() : ADBResult {                                                    // x1   //y1  // x2   //y2  // time
+        val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "100", "600", "100", "300", "100"))
+        return baseEmptyChecking(result)
+    }
+
+    fun invokeScrollUp() : ADBResult {
+        val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "100", "300", "100", "600", "100"))
+        return baseEmptyChecking(result)
+    }
+
+    fun invokeScrollLeft() : ADBResult {
+        val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "300", "100", "1000", "100", "100"))
+        return baseEmptyChecking(result)
+    }
+
+    fun invokeScrollRight() : ADBResult {
+        val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "1000", "100", "300", "100", "100"))
+        return baseEmptyChecking(result)
+    }
+
     fun invokeRecentApplicationsButton() : ADBResult {
         return baseInvokeKeyEvent(APP_SWITCH_BUTTON)
     }

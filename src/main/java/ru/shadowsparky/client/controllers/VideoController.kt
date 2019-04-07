@@ -2,13 +2,15 @@
  * Created by shadowsparky in 2019
  */
 
+@file:Suppress("NON_EXHAUSTIVE_WHEN")
+
 package ru.shadowsparky.client.controllers
 
 import javafx.application.Platform
+import javafx.event.EventType
 import javafx.fxml.FXML
 import javafx.scene.image.Image
-import javafx.scene.input.MouseButton
-import javafx.scene.input.MouseEvent
+import javafx.scene.input.*
 import javafx.scene.layout.*
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
@@ -42,32 +44,52 @@ class VideoController() : ImageCallback, Controllerable {
 
     fun attachClient(client: Client) {
         this.client = client
-        if (this.client!!.addr == "127.0.0.1") {
-            enableClicking()
-        }
     }
 
-    //FIXME Неправильно работает в вертикальном режиме
-    fun enableClicking() {
-        videoPane.addEventHandler(MouseEvent.MOUSE_CLICKED) {
-            if (it.button == MouseButton.PRIMARY) {
-                val x = infelicity_width * it.x
-                val y = infelicity_height * it.y
-                val res = adb.tapToScreen(x, y)
-                if (res.status == ADBStatus.ERROR) {
-                    log.printError("TAP ERROR: ${res.info}")
-                }
-                log.printInfo("coordX: $x coordY: $y || VideoPane: ${videoPane.width} ${videoPane.height}")
-            } else if (it.button == MouseButton.SECONDARY){
-                adb.invokeBackButton()
-            } else if (it.button == MouseButton.MIDDLE) {
-                adb.invokeHomeButton()
+    fun enableADBActions() {
+        initClicking()
+        initKeyboard()
+    }
+
+    fun initKeyboard() {
+        stage!!.scene!!.setOnKeyPressed {
+            when(it.code) {
+                KeyCode.UP ->  adb.invokeScrollUp()
+                KeyCode.DOWN -> adb.invokeScrollDown()
+                KeyCode.LEFT-> adb.invokeScrollLeft()
+                KeyCode.RIGHT -> adb.invokeScrollRight()
+                KeyCode.SHIFT -> adb.invokeRecentApplicationsButton()
             }
         }
     }
 
+    //FIXME Неправильно работает в вертикальном режиме
+    fun initClicking() {
+        videoPane.addEventHandler(MouseEvent.MOUSE_CLICKED) {
+            when(it.button) {
+                MouseButton.PRIMARY -> {
+                    val x = infelicity_width * it.x
+                    val y = infelicity_height * it.y
+                    val res = adb.tapToScreen(x, y)
+                    if (res.status == ADBStatus.ERROR) {
+                        log.printError("TAP ERROR: ${res.info}")
+                    }
+                    log.printInfo("coordX: $x coordY: $y || VideoPane: ${videoPane.width} ${videoPane.height}")
+                }
+                MouseButton.SECONDARY -> adb.invokeBackButton()
+                MouseButton.MIDDLE -> adb.invokeHomeButton()
+            }
+        }
+//        stage!!.scene!!.setOnScroll {
+//            log.printInfo(it.eventType.name)
+//        }
+    }
+
     fun attachStage(stage: Stage?) {
         this.stage = stage
+        if (this.client!!.addr == "127.0.0.1") {
+            enableADBActions()
+        }
     }
 
     fun start() {
