@@ -11,12 +11,12 @@ import ru.shadowsparky.client.utils.Resultable
 import ru.shadowsparky.client.utils.Extras.Companion.PORT
 import ru.shadowsparky.client.utils.ImageCallback
 import ru.shadowsparky.client.utils.Injection
-import ru.shadowsparky.screencast.PreparingData
-import ru.shadowsparky.screencast.proto.HandledPictureOuterClass
+import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
 import java.io.*
 import java.net.Socket
 import java.net.SocketException
 
+@Suppress("BlockingMethodInNonBlockingContext")
 class Client(
         private val callback: ImageCallback,
         private val handler: Resultable,
@@ -24,19 +24,15 @@ class Client(
         private val port: Int = PORT
 ) {
     private var socket: Socket? = null
-    private val test = Injection.provideLinkedBlockingQueue()
     private val log = Injection.provideLogger()
-    private var inStream: ObjectInputStream? = null
     private var decoder: Decoder? = null
-    private var inDataStream: DataInputStream? = null
-    private lateinit var pData: PreparingData
+    private lateinit var pData: PreparingDataOuterClass.PreparingData
     var handling: Boolean = false
         set(value) {
             if (value) {
                 log.printInfo("Handling enabled")
             } else {
                 socket?.close()
-                inStream?.close()
                 decoder?.dispose()
                 
             }
@@ -50,8 +46,6 @@ class Client(
     private fun connectToServer() = GlobalScope.launch {
         try {
             socket = Socket(addr, port)
-            inStream = ObjectInputStream(BufferedInputStream(socket!!.getInputStream()))
-            inDataStream = DataInputStream(BufferedInputStream(socket!!.getInputStream()))
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
@@ -67,23 +61,17 @@ class Client(
 
     private fun enableDataHandling() = GlobalScope.launch(Dispatchers.IO) {
         handling = true
-        val obj = inStream!!.readObject()
-        if (obj is PreparingData) {
-            if (obj.key == "key") {
-                pData = obj
-                log.printInfo("True Password")
-             } else {
-                log.printInfo("Incorrect password")
-                handling = false
-                return@launch
-            }
+        val pData = PreparingDataOuterClass.PreparingData.parseDelimitedFrom(socket?.getInputStream())
+        if (pData.password == "") {
+            this@Client.pData = pData
+            log.printInfo("True Password")
         } else {
+            log.printInfo("Incorrect password")
             handling = false
-            log.printInfo("Handling disabled by: Preparing Data Not Found. Corrupted data")
+            handler.onError(IncorrectPasswordException())
             return@launch
         }
         log.printInfo("Data Handling enabled")
-//        decoder()
         handler.onSuccess()
         try {
             decoder = Decoder(callback)
@@ -94,7 +82,6 @@ class Client(
                         .HandledPicture
                         .parseDelimitedFrom(socket!!.getInputStream())
                 decoder?.decode(picture.encodedPicture.toByteArray())
-                log.printInfo("test: ${picture.encodedPicture.isEmpty}")
             }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")
