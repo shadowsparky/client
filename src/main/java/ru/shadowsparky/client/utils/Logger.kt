@@ -11,7 +11,5 @@ class Logger {
     private val loggy = Logger.getLogger("Logger")
 
     fun printInfo(message: String) = loggy.info(message)
-    fun printWarning(message: String) = loggy.warning(message)
     fun printError(message: String) = loggy.log(Level.SEVERE, message)
-    fun printFine(message: String) = loggy.log(Level.FINE, message)
 }

@@ -9,6 +9,7 @@ import java.lang.RuntimeException
 import java.net.Inet4Address
 import java.net.NetworkInterface
 
+@Deprecated("Бесполезный файл")
 class NetworkUtils {
     fun getIpv4() : String {
         val interfaces = NetworkInterface.getNetworkInterfaces()
