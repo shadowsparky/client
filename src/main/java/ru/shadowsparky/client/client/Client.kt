@@ -12,6 +12,7 @@ import ru.shadowsparky.client.utils.Extras.Companion.PORT
 import ru.shadowsparky.client.utils.ImageCallback
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.screencast.PreparingData
+import ru.shadowsparky.screencast.proto.HandledPictureOuterClass
 import java.io.*
 import java.net.Socket
 import java.net.SocketException
@@ -86,13 +87,14 @@ class Client(
         handler.onSuccess()
         try {
             decoder = Decoder(callback)
+            log.printInfo("Decoder initialized")
             while (handling) {
-                val len = inDataStream!!.readInt()
-                if (len > 0) {
-                    val buf = ByteArray(len)
-                    inDataStream!!.readFully(buf, 0, buf.size)
-                    decoder?.decode(buf)
-                }
+                log.printInfo("Handling new iteration")
+                val picture = HandledPictureOuterClass
+                        .HandledPicture
+                        .parseDelimitedFrom(socket!!.getInputStream())
+                decoder?.decode(picture.encodedPicture.toByteArray())
+                log.printInfo("test: ${picture.encodedPicture.isEmpty}")
             }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")

@@ -36,6 +36,7 @@ class VideoController : ImageCallback, Controllerable {
         videoPane.background = background
         infelicity_width = image.width / videoPane.width
         infelicity_height = image.height / videoPane.height
+//        log.printInfo("VideoPane: width ${image.width} height ${image.height}")
     }
 
     fun onDestroy(event: WindowEvent) {
@@ -47,12 +48,12 @@ class VideoController : ImageCallback, Controllerable {
         this.client = client
     }
 
-    fun enableADBActions() {
-        initClicking()
-        initKeyboard()
+    private fun enableADBActions() {
+        setupMouse()
+        setupKeyboard()
     }
 
-    fun initKeyboard() {
+    private fun setupKeyboard() {
         stage!!.scene!!.setOnKeyPressed {
             when(it.code) {
                 KeyCode.UP ->  adb.invokeScrollUp()
@@ -61,11 +62,13 @@ class VideoController : ImageCallback, Controllerable {
                 KeyCode.RIGHT -> adb.invokeScrollRight()
                 KeyCode.SHIFT -> adb.invokeRecentApplicationsButton()
             }
+//            if (res?.status != ADBStatus.OK)
+//                log.printError("Keyboard error: ${res?.info}")
         }
     }
 
     //FIXME Неправильно работает в вертикальном режиме
-    fun initClicking() {
+    private fun setupMouse() {
         videoPane.addEventHandler(MouseEvent.MOUSE_CLICKED) {
             when(it.button) {
                 MouseButton.PRIMARY -> {
@@ -75,7 +78,7 @@ class VideoController : ImageCallback, Controllerable {
                     if (res.status == ADBStatus.ERROR) {
                         log.printError("TAP ERROR: ${res.info}")
                     }
-                    log.printInfo("coordX: $x coordY: $y || VideoPane: ${videoPane.width} ${videoPane.height}")
+                    log.printInfo("CoordX: (${x}) ${it.x} CoordY: (${y}) ${it.y}")
                 }
                 MouseButton.SECONDARY -> adb.invokeBackButton()
                 MouseButton.MIDDLE -> adb.invokeHomeButton()

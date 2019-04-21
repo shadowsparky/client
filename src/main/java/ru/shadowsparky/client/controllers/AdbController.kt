@@ -84,7 +84,7 @@ class AdbController : Controllerable, Loadingable, Resultable {
         val error = when (e) {
             is ConnectException -> "При соединении произошла ошибка.\nСервер не найден"
             is RuntimeException -> "Соединение было разорвано.\nБыли получены битые данные"
-            is EOFException -> "Произошло отключение от сервера"
+            is EOFException -> "При подключении к серверу произошла ошибка"
             else -> "Соединение было разорвано.\nПроизошла неизвестная ошибка"
         }
         setLoading(false)
