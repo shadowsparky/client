@@ -11,12 +11,14 @@ import ru.shadowsparky.client.utils.Resultable
 import ru.shadowsparky.client.utils.Extras.Companion.PORT
 import ru.shadowsparky.client.utils.ImageCallback
 import ru.shadowsparky.client.utils.Injection
+import ru.shadowsparky.client.utils.exceptions.CorruptedDataExcetion
 import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
+import ru.shadowsparky.screencast.proto.HandledPictureOuterClass
+import ru.shadowsparky.screencast.proto.PreparingDataOuterClass
 import java.io.*
 import java.net.Socket
 import java.net.SocketException
 
-@Suppress("BlockingMethodInNonBlockingContext")
 class Client(
         private val callback: ImageCallback,
         private val handler: Resultable,
@@ -59,18 +61,30 @@ class Client(
         enableDataHandling()
     }
 
+    private fun handlePreparingData() : Boolean {
+        val pData = PreparingDataOuterClass.PreparingData.parseDelimitedFrom(socket?.getInputStream())
+        if (pData != null) {
+            if (pData.password == "") {
+                this@Client.pData = pData
+                log.printInfo("True Password")
+                return true
+            } else {
+                log.printInfo("Incorrect password")
+                handling = false
+                handler.onError(IncorrectPasswordException())
+            }
+        } else {
+            log.printInfo("Corrupted pData")
+            handling = false
+            handler.onError(CorruptedDataExcetion("Corrupted pData"))
+        }
+        return false
+    }
+
     private fun enableDataHandling() = GlobalScope.launch(Dispatchers.IO) {
         handling = true
-        val pData = PreparingDataOuterClass.PreparingData.parseDelimitedFrom(socket?.getInputStream())
-        if (pData.password == "") {
-            this@Client.pData = pData
-            log.printInfo("True Password")
-        } else {
-            log.printInfo("Incorrect password")
-            handling = false
-            handler.onError(IncorrectPasswordException())
+        if (!handlePreparingData())
             return@launch
-        }
         log.printInfo("Data Handling enabled")
         handler.onSuccess()
         try {

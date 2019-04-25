@@ -97,4 +97,8 @@ class VideoController : ImageCallback, Controllerable {
         client!!.start()
     }
 
+    fun stop() {
+        client?.handling = false
+    }
+
 }

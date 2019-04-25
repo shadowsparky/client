@@ -17,18 +17,19 @@ import ru.shadowsparky.client.controllers.VideoController
 
 class Launcher() {
     private var stage: Stage? = null
+    private lateinit var controller: VideoController
 
     fun launch(type: ConnectionType, handler: Resultable, addr: String? = null) {
         val fxmlLoader = FXMLLoader(javaClass.classLoader.getResource(LayoutConsts.VIDEO_FXML))
         val root = fxmlLoader.load<Parent>()
-        val controller = fxmlLoader.getController<VideoController>()
+        controller = fxmlLoader.getController<VideoController>()
         if (type == ConnectionType.adb) {
             controller.attachClient(Client(controller, handler, "127.0.0.1", Extras.FORWARD_PORT))
         } else if (type == ConnectionType.wifi)
             controller.attachClient(Client(controller, handler, addr!!))
         controller.start()
         stage = Stage()
-        val screen = Screen.getPrimary()
+        //Screen.getPrimary()
         stage?.title = "Screencast"
         stage?.scene = Scene(root)
         stage?.initStyle(StageStyle.UNDECORATED)
@@ -43,6 +44,7 @@ class Launcher() {
     }
 
     fun hide() {
+        controller.stop()
         stage?.hide()
     }
 }

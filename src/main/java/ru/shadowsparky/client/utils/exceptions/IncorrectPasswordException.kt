@@ -4,4 +4,4 @@
 
 package ru.shadowsparky.client.utils.exceptions
 
-class IncorrectPasswordException : RuntimeException("Был введен неправильный пароль")
+class IncorrectPasswordException : Exception("Был введен неправильный пароль")

@@ -38,13 +38,9 @@ class ADBWorker {
         return ADBResult(ADBStatus.ERROR)
     }
 
-    fun invokeHomeButton() : ADBResult {
-        return baseInvokeKeyEvent(HOME_BUTTON)
-    }
-
-    fun invokeBackButton() : ADBResult {
-        return baseInvokeKeyEvent(BACK_BUTTON)
-    }
+    fun invokeHomeButton() : ADBResult = baseInvokeKeyEvent(HOME_BUTTON)
+    fun invokeBackButton() : ADBResult = baseInvokeKeyEvent(BACK_BUTTON)
+    fun invokeRecentApplicationsButton() : ADBResult = baseInvokeKeyEvent(APP_SWITCH_BUTTON)
 
     private fun baseInvokeKeyEvent(keycode: String) : ADBResult {
         val result = executor.executeCommand(listOf("adb", "shell", "input", "keyevent", keycode))
@@ -69,10 +65,6 @@ class ADBWorker {
     fun invokeScrollRight() : ADBResult {
         val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "1000", "100", "300", "100", "100"))
         return baseEmptyChecking(result)
-    }
-
-    fun invokeRecentApplicationsButton() : ADBResult {
-        return baseInvokeKeyEvent(APP_SWITCH_BUTTON)
     }
 
     // TODO: Проверка на "битые" девайсы и существование adb
