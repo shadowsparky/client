@@ -90,7 +90,7 @@ class Client(
         try {
             decoder = Decoder(callback)
             log.printInfo("Decoder initialized")
-            while (handling) {
+            while (socket!!.isConnected) {
                 log.printInfo("Handling new iteration")
                 val picture = HandledPictureOuterClass
                         .HandledPicture

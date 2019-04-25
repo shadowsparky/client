@@ -62,8 +62,6 @@ class VideoController : ImageCallback, Controllerable {
                 KeyCode.RIGHT -> adb.invokeScrollRight()
                 KeyCode.SHIFT -> adb.invokeRecentApplicationsButton()
             }
-//            if (res?.status != ADBStatus.OK)
-//                log.printError("Keyboard error: ${res?.info}")
         }
     }
 
