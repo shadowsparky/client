@@ -28,15 +28,13 @@ class VideoController : ImageCallback, Controllerable {
     private var stage: Stage? = null
     private var infelicity_width: Double = 0.0
     private var infelicity_height: Double = 0.0
-    private val adb = Injection.provideAdb()
+    private val adb =  Injection.provideAdb()
 
     override fun handleImage(image: Image) = Platform.runLater {
-        val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize(100.0, 100.0, true, true, true, false))
+        val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize(100.0, 100.0, true, true, false, false))
         val background = Background(bImage)
         videoPane.background = background
-        infelicity_width = image.width / videoPane.width
-        infelicity_height = image.height / videoPane.height
-//        log.printInfo("VideoPane: width ${image.width} height ${image.height}")
+        log.printInfo("VideoPane: width ${image.width} height ${image.height}")
     }
 
     fun onDestroy(event: WindowEvent) {

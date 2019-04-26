@@ -91,10 +91,10 @@ class Client(
             decoder = Decoder(callback)
             log.printInfo("Decoder initialized")
             while (socket!!.isConnected) {
-                log.printInfo("Handling new iteration")
                 val picture = HandledPictureOuterClass
                         .HandledPicture
                         .parseDelimitedFrom(socket!!.getInputStream())
+//                if (picture != null)
                 decoder?.decode(picture.encodedPicture.toByteArray())
             }
         } catch (e: SocketException) {
