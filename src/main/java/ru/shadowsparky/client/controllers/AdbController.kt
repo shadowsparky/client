@@ -4,6 +4,7 @@
 
 package ru.shadowsparky.client.controllers
 
+import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.ListView
@@ -48,7 +49,7 @@ class AdbController : BaseConnectionFragment() {
         initDevices()
     }
 
-    private fun initDevices() {
+    private fun initDevices() = Platform.runLater {
         addr.items.clear()
         val result = adb.getDevices()
         if (result.status == ADBStatus.OK) {

@@ -16,7 +16,7 @@ class Dialog(val root: StackPane) {
         if (showTitle)
             content.setHeading(Label(title))
         content.setBody(Label(text))
-        val diag = JFXDialog(root, content, JFXDialog.DialogTransition.CENTER)
+        val diag = JFXDialog(root, content, JFXDialog.DialogTransition.CENTER, true)
         val button = Button("Хорошо")
         button.setOnAction { diag.close() }
         content.setActions(button)

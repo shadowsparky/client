@@ -39,9 +39,6 @@ class MainController : Controllerable {
                     log.printInfo("Adb Clicked")
                     injector?.injectScreen(LayoutConsts.ADB_LAYOUT_FXML, AdbController())
                 }
-                "Settings" -> {
-                    throw NotImplementedError()
-                }
             }
         }
     }

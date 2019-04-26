@@ -8,7 +8,6 @@
       <TabPane fx:id="tabPane">
          <Tab closable="false" text="WIFI" />
          <Tab closable="false" text="ADB" />
-         <Tab closable="false" text="Settings" />
       </TabPane>
    </top>
 </BorderPane>

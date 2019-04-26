@@ -30,7 +30,7 @@
                     <Insets top="70.0" />
                 </GridPane.margin>
             </Button>
-            <ProgressBar fx:id="loading" visible="false" GridPane.valignment="CENTER" GridPane.rowIndex="1" maxWidth="$DEFALUT_WIDTH" minWidth="$DEFALUT_WIDTH" prefWidth="$DEFALUT_WIDTH" maxHeight="$DEFALUT_HEIGHT" minHeight="$DEFALUT_HEIGHT" prefHeight="$DEFALUT_HEIGHT" GridPane.halignment="CENTER">
+            <ProgressBar fx:id="loading" GridPane.valignment="CENTER" GridPane.rowIndex="1" maxWidth="$DEFALUT_WIDTH" minWidth="$DEFALUT_WIDTH" prefWidth="$DEFALUT_WIDTH" maxHeight="$DEFALUT_HEIGHT" minHeight="$DEFALUT_HEIGHT" prefHeight="$DEFALUT_HEIGHT" GridPane.halignment="CENTER">
                 <GridPane.margin>
                     <Insets top="200.0" />
                 </GridPane.margin>

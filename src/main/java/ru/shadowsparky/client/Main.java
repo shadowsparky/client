@@ -10,12 +10,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro8.JMetro;
+import ru.shadowsparky.client.utils.LayoutConsts;
+
+import java.util.Objects;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass()
+                .getClassLoader()
+                .getResource(LayoutConsts.INSTANCE.getMAIN_FXML()))
+        );
         primaryStage.setTitle("Главное меню");
         primaryStage.setMinHeight(350);
         primaryStage.setMinWidth(440);

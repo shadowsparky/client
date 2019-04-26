@@ -75,6 +75,7 @@ class VideoController : ImageCallback, Controllerable {
                     val res = adb.tapToScreen(x, y)
                     if (res.status == ADBStatus.ERROR) {
                         log.printError("TAP ERROR: ${res.info}")
+                        return@addEventHandler
                     }
                     log.printInfo("CoordX: (${x}) ${it.x} CoordY: (${y}) ${it.y}")
                 }

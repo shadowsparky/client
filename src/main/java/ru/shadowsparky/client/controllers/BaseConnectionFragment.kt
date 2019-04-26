@@ -10,6 +10,8 @@ import javafx.scene.control.Button
 import javafx.scene.control.ProgressBar
 import javafx.scene.layout.StackPane
 import ru.shadowsparky.client.utils.*
+import ru.shadowsparky.client.utils.exceptions.CorruptedDataExcetion
+import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
 import java.io.EOFException
 import java.net.ConnectException
 
@@ -24,20 +26,22 @@ abstract class BaseConnectionFragment : Controllerable, Loadingable, Resultable 
     fun init() {
         setLoading(false)
         dialog = Dialog(stack)
+        loading.progress = ProgressBar.INDETERMINATE_PROGRESS
     }
 
     override fun onSuccess() = Platform.runLater {
         setLoading(false)
-        //dialog.showDialog("Очень важная информация", "Соединение успешно установлено")
         launcher.show()
     }
 
     override fun onError(e: Exception) = Platform.runLater {
         val error = when (e) {
             is ConnectException -> "При соединении произошла ошибка.\nСервер не найден"
-            is RuntimeException -> "Соединение было разорвано.\nБыли получены битые данные"
+            is CorruptedDataExcetion -> "Соединение было разорвано.\nБыли получены битые данные"
             is EOFException -> "Произошло отключение от сервера"
-            else -> "Соединение было разорвано.\nПроизошла неизвестная ошибка"
+            is IncorrectPasswordException -> "При соединении с сервером произошла ошибка. Вы ввели неправильный пароль"
+            else -> "Соединение было разорвано"
+
         }
         setLoading(false)
         dialog.showDialog("Ошибка", error)
