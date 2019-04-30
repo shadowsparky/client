@@ -11,6 +11,7 @@ import ru.shadowsparky.client.utils.Extras.Companion.APP_SWITCH_BUTTON
 import ru.shadowsparky.client.utils.Extras.Companion.BACK_BUTTON
 import ru.shadowsparky.client.utils.Extras.Companion.HOME_BUTTON
 import ru.shadowsparky.client.utils.Injection
+import ru.shadowsparky.client.utils.exceptions.ConsoleExecutorException
 
 class ADBWorker {
     private val log = Injection.provideLogger()
@@ -69,7 +70,12 @@ class ADBWorker {
 
     // TODO: Проверка на "битые" девайсы и существование adb
     fun getDevices() : ADBResult {
-        val result = executor.executeCommand(listOf("adb", "devices", "-l"))
-        return baseNotEmptyChecking(result)
+        return try {
+            val result = executor.executeCommand(listOf("adb", "devices", "-l"))
+            baseNotEmptyChecking(result)
+        } catch(e: ConsoleExecutorException) {
+            ADBResult(ADBStatus.ERROR, "${e.message}")
+        }
+
     }
 }

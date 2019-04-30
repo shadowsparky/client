@@ -20,6 +20,10 @@ import ru.shadowsparky.client.utils.Controllerable
 import ru.shadowsparky.client.utils.ImageCallback
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.adb.ADBStatus
+import java.awt.Toolkit.getDefaultToolkit
+import java.awt.Dimension
+import java.awt.Toolkit
+
 
 class VideoController : ImageCallback, Controllerable {
     private var client: Client? = null
@@ -31,10 +35,20 @@ class VideoController : ImageCallback, Controllerable {
     private val adb =  Injection.provideAdb()
 
     override fun handleImage(image: Image) = Platform.runLater {
-        val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize(100.0, 100.0, true, true, false, false))
+        val bImage = BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize(getScreenSize(image).width.toDouble(), getScreenSize(image).height.toDouble(), false, false, false, false))
         val background = Background(bImage)
         videoPane.background = background
-        log.printInfo("VideoPane: width ${image.width} height ${image.height}")
+//        log.printInfo("VideoPane: width ${image.width} height ${image.height}")
+    }
+
+    private fun getScreenSize(image: Image) : Dimension {
+        val screenSize = Toolkit.getDefaultToolkit().screenSize
+        if (image.width < image.height) {
+            val height = screenSize.height
+//            screenSize.height = screenSize.width
+            screenSize.width = (height * 0.7).toInt()
+        }
+        return screenSize
     }
 
     fun onDestroy(event: WindowEvent) {

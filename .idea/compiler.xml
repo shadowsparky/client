@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="client" />
+        <module name="screencast_client" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="client" target="8" />
+      <module name="screencast_client" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
