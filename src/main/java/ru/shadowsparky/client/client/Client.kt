@@ -74,7 +74,6 @@ class Client(
                 handler.onError(IncorrectPasswordException())
             }
         } else {
-            log.printInfo("Corrupted pData")
             handling = false
             handler.onError(CorruptedDataExcetion("Corrupted pData"))
         }
@@ -98,6 +97,7 @@ class Client(
             }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")
+            handler.onError(e)
         } catch (e: RuntimeException) {
             log.printInfo("Handling disabled by: RuntimeException. ${e.message}")
             handler.onError(e)

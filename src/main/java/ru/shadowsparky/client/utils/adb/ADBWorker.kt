@@ -18,13 +18,21 @@ class ADBWorker {
     private val executor = Injection.provideExecutor()
 
     fun forwardPort(device_id: String) : ADBResult {
-        val result = executor.executeCommand(listOf("adb", "-s", device_id, "forward", "tcp:${Extras.FORWARD_PORT}", "tcp:${Extras.PORT}"))
-        return baseEmptyChecking(result)
+        return try {
+            val result = executor.executeCommand(listOf("adb", "-s", device_id, "forward", "tcp:${Extras.FORWARD_PORT}", "tcp:${Extras.PORT}"))
+            baseEmptyChecking(result)
+        } catch (e: ConsoleExecutorException) {
+            ADBResult(ADBStatus.ERROR, "${e.message}")
+        }
     }
 
     fun tapToScreen(x: Double, y: Double) : ADBResult {
-        val result = executor.executeCommand(listOf("adb", "shell", "input", "tap", "$x", "$y"))
-        return baseEmptyChecking(result)
+        return try {
+            val result = executor.executeCommand(listOf("adb", "shell", "input", "tap", "$x", "$y"))
+            baseEmptyChecking(result)
+        } catch (e: ConsoleExecutorException) {
+            ADBResult(ADBStatus.ERROR, "${e.message}")
+        }
     }
 
     private fun baseEmptyChecking(result: String) : ADBResult {
@@ -44,28 +52,48 @@ class ADBWorker {
     fun invokeRecentApplicationsButton() : ADBResult = baseInvokeKeyEvent(APP_SWITCH_BUTTON)
 
     private fun baseInvokeKeyEvent(keycode: String) : ADBResult {
-        val result = executor.executeCommand(listOf("adb", "shell", "input", "keyevent", keycode))
-        return baseEmptyChecking(result)
+        return try {
+            val result = executor.executeCommand(listOf("adb", "shell", "input", "keyevent", keycode))
+            baseEmptyChecking(result)
+        } catch (e: ConsoleExecutorException) {
+            ADBResult(ADBStatus.ERROR, "${e.message}")
+        }
     }
 
     fun invokeScrollDown() : ADBResult {                                                    // x1   //y1  // x2   //y2  // time
-        val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "100", "600", "100", "300", "100"))
-        return baseEmptyChecking(result)
+        return try {
+            val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "100", "600", "100", "300", "100"))
+            baseEmptyChecking(result)
+        } catch (e: ConsoleExecutorException) {
+            ADBResult(ADBStatus.ERROR, "${e.message}")
+        }
     }
 
     fun invokeScrollUp() : ADBResult {
-        val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "100", "300", "100", "600", "100"))
-        return baseEmptyChecking(result)
+        return try {
+            val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "100", "300", "100", "600", "100"))
+            baseEmptyChecking(result)
+        } catch (e: ConsoleExecutorException) {
+            ADBResult(ADBStatus.ERROR, "${e.message}")
+        }
     }
 
     fun invokeScrollLeft() : ADBResult {
-        val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "300", "100", "1000", "100", "100"))
-        return baseEmptyChecking(result)
+        return try {
+            val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "300", "100", "1000", "100", "100"))
+            baseEmptyChecking(result)
+        } catch (e: ConsoleExecutorException) {
+            ADBResult(ADBStatus.ERROR, "${e.message}")
+        }
     }
 
     fun invokeScrollRight() : ADBResult {
-        val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "1000", "100", "300", "100", "100"))
-        return baseEmptyChecking(result)
+        return try {
+            val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "1000", "100", "300", "100", "100"))
+            baseEmptyChecking(result)
+        } catch (e: ConsoleExecutorException) {
+            ADBResult(ADBStatus.ERROR, "${e.message}")
+        }
     }
 
     // TODO: Проверка на "битые" девайсы и существование adb

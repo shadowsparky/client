@@ -6,4 +6,4 @@ package ru.shadowsparky.client.utils.exceptions
 
 import java.lang.Exception
 
-class CorruptedDataExcetion(override val message: String?) : Exception (message)
+class CorruptedDataException(override val message: String?) : Exception (message)
