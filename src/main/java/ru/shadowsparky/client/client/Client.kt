@@ -4,21 +4,19 @@
 
 package ru.shadowsparky.client.client
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import ru.shadowsparky.client.utils.Resultable
+import kotlinx.coroutines.*
 import ru.shadowsparky.client.utils.Extras.Companion.PORT
 import ru.shadowsparky.client.utils.ImageCallback
 import ru.shadowsparky.client.utils.Injection
+import ru.shadowsparky.client.utils.Resultable
 import ru.shadowsparky.client.utils.exceptions.CorruptedDataExcetion
 import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
 import ru.shadowsparky.screencast.proto.HandledPictureOuterClass
 import ru.shadowsparky.screencast.proto.PreparingDataOuterClass
-import java.io.*
+import java.io.EOFException
+import java.io.OptionalDataException
 import java.net.Socket
 import java.net.SocketException
-import java.util.concurrent.Executors
 import java.util.concurrent.LinkedBlockingQueue
 
 class Client(
@@ -31,7 +29,7 @@ class Client(
     private val log = Injection.provideLogger()
     private var decoder: Decoder? = null
     private lateinit var pData: PreparingDataOuterClass.PreparingData
-    private var saved_data = LinkedBlockingQueue<ByteArray>()
+    @Volatile private var saved_data = LinkedBlockingQueue<ByteArray>()
     var handling: Boolean = false
         set(value) {
             if (value) {
@@ -90,17 +88,14 @@ class Client(
         log.printInfo("Data Handling enabled")
         handler.onSuccess()
         decode()
-//        val executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
         try {
-//            executor.execute {
-                while (socket!!.isConnected) {
-                    val picture = HandledPictureOuterClass
-                            .HandledPicture
-                            .parseDelimitedFrom(socket!!.getInputStream())
-                    saved_data.add(picture.encodedPicture.toByteArray())
-                    log.printInfo("DATA HANDLED: ${picture.serializedSize}")
-                }
-//            }
+            while (socket!!.isConnected) {
+                val picture = HandledPictureOuterClass
+                        .HandledPicture
+                        .parseDelimitedFrom(socket!!.getInputStream())
+                saved_data.add(picture.encodedPicture.toByteArray())
+                log.printInfo("DATA HANDLED: ${picture.serializedSize}")
+            }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")
         } catch (e: RuntimeException) {
@@ -113,17 +108,18 @@ class Client(
             log.printInfo("Handling disabled by: OptionalDataException. ${e.message}")
             handler.onError(e)
         } finally {
-//            executor.shutdown()
             handling = false
         }
     }
 
     fun decode() = GlobalScope.launch(Dispatchers.IO) {
-        decoder = Decoder(callback)
+        decoder = Decoder()
         log.printInfo("Decoder initialized")
         while (handling) {
             val item = saved_data.take()
-            decoder?.decode(item)
+            val image_async = async(Dispatchers.IO) { decoder?.decode(item) }
+            val image = image_async.await()
+            if (image != null) callback.handleImage(image)
             log.printInfo("decoded ${Thread.currentThread().name}")
         }
     }

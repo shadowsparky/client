@@ -4,6 +4,8 @@
 
 package ru.shadowsparky.client.client
 
+import javafx.scene.image.Image
+import kotlinx.coroutines.Deferred
 import org.bytedeco.javacpp.*
 import org.bytedeco.javacpp.avcodec.*
 import org.bytedeco.javacpp.avutil.*
@@ -13,9 +15,10 @@ import ru.shadowsparky.client.utils.ImageCallback
 import ru.shadowsparky.client.utils.Injection
 import java.io.DataOutputStream
 import java.nio.ByteBuffer
+import kotlin.coroutines.suspendCoroutine
 
 class Decoder(
-        private val callback: ImageCallback//,
+//        private val callback: ImageCallback//,
 //        private var pData: PreparingData
 ) {
     private val log = Injection.provideLogger()
@@ -59,16 +62,16 @@ class Decoder(
         }
     }
 
-    fun decode(data: ByteArray) {
+    fun decode(data: ByteArray) : Image? {
         packet.data(BytePointer(ByteBuffer.wrap(data)))
         packet.size(data.size)
         var len = avcodec_send_packet(c, packet)
         if (len != 0) {
-            return
+            return null
         }
         len = avcodec_receive_frame(c, picture)
         if (len != 0) {
-            return
+            return null
         }
         intelliParams()
         convert_ctx = swscale.sws_getContext(
@@ -88,6 +91,7 @@ class Decoder(
         val image = converter.Mat2Image(mats)
         mats.release()
         packet.deallocate()
-        callback.handleImage(image)
+        return image
+//        callback.handleImage(image)
     }
 }
