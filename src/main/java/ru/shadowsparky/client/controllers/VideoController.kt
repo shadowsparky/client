@@ -71,12 +71,13 @@ class VideoController : ImageCallback, Controllerable {
                 KeyCode.DOWN -> adb.invokeScrollDown()
                 KeyCode.LEFT-> adb.invokeScrollLeft()
                 KeyCode.RIGHT -> adb.invokeScrollRight()
-                KeyCode.SHIFT -> adb.invokeRecentApplicationsButton()
+                KeyCode.B, KeyCode.Z -> adb.invokeBackButton()
+                KeyCode.R, KeyCode.C -> adb.invokeRecentApplicationsButton()
+                KeyCode.H, KeyCode.X -> adb.invokeHomeButton()
             }
         }
     }
 
-    //FIXME Неправильно работает в вертикальном режиме
     private fun setupMouse() {
         image.addEventHandler(MouseEvent.MOUSE_CLICKED) {
             when(it.button) {
@@ -90,8 +91,6 @@ class VideoController : ImageCallback, Controllerable {
                     }
                     log.printInfo("CoordX: (${x}) ${it.x} CoordY: (${y}) ${it.y}")
                 }
-                MouseButton.SECONDARY -> adb.invokeBackButton()
-                MouseButton.MIDDLE -> adb.invokeHomeButton()
             }
         }
     }
