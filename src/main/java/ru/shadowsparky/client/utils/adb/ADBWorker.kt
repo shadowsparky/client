@@ -96,7 +96,6 @@ class ADBWorker {
         }
     }
 
-    // TODO: Проверка на "битые" девайсы и существование adb
     fun getDevices() : ADBResult {
         return try {
             val result = executor.executeCommand(listOf("adb", "devices", "-l"))

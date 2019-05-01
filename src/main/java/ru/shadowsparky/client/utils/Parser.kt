@@ -14,16 +14,18 @@ object Parser {
         val items = str.split("\n")
         items.forEach {
             if (it.length > 30) {
-                val model = it
-                        .substringAfter("model:")
-                        .substringBefore(" device:")
-                val id = it
-                        .substringBefore("device")
-                        .trim()
-                if ((model.isNotEmpty()) and (id.isNotEmpty())) {
-                    result.add(ADBDevice(id, model))
+                if (!it.contains("offline", true)) {
+                    val model = it
+                            .substringAfter("model:")
+                            .substringBefore(" device:")
+                    val id = it
+                            .substringBefore("device")
+                            .trim()
+                    if ((model.isNotEmpty()) and (id.isNotEmpty())) {
+                        result.add(ADBDevice(id, model))
+                    }
+                    log.printInfo("found device: $model $id")
                 }
-                log.printInfo("found device: $model $id")
             }
         }
         return result
