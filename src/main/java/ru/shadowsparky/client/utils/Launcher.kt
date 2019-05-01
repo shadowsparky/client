@@ -11,6 +11,7 @@ import javafx.stage.Screen
 import javafx.stage.Stage
 import javafx.stage.StageStyle
 import javafx.stage.WindowEvent
+import org.scenicview.ScenicView
 import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.controllers.ConnectionType
 import ru.shadowsparky.client.controllers.VideoController
@@ -37,6 +38,7 @@ class Launcher() {
         stage?.isMaximized = true
         stage?.scene?.window?.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, controller::onDestroy)
         controller.attachStage(stage)
+        ScenicView.show(stage?.scene)
     }
 
     fun show() {
