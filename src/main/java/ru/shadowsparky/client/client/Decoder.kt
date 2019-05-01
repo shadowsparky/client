@@ -48,19 +48,6 @@ class Decoder(
         convert_ctx?.close()
     }
 
-    @Deprecated("you will die")
-    fun createProcess() {
-        process = ProcessBuilder()
-                .command("ffplay", "-framerate", "60", "-window_title", "PIPE OUT", "-")
-                .start()
-        mOut = DataOutputStream(process!!.outputStream)
-    }
-
-    @Deprecated("you will die")
-    fun writeToPipe(data: ByteArray) {
-        mOut!!.write(data)
-    }
-
     fun intelliParams() {
         if ((saved_width != c.width()) and (saved_height != c.height())) {
             bytes = av_image_get_buffer_size(AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
@@ -71,7 +58,6 @@ class Decoder(
             log.printInfo("Orientation changed!")
         }
     }
-
 
     fun decode(data: ByteArray) {
         packet.data(BytePointer(ByteBuffer.wrap(data)))
@@ -100,6 +86,8 @@ class Decoder(
         swscale.sws_scale(convert_ctx, picture.data(), picture.linesize(), 0, c.height(), RGBPicture.data(), RGBPicture.linesize())
         val mats = opencv_core.Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0), RGBPicture.linesize(0).toLong())
         val image = converter.Mat2Image(mats)
+        mats.release()
+        packet.deallocate()
         callback.handleImage(image)
     }
 }

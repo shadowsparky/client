@@ -36,7 +36,6 @@ class Client(
             } else {
                 socket?.close()
                 decoder?.dispose()
-                
             }
             field = value
         }
@@ -94,7 +93,7 @@ class Client(
                 val picture = HandledPictureOuterClass
                         .HandledPicture
                         .parseDelimitedFrom(socket!!.getInputStream())
-//                if (picture != null)
+                log.printInfo("DATA HANDLED: ${picture.serializedSize}")
                 decoder?.decode(picture.encodedPicture.toByteArray())
             }
         } catch (e: SocketException) {
@@ -112,4 +111,5 @@ class Client(
             handling = false
         }
     }
+
 }
