@@ -9,7 +9,7 @@ import ru.shadowsparky.client.utils.Extras.Companion.PORT
 import ru.shadowsparky.client.utils.ImageCallback
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.Resultable
-import ru.shadowsparky.client.utils.exceptions.CorruptedDataExcetion
+import ru.shadowsparky.client.utils.exceptions.CorruptedDataException
 import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
 import ru.shadowsparky.screencast.proto.HandledPictureOuterClass
 import ru.shadowsparky.screencast.proto.PreparingDataOuterClass
@@ -75,7 +75,7 @@ class Client(
             }
         } else {
             handling = false
-            handler.onError(CorruptedDataExcetion("Corrupted pData"))
+            handler.onError(CorruptedDataException("Corrupted pData"))
         }
         return false
     }

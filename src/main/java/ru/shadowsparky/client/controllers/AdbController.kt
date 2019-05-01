@@ -6,6 +6,7 @@ package ru.shadowsparky.client.controllers
 
 import javafx.application.Platform
 import javafx.fxml.FXML
+import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.ListView
 import ru.shadowsparky.client.utils.Injection
@@ -16,6 +17,7 @@ class AdbController : BaseConnectionFragment() {
     private val adb = Injection.provideAdb()
     private var selectedDevice: String? = null
     @FXML protected lateinit var addr: ListView<Label>
+    @FXML protected lateinit var faq: Button
 
     @FXML fun initialize() {
         this.init()
@@ -41,6 +43,14 @@ class AdbController : BaseConnectionFragment() {
                 launcher.hide()
                 connect.text = "Подключиться"
             }
+        }
+        faq.setOnAction {
+            dialog.showDialog(
+                    "Помощь",
+                    "Для того, чтобы нажимать на экран мобильного устройства, используйте левую кнопку мыши.\n" +
+                    "Для возвращения назад нажмите на кнопку Z или B, \n" +
+                    "Для открытия меню недавних приложений нажмите на C или R, \n" +
+                    "Для нажатия на кнопку 'Домой' нажмите на X или H.", true)
         }
     }
 

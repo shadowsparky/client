@@ -9,12 +9,15 @@ import com.jfoenix.controls.JFXDialogLayout
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.StackPane
+import javafx.scene.text.Font
 
 class Dialog(val root: StackPane) {
     fun showDialog(title: String, text: String, showTitle: Boolean = false) {
         val content = JFXDialogLayout()
+        val title_lab = Label(title)
+        title_lab.font = Font(20.0)
         if (showTitle)
-            content.setHeading(Label(title))
+            content.setHeading(title_lab)
         content.setBody(Label(text))
         val diag = JFXDialog(root, content, JFXDialog.DialogTransition.CENTER, true)
         val button = Button("Хорошо")

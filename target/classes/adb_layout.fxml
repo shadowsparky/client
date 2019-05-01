@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.Double?>
+<?import javafx.collections.FXCollections?>
 <StackPane fx:id="stack" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane prefHeight="400.0" prefWidth="600.0">
         <fx:define>
@@ -20,6 +21,7 @@
             <ColumnConstraints minWidth="10.0" percentWidth="100.0" prefWidth="100.0" />
         </columnConstraints>
         <children>
+            <Button fx:id="faq" text="FAQ" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.halignment="LEFT" maxHeight="30" maxWidth="100"></Button>
             <ListView fx:id="addr" maxHeight="$DEFALUT_HEIGHT" maxWidth="$DEFALUT_WIDTH" minHeight="$DEFALUT_HEIGHT" minWidth="$DEFALUT_WIDTH" prefHeight="$DEFALUT_HEIGHT" prefWidth="$DEFALUT_WIDTH" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                 <GridPane.margin>
                     <Insets bottom="$DEFALUT_HEIGHT" />

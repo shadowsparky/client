@@ -10,7 +10,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.ProgressBar
 import javafx.scene.layout.StackPane
 import ru.shadowsparky.client.utils.*
-import ru.shadowsparky.client.utils.exceptions.CorruptedDataExcetion
+import ru.shadowsparky.client.utils.exceptions.CorruptedDataException
 import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
 import java.io.EOFException
 import java.net.ConnectException
@@ -37,7 +37,7 @@ abstract class BaseConnectionFragment : Controllerable, Loadingable, Resultable 
     override fun onError(e: Exception) = Platform.runLater {
         val error = when (e) {
             is ConnectException -> "При соединении произошла ошибка.\nСервер не найден"
-            is CorruptedDataExcetion -> "Соединение было разорвано.\nБыли получены битые данные"
+            is CorruptedDataException -> "Соединение было разорвано.\nБыли получены битые данные"
             is EOFException -> "Произошло отключение от сервера"
             is IncorrectPasswordException -> "При соединении с сервером произошла ошибка. Вы ввели неправильный пароль"
             else -> "Соединение было разорвано"
