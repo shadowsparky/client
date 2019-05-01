@@ -38,7 +38,7 @@ class Launcher() {
         stage?.isMaximized = true
         stage?.scene?.window?.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, controller::onDestroy)
         controller.attachStage(stage)
-        ScenicView.show(stage?.scene)
+//        ScenicView.show(stage?.scene)
     }
 
     fun show() {
