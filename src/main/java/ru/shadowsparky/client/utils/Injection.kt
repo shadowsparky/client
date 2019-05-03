@@ -11,11 +11,11 @@ import java.lang.RuntimeException
 
 object Injection {
     private val logger = Logger()
-    private val mNetworkUtils = NetworkUtils()
+//    private val mNetworkUtils = NetworkUtils()
     fun provideLogger() = logger
     fun provideConverter() = Converter()
     fun provideAdb() = ADBWorker()
-    fun provideInjector(root: BorderPane) = Injector(root)
-    fun provideLauncher() = Launcher()
+//    fun provideInjector(root: BorderPane) = Injector(root)
+//    fun provideLauncher() = Launcher()
     fun provideExecutor() = ConsoleExecutor()
 }

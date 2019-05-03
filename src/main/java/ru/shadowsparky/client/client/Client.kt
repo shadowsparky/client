@@ -49,7 +49,9 @@ class Client(
         }
 
     fun start() {
-        connectToServer()
+        this.use {
+            connectToServer()
+        }
     }
 
     private fun connectToServer() = GlobalScope.launch {
