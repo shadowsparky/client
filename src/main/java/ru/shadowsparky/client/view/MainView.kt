@@ -5,16 +5,19 @@
 
 package ru.shadowsparky.client.view
 
-import com.jfoenix.controls.JFXTabPane
 import javafx.application.Platform
 import javafx.stage.StageStyle
+import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.Resultable
-import tornadofx.*
+import tornadofx.View
+import tornadofx.addClass
+import tornadofx.tab
 
-class MainView : View("test"), Resultable {
+open class MainView : View("test"), Resultable {
     lateinit var video: VideoView
-    private val _log = Injection.provideLogger()
+    val _log = Injection.provideLogger()
+    val styles = Injection.provideStyles()
 
     override fun onSuccess() = Platform.runLater{
         video.openWindow(StageStyle.UNDECORATED)?.apply {
@@ -24,15 +27,12 @@ class MainView : View("test"), Resultable {
     }
 
     override fun onError(e: Exception) = Platform.runLater {
+        video.close()
         _log.printInfo("EXCEPTION: $e")
     }
 
-    override val root = JFXTabPane().apply {
-        tabMinHeight = 50.0
-        tabMaxHeight = 50.0
-        style {
-            fontSize = Dimension(16.0, Dimension.LinearUnits.px)
-        }
+    override val root = styles.defaultTabPane.apply {
+        addClass(styles.test)
 
         tab("WIFI") {
             add(WifiView(this@MainView).root)

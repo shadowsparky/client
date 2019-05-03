@@ -5,33 +5,37 @@
 
 package ru.shadowsparky.client.view
 
-import com.jfoenix.controls.JFXButton
-import com.jfoenix.controls.JFXListView
+import javafx.application.Platform
 import javafx.geometry.Pos
-import javafx.scene.control.Label
 import javafx.scene.layout.VBox
-import javafx.scene.paint.Color
 import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.controllers.AdbController
-import ru.shadowsparky.client.utils.ConnectionType
-import ru.shadowsparky.client.utils.Extras
-import ru.shadowsparky.client.utils.Injection
-import ru.shadowsparky.client.utils.Parser
-import ru.shadowsparky.client.utils.adb.ADBStatus
+import ru.shadowsparky.client.utils.*
 import tornadofx.*
 
-class AdbView(val view: MainView) : View() {
+class AdbView(val view: MainView) : Resultable, View() {
     override val root = VBox()
-    val input = JFXListView<Label>()
+    val styles = Injection.provideStyles()
+    var input = styles.defaultList
     private val adb = Injection.provideAdb()
     private val controller: AdbController
+    private var client: Client? = null
+    private val button = styles.buttonStyle
+    override fun onSuccess() = Platform.runLater {
+        view.onSuccess()
+        button.text = "Отключиться"
+    }
 
-    fun updateDevices() {
+    override fun onError(e: Exception) = Platform.runLater {
+        view.onError(e)
+        client?.close()
+        button.text = "Подключиться"
+    }
+
+
+    fun updateDevices() = Platform.runLater {
         input.items.clear()
-        input.apply {
-            maxWidth = 300.0
-            minWidth = 300.0
-            minHeight = 40.0
+        input = styles.defaultList.apply {
             controller.updateDevices()
         }
     }
@@ -40,28 +44,24 @@ class AdbView(val view: MainView) : View() {
         controller = AdbController(this)
         with(root) {
             this += input
-            vbox {
-                minHeight = 10.0
-            }
-            this += JFXButton().apply {
-                maxWidth = 300.0
-                minWidth = 300.0
-                minHeight = 50.0
+            addClass(styles.wrapper)
+            this += button.apply {
                 action {
-                    view.video = VideoView(ConnectionType.adb)
-                    val client = Client(view.video, view, "127.0.0.1", Extras.FORWARD_PORT)
-                    val strDevice = input.selectionModel?.selectedItem?.text
-                    if (strDevice != null) {
-                        val device = Parser.deviceToStr(strDevice)
-                        if (device != null) {
-                            adb.forwardPort(device.id)
-                            client.start()
+                    if (button.text == "Подключиться") {
+                        view.video = VideoView(ConnectionType.adb)
+                        client = Client(view.video, this@AdbView, "127.0.0.1", Extras.FORWARD_PORT)
+                        val strDevice = input.selectionModel?.selectedItem?.text
+                        if (strDevice != null) {
+                            val device = Parser.deviceToStr(strDevice)
+                            if (device != null) {
+                                adb.forwardPort(device.id)
+                                client?.start()
+                            }
                         }
+                    } else {
+                        client?.close()
+                        button.text = "Подключиться"
                     }
-                }
-                style {
-                    buttonType = JFXButton.ButtonType.RAISED
-                    backgroundColor += Color.BLUE
                 }
             }
             useMaxWidth = true

@@ -101,7 +101,7 @@ class Client(
                 val picture = HandledPictureOuterClass
                         .HandledPicture
                         .parseDelimitedFrom(socket!!.getInputStream())
-                if (picture != null)
+//                if (picture != null)
                     saved_data.add(picture.encodedPicture.toByteArray())
             }
         } catch (e: SocketException) {

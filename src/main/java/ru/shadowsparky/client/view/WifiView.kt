@@ -5,49 +5,56 @@
 
 package ru.shadowsparky.client.view
 
-import com.jfoenix.controls.JFXButton
-import com.jfoenix.controls.JFXTextField
+import javafx.application.Platform
 import javafx.geometry.Pos
 import javafx.scene.layout.VBox
-import javafx.scene.paint.Color
 import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.utils.ConnectionType
+import ru.shadowsparky.client.utils.Injection
+import ru.shadowsparky.client.utils.Resultable
 import tornadofx.*
+import java.lang.Exception
 
-class WifiView(view: MainView) : View() {
+class WifiView(private val main: MainView) : View(), Resultable {
     override val root = VBox()
+    private val styles = Injection.provideStyles()
+    private var client: Client? = null
+    private val button = styles.buttonStyle
 
     init {
         with(root) {
-            val input = JFXTextField().apply {
-                maxWidth = 300.0
-                minWidth = 300.0
-                minHeight = 40.0
-                style {
-                    fontSize = Dimension(16.0, Dimension.LinearUnits.px)
-                    endMargin = Dimension(16.0, Dimension.LinearUnits.px)
-                }
+            val input = styles.wifiTextField.apply {
+                text = "192.168.31.221"
             }
             this += input
-            vbox {
-                minHeight = 10.0
-            }
-            this += JFXButton().apply {
-                maxWidth = 300.0
-                minWidth = 300.0
-                minHeight = 50.0
+            addClass(styles.wrapper)
+            this += button.apply {
                 action {
-                    view.video = VideoView(ConnectionType.wifi)
-                    val client = Client(view.video, view, input.text)
-                    client.start()
-                }
-                style {
-                    buttonType = JFXButton.ButtonType.RAISED
-                    backgroundColor += Color.BLUE
+                    if (button.text == "Подключиться") {
+                        main.video = VideoView(ConnectionType.wifi)
+                        client = Client(main.video, this@WifiView, input.text)
+                        client?.start()
+                    } else {
+                        client?.close()
+                        button.text = "Подключиться"
+                    }
                 }
             }
             useMaxWidth = true
             alignment = Pos.CENTER
         }
     }
+
+    override fun onSuccess() = Platform.runLater {
+        main.onSuccess()
+        button.text = "Отключиться"
+    }
+
+    override fun onError(e: Exception) = Platform.runLater {
+        main.onError(e)
+        client?.close()
+        button.text = "Подключиться"
+    }
+
+
 }
