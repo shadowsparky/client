@@ -15,6 +15,9 @@ import org.scenicview.ScenicView
 import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.controllers.ConnectionType
 import ru.shadowsparky.client.controllers.VideoController
+import de.saxsys.leakscanner.LeakScanner
+
+
 
 class Launcher() {
     private var stage: Stage? = null
@@ -38,6 +41,8 @@ class Launcher() {
         stage?.isMaximized = true
         stage?.scene?.window?.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, controller::onDestroy)
         controller.attachStage(stage)
+        LeakScanner(stage?.scene, 100L)
+
 //        ScenicView.show(stage?.scene)
     }
 

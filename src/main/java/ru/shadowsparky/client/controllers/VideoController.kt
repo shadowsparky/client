@@ -15,6 +15,8 @@ import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.utils.Controllerable
 import ru.shadowsparky.client.utils.ImageCallback
@@ -35,10 +37,13 @@ class VideoController : ImageCallback, Controllerable {
 
     override fun handleImage(image: Image) = Platform.runLater {
         this.image.image = image
-        this.image.fitHeight = getScreenSize(image).getHeight()
-        this.image.fitWidth = getScreenSize(image).getWidth()
-        infelicity_width = image.width / this.image.fitWidth
-        infelicity_height = image.height / this.image.fitHeight
+        val screenSize = getScreenSize(image)
+        this@VideoController.image.fitHeight = screenSize.getHeight()
+        this@VideoController.image.fitWidth = screenSize.getWidth()
+        GlobalScope.launch {
+            infelicity_width = image.width / this@VideoController.image.fitWidth
+            infelicity_height = image.height / this@VideoController.image.fitHeight
+        }
     }
 
     private fun getScreenSize(image: Image) : Dimension {
