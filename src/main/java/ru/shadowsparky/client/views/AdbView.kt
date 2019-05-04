@@ -7,11 +7,15 @@ package ru.shadowsparky.client.views
 
 import javafx.application.Platform
 import javafx.geometry.Pos
+import javafx.scene.control.ProgressBar
+import javafx.scene.control.ProgressIndicator
+import javafx.scene.control.ProgressIndicator.INDETERMINATE_PROGRESS
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 import ru.shadowsparky.client.controllers.AdbController
 import ru.shadowsparky.client.utils.*
 import tornadofx.*
+import java.awt.Color
 
 class AdbView : BaseView() {
     override val root = StackPane()
@@ -29,6 +33,7 @@ class AdbView : BaseView() {
         dialog = Dialog(root)
         with(root) {
             vbox {
+                this += styles.getLabel("Выберите устройство")
                 this += input
                 addClass(styles.wrapper)
                 this += styles.buttonStyle.apply {
@@ -45,6 +50,10 @@ class AdbView : BaseView() {
                     style {
                         backgroundColor += styles.defaultColor
                     }
+                }
+//                addClass(styles.wrapper)
+                this += ProgressBar().apply {
+                    progress = INDETERMINATE_PROGRESS
                 }
                 useMaxWidth = true
                 alignment = Pos.CENTER

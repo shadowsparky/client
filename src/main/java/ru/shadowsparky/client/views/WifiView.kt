@@ -20,7 +20,7 @@ class WifiView : BaseView() {
     init {
         root.apply {
             vbox {
-                this += styles.getLabel("Введите Wifi адрес")
+                this += styles.getLabel("Введите IP адрес")
                 this += styles.wifiTextField.apply {
                     bind(mInputText)
                 }

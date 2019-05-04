@@ -20,7 +20,9 @@ import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.Resultable
 import ru.shadowsparky.client.utils.exceptions.CorruptedDataException
 import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
+import ru.shadowsparky.client.utils.exceptions.ProjectionAlreadyStartedException
 import tornadofx.View
+import tornadofx.onChange
 import java.io.EOFException
 import java.net.ConnectException
 
@@ -31,7 +33,14 @@ abstract class BaseView : View(""), Resultable {
     var video: VideoView? = null
     lateinit var dialog: Dialog
     var mButtonStatus = SimpleBooleanProperty(false)
+    var loading = SimpleBooleanProperty(false)
     var mButtonText = SimpleStringProperty("Подключиться")
+
+    init {
+        mButtonStatus.onChange {
+            loading.set(it)
+        }
+    }
 
     protected fun setStyle() {
         JMetro(JMetro.Style.DARK).applyTheme(root)
@@ -59,6 +68,7 @@ abstract class BaseView : View(""), Resultable {
             is ConnectException -> "При соединении произошла ошибка.\nСервер не найден"
             //is CorruptedDataException -> "Соединение было разорвано."
             is EOFException -> "Произошло отключение от сервера"
+            is ProjectionAlreadyStartedException -> "При соединении произошла ошибка. \nВы не отключились от предыдущего соединения"
             is IncorrectPasswordException -> "При соединении с сервером произошла ошибка. Вы ввели неправильный пароль"
             else -> "Соединение было разорвано"
         }

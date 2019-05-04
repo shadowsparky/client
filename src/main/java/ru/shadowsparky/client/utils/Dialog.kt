@@ -23,6 +23,7 @@ class Dialog(val root: StackPane) {
         val button = Button("Хорошо")
         button.setOnAction { diag.close() }
         content.setActions(button)
+        button.requestFocus()
         diag.show()
     }
 }
