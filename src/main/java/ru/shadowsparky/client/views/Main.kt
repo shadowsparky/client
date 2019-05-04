@@ -5,8 +5,7 @@
 
 package ru.shadowsparky.client.views
 
-import ru.shadowsparky.client.views.MainView
-import ru.shadowsparky.client.view.Styles
+import ru.shadowsparky.client.utils.Styles
 import tornadofx.App
 import tornadofx.reloadStylesheetsOnFocus
 

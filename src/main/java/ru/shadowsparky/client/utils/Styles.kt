@@ -3,19 +3,25 @@
  *
  */
 
-package ru.shadowsparky.client.view
+/*
+ * Created by shadowsparky in 2019
+ *
+ */
+
+/*
+ * Created by shadowsparky in 2019
+ *
+ */
+
+package ru.shadowsparky.client.utils
 
 import com.jfoenix.controls.JFXButton
-import com.jfoenix.controls.JFXListView
-import com.jfoenix.controls.JFXTabPane
-import com.jfoenix.controls.JFXTextField
 import javafx.geometry.Pos
 import javafx.scene.control.Label
 import javafx.scene.control.ListView
 import javafx.scene.control.TabPane
 import javafx.scene.control.TextField
 import javafx.scene.paint.Color
-import ru.shadowsparky.client.utils.Injection
 import tornadofx.*
 
 class Styles : Stylesheet() {
@@ -27,9 +33,6 @@ class Styles : Stylesheet() {
         minWidth = 400.0
         minHeight = 40.0
         style {
-//            cssproperty<>()
-//            borderColor += box(Color.RED)
-            _log.printInfo("WIFITEXTFIELD: ${tabHeaderBackground.render()}")
             backgroundColor += Color.WHITE
             fontSize = Dimension(16.0, Dimension.LinearUnits.px)
             textFill = Color.BLACK

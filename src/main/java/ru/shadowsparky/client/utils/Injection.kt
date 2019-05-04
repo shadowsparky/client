@@ -4,11 +4,7 @@
 
 package ru.shadowsparky.client.utils
 
-import javafx.scene.layout.BorderPane
-import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.utils.adb.ADBWorker
-import ru.shadowsparky.client.view.Styles
-import java.lang.RuntimeException
 
 object Injection {
     private val logger = Logger()

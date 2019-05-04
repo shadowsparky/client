@@ -21,7 +21,7 @@ import tornadofx.useMaxWidth
 
 class VideoView(type: ConnectionType) : View(), ImageCallback {
     val image: ImageView
-    private val controller: VideoController
+    val controller: VideoController
     var client: Client? = null
     var stage: Stage? = null
 

@@ -5,7 +5,6 @@
 
 package ru.shadowsparky.client.views
 
-import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
 import javafx.scene.layout.VBox
@@ -15,22 +14,10 @@ import tornadofx.*
 class WifiView : BaseView() {
     override val root = VBox()
     var mInputText = SimpleStringProperty("192.168.31.221")
-    var mButtonStatus = SimpleBooleanProperty(false)
-    var mButtonText = SimpleStringProperty("Подключиться")
     private var controller: WifiController = WifiController(this)
 
-    override fun onSuccess() {
-        super.onSuccess()
-        mButtonStatus.set(true)
-    }
-
-    override fun onError(e: Exception) {
-        super.onError(e)
-        mButtonStatus.set(false)
-    }
-
     init {
-        with(root) {
+        root.apply {
             this += styles.wifiTextField.apply {
                 bind(mInputText)
             }

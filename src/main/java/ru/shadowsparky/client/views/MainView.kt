@@ -5,14 +5,15 @@
 
 package ru.shadowsparky.client.views
 
-import javafx.scene.Parent
+import javafx.scene.control.TabPane
 import tornadofx.addClass
 import tornadofx.tab
 
 class MainView : BaseView(){
-    override val root: Parent
+    override val root: TabPane
 
     init {
+        val adb = AdbView()
         root = styles.defaultTabPane.apply {
             addClass(styles.test)
 
@@ -21,10 +22,12 @@ class MainView : BaseView(){
             }
 
             tab("ADB") {
-                //            val adb = AdbView(this@MainView)
-//            adb.updateDevices()
-//            add(adb.root)
+                adb.updateDevices()
+                add(adb.root)
             }
+        }
+        root.selectionModel.selectedItemProperty().addListener { obs, ov, nv ->
+            adb.updateDevices()
         }
         setStyle()
     }

@@ -6,11 +6,15 @@
 package ru.shadowsparky.client.controllers
 
 import javafx.scene.control.Label
+import ru.shadowsparky.client.client.Client
+import ru.shadowsparky.client.utils.ConnectionType
+import ru.shadowsparky.client.utils.Extras
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.Parser
 import ru.shadowsparky.client.utils.adb.ADBDevice
 import ru.shadowsparky.client.utils.adb.ADBStatus
-import ru.shadowsparky.client.view.AdbView
+import ru.shadowsparky.client.views.AdbView
+import ru.shadowsparky.client.views.VideoView
 
 class AdbController(private val view: AdbView) {
     private val adb = Injection.provideAdb()
@@ -30,5 +34,18 @@ class AdbController(private val view: AdbView) {
             }
         }
         return null
+    }
+
+    fun startProjection() {
+        view.video = VideoView(ConnectionType.adb)
+        view.video?.client = Client(view.video!!, view, "127.0.0.1", Extras.FORWARD_PORT)
+        val strDevice = view.input.selectionModel?.selectedItem?.text
+        if (strDevice != null) {
+            val device = Parser.deviceToStr(strDevice)
+            if (device != null) {
+                adb.forwardPort(device.id)
+                view.video?.client?.start()
+            }
+        }
     }
 }

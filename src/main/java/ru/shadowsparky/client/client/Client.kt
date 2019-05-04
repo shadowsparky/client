@@ -4,6 +4,7 @@
 
 package ru.shadowsparky.client.client
 
+import com.google.protobuf.InvalidProtocolBufferException
 import kotlinx.coroutines.*
 import ru.shadowsparky.client.utils.Extras.Companion.PORT
 import ru.shadowsparky.client.utils.ImageCallback
@@ -71,20 +72,24 @@ class Client(
     }
 
     private fun handlePreparingData() : Boolean {
-        val pData = PreparingDataOuterClass.PreparingData.parseDelimitedFrom(socket?.getInputStream())
-        if (pData != null) {
-            if (pData.password == "") {
-                this@Client.pData = pData
-                log.printInfo("True Password")
-                return true
+        try {
+            val pData = PreparingDataOuterClass.PreparingData.parseDelimitedFrom(socket?.getInputStream())
+            if (pData != null) {
+                if (pData.password == "") {
+                    this@Client.pData = pData
+                    log.printInfo("True Password")
+                    return true
+                } else {
+                    log.printInfo("Incorrect password")
+                    handling = false
+                    handler.onError(IncorrectPasswordException())
+                }
             } else {
-                log.printInfo("Incorrect password")
                 handling = false
-                handler.onError(IncorrectPasswordException())
+                handler.onError(CorruptedDataException("Corrupted pData"))
             }
-        } else {
-            handling = false
-            handler.onError(CorruptedDataException("Corrupted pData"))
+        } catch(e: InvalidProtocolBufferException) {
+            // ignore
         }
         return false
     }

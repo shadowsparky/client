@@ -23,19 +23,13 @@ class VideoController(private val view: VideoView, val type: ConnectionType) : C
     private val adb = Injection.provideAdb()
     private val _log = Injection.provideLogger()
 
-    init {
-        if (type == ConnectionType.adb) {
-            enableADBActions()
-        }
-    }
-
-    private fun enableADBActions() {
+    fun enableADBActions() {
         setupMouse()
         setupKeyboard()
     }
 
     private fun setupKeyboard() {
-        view.currentStage!!.scene.setOnKeyPressed {
+        view.stage?.scene?.setOnKeyPressed {
             when(it.code) {
                 KeyCode.UP ->  adb.invokeScrollUp()
                 KeyCode.DOWN -> adb.invokeScrollDown()
