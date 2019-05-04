@@ -49,6 +49,7 @@ class VideoController(private val view: VideoView, val type: ConnectionType) : C
         }
     }
 
+
     private fun setupMouse() {
         view.image.addEventHandler(MouseEvent.MOUSE_CLICKED) {
             when(it.button) {

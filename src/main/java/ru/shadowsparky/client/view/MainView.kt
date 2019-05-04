@@ -7,6 +7,7 @@ package ru.shadowsparky.client.view
 
 import javafx.application.Platform
 import javafx.stage.StageStyle
+import jfxtras.styles.jmetro8.JMetro
 import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.Resultable
@@ -27,7 +28,6 @@ open class MainView : View("test"), Resultable {
     }
 
     override fun onError(e: Exception) = Platform.runLater {
-        video.close()
         _log.printInfo("EXCEPTION: $e")
     }
 
@@ -43,5 +43,9 @@ open class MainView : View("test"), Resultable {
             adb.updateDevices()
             add(adb.root)
         }
+    }
+
+    init {
+        JMetro(JMetro.Style.DARK).applyTheme(root)
     }
 }

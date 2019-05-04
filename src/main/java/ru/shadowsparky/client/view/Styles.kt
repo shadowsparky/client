@@ -11,6 +11,9 @@ import com.jfoenix.controls.JFXTabPane
 import com.jfoenix.controls.JFXTextField
 import javafx.geometry.Pos
 import javafx.scene.control.Label
+import javafx.scene.control.ListView
+import javafx.scene.control.TabPane
+import javafx.scene.control.TextField
 import javafx.scene.paint.Color
 import ru.shadowsparky.client.utils.Injection
 import tornadofx.*
@@ -19,13 +22,13 @@ class Styles : Stylesheet() {
     val wrapper by cssclass()
     val _log = Injection.provideLogger()
 
-    val wifiTextField = JFXTextField().apply {
+    val wifiTextField = TextField().apply {
         maxWidth = 300.0
         minWidth = 300.0
         minHeight = 40.0
         style {
 //            cssproperty<>()
-            borderColor += box(Color.RED)
+//            borderColor += box(Color.RED)
             _log.printInfo("WIFITEXTFIELD: ${tabHeaderBackground.render()}")
             backgroundColor += Color.WHITE
             fontSize = Dimension(16.0, Dimension.LinearUnits.px)
@@ -46,15 +49,16 @@ class Styles : Stylesheet() {
         buttonType = JFXButton.ButtonType.RAISED
     }
 
-    val defaultList = JFXListView<Label>().apply {
+    val defaultList = ListView<Label>().apply {
         maxWidth = 300.0
         minWidth = 300.0
         minHeight = 40.0
+        maxHeight = 40.0
     }
 
     val test by cssclass()
 
-    val defaultTabPane = JFXTabPane().apply {
+    val defaultTabPane = TabPane().apply {
         tabMinHeight = 50.0
         tabMinWidth = 50.0
         minWidth = 600.0
