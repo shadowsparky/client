@@ -3,16 +3,6 @@
  *
  */
 
-/*
- * Created by shadowsparky in 2019
- *
- */
-
-/*
- * Created by shadowsparky in 2019
- *
- */
-
 package ru.shadowsparky.client.utils
 
 import com.jfoenix.controls.JFXButton
@@ -22,20 +12,26 @@ import javafx.scene.control.ListView
 import javafx.scene.control.TabPane
 import javafx.scene.control.TextField
 import javafx.scene.paint.Color
+import javafx.scene.text.FontPosture
 import tornadofx.*
 
 class Styles : Stylesheet() {
     val wrapper by cssclass()
     val _log = Injection.provideLogger()
 
+    fun getLabel(text: String) = Label(text).apply {
+        style {
+            fontSize = Dimension(16.0, Dimension.LinearUnits.px)
+            textFill = Color.WHITE
+        }
+    }
+
     val wifiTextField = TextField().apply {
         maxWidth = 400.0
         minWidth = 400.0
-        minHeight = 40.0
+        minHeight = 55.0
         style {
-            backgroundColor += Color.WHITE
             fontSize = Dimension(16.0, Dimension.LinearUnits.px)
-            textFill = Color.BLACK
             alignment = Pos.CENTER
         }
     }

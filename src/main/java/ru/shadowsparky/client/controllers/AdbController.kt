@@ -36,6 +36,17 @@ class AdbController(private val view: AdbView) {
         return null
     }
 
+    fun showHelp() {
+        view.dialog.showDialog(
+                "Справка",
+                "Для того, чтобы нажимать на экран мобильного устройства, используйте левую кнопку мыши.\n" +
+                        "Для возвращения назад нажмите на кнопку Z или B, \n" +
+                        "Для открытия меню недавних приложений нажмите на C или R, \n" +
+                        "Для нажатия на кнопку 'Домой' нажмите на X или H.",
+                true
+        )
+    }
+
     fun startProjection() {
         view.video = VideoView(ConnectionType.adb)
         view.video?.client = Client(view.video!!, view, "127.0.0.1", Extras.FORWARD_PORT)
@@ -46,6 +57,8 @@ class AdbController(private val view: AdbView) {
                 adb.forwardPort(device.id)
                 view.video?.client?.start()
             }
+        } else {
+            view.dialog.showDialog("Ошибка", "Вы должны выбрать устройство.")
         }
     }
 }

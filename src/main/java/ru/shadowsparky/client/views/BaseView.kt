@@ -11,17 +11,25 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.scene.Parent
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
+import javafx.scene.layout.StackPane
 import javafx.stage.StageStyle
 import jfxtras.styles.jmetro8.JMetro
 import ru.shadowsparky.client.utils.ConnectionType
+import ru.shadowsparky.client.utils.Dialog
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.Resultable
+import ru.shadowsparky.client.utils.exceptions.CorruptedDataException
+import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
 import tornadofx.View
+import java.io.EOFException
+import java.net.ConnectException
 
 abstract class BaseView : View(""), Resultable {
-    abstract override val root: Parent
+    abstract override val root: StackPane
+
     protected val styles = Injection.provideStyles()
     var video: VideoView? = null
+    lateinit var dialog: Dialog
     var mButtonStatus = SimpleBooleanProperty(false)
     var mButtonText = SimpleStringProperty("Подключиться")
 
@@ -35,21 +43,25 @@ abstract class BaseView : View(""), Resultable {
         }
         video!!.stage?.addEventFilter(KeyEvent.KEY_PRESSED) {
             if (it.code == KeyCode.ESCAPE) {
-                log.info("Escape")
                 video!!.client?.close()
             }
         }
         if (video?.controller?.type == ConnectionType.adb)
             video?.controller?.enableADBActions()
-        log.info("button disabled")
         mButtonStatus.set(true)
-        log.info("onSuccess")
     }
 
     override fun onError(e: Exception) = Platform.runLater {
         mButtonStatus.set(false)
         video?.stage?.close()
-        log.info("button enabled")
         log.info("onError: $e")
+        val error = when (e) {
+            is ConnectException -> "При соединении произошла ошибка.\nСервер не найден"
+            //is CorruptedDataException -> "Соединение было разорвано."
+            is EOFException -> "Произошло отключение от сервера"
+            is IncorrectPasswordException -> "При соединении с сервером произошла ошибка. Вы ввели неправильный пароль"
+            else -> "Соединение было разорвано"
+        }
+        dialog.showDialog("Ошибка", error, true)
     }
 }

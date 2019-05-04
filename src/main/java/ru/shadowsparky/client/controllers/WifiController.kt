@@ -18,12 +18,16 @@ class WifiController(private val view: WifiView) : Controller() {
     private val _log = Injection.provideLogger()
 
     fun startProjection() {
-        if ((view.video == null) or (view.video?.client?.handling == false)) {
-            view.video = VideoView(ConnectionType.wifi)
-            view.video!!.client = Client(view.video!!, view, view.mInputText.get())
-            view.video!!.client?.start()
+        if (view.mInputText.get().isNotEmpty()) {
+            if ((view.video == null) or (view.video?.client?.handling == false)) {
+                view.video = VideoView(ConnectionType.wifi)
+                view.video!!.client = Client(view.video!!, view, view.mInputText.get())
+                view.video!!.client?.start()
+            } else {
+                view.onError(ProjectionAlreadyStartedException())
+            }
         } else {
-            view.onError(ProjectionAlreadyStartedException())
+            view.dialog.showDialog("Ошибка", "Вы должны ввести адрес Android устройства")
         }
     }
 }
