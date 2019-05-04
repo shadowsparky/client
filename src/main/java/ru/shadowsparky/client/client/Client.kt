@@ -97,7 +97,7 @@ class Client(
         handler.onSuccess()
         decode()
         try {
-            while (socket!!.isConnected) {
+            while (handling) {
                 val picture = HandledPictureOuterClass
                         .HandledPicture
                         .parseDelimitedFrom(socket!!.getInputStream())

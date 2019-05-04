@@ -7,20 +7,17 @@ package ru.shadowsparky.client.view
 
 import javafx.application.Platform
 import javafx.stage.StageStyle
-import jfxtras.styles.jmetro8.JMetro
-import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.Resultable
+import ru.shadowsparky.client.views.VideoView
 import tornadofx.View
-import tornadofx.addClass
-import tornadofx.tab
 
-open class MainView : View("test"), Resultable {
+open class MainView : View("Главное меню"), Resultable {
     lateinit var video: VideoView
     val _log = Injection.provideLogger()
     val styles = Injection.provideStyles()
 
-    override fun onSuccess() = Platform.runLater{
+    override fun onSuccess() = Platform.runLater {
         video.openWindow(StageStyle.UNDECORATED)?.apply {
             isFullScreen = true
         }
@@ -32,20 +29,6 @@ open class MainView : View("test"), Resultable {
     }
 
     override val root = styles.defaultTabPane.apply {
-        addClass(styles.test)
 
-        tab("WIFI") {
-            add(WifiView(this@MainView).root)
-        }
-
-        tab("ADB") {
-            val adb = AdbView(this@MainView)
-            adb.updateDevices()
-            add(adb.root)
-        }
-    }
-
-    init {
-        JMetro(JMetro.Style.DARK).applyTheme(root)
     }
 }

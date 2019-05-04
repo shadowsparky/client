@@ -23,8 +23,8 @@ class Styles : Stylesheet() {
     val _log = Injection.provideLogger()
 
     val wifiTextField = TextField().apply {
-        maxWidth = 300.0
-        minWidth = 300.0
+        maxWidth = 400.0
+        minWidth = 400.0
         minHeight = 40.0
         style {
 //            cssproperty<>()
@@ -43,17 +43,17 @@ class Styles : Stylesheet() {
             text = "Подключиться"
             textFill = Color.WHITE
         }
-        maxWidth = 300.0
-        minWidth = 300.0
+        maxWidth = 400.0
+        minWidth = 400.0
         minHeight = 50.0
         buttonType = JFXButton.ButtonType.RAISED
     }
 
     val defaultList = ListView<Label>().apply {
-        maxWidth = 300.0
-        minWidth = 300.0
-        minHeight = 40.0
-        maxHeight = 40.0
+        maxWidth = 400.0
+        minWidth = 400.0
+        minHeight = 60.0
+        maxHeight = 60.0
     }
 
     val test by cssclass()
@@ -63,6 +63,7 @@ class Styles : Stylesheet() {
         tabMinWidth = 50.0
         minWidth = 600.0
         minHeight = 500.0
+        tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
     }
 
     val defaultColor = c("#1B1B22")

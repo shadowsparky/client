@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox
 import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.controllers.AdbController
 import ru.shadowsparky.client.utils.*
+import ru.shadowsparky.client.views.VideoView
 import tornadofx.*
 
 class AdbView(val view: MainView) : Resultable, View() {
@@ -62,6 +63,13 @@ class AdbView(val view: MainView) : Resultable, View() {
                         client?.close()
                         button.text = "Подключиться"
                     }
+                }
+            }
+            addClass(styles.wrapper)
+            this += Styles().buttonStyle.apply {
+                text = "Справка"
+                style {
+                    backgroundColor += styles.defaultColor
                 }
             }
             useMaxWidth = true

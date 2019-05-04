@@ -6,39 +6,37 @@
 package ru.shadowsparky.client.view
 
 import javafx.application.Platform
+import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyEvent
 import javafx.scene.layout.VBox
 import ru.shadowsparky.client.client.Client
+import ru.shadowsparky.client.controllers.WifiController
 import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.Resultable
+import ru.shadowsparky.client.views.WifiView
 import tornadofx.*
 import java.lang.Exception
 
-class WifiView(private val main: MainView) : View(), Resultable {
+class WifiView(val main: MainView) : View(), Resultable {
     override val root = VBox()
-    private val styles = Injection.provideStyles()
-    private var client: Client? = null
-    private val button = styles.buttonStyle
+    val styles = Injection.provideStyles()
+    var client: Client? = null
+    var mInputText = SimpleStringProperty("192.168.31.221")
+    var mButtonText = SimpleStringProperty("Подключиться")
+    private var controller: WifiController = WifiController(WifiView())
 
     init {
         with(root) {
-            val input = styles.wifiTextField.apply {
-                text = "192.168.31.221"
+            this += styles.wifiTextField.apply {
+                bind(mInputText)
             }
-            this += input
             addClass(styles.wrapper)
-            this += button.apply {
-                action {
-                    if (button.text == "Подключиться") {
-                        main.video = VideoView(ConnectionType.wifi)
-                        client = Client(main.video, this@WifiView, input.text)
-                        client?.start()
-                    } else {
-                        client?.close()
-                        button.text = "Подключиться"
-                    }
-                }
+            this += styles.buttonStyle.apply {
+                bind(mButtonText)
+                action { controller.startProjection() }
             }
             useMaxWidth = true
             alignment = Pos.CENTER
@@ -47,14 +45,12 @@ class WifiView(private val main: MainView) : View(), Resultable {
 
     override fun onSuccess() = Platform.runLater {
         main.onSuccess()
-        button.text = "Отключиться"
+        mButtonText.set("Отключиться")
     }
 
     override fun onError(e: Exception) = Platform.runLater {
         main.onError(e)
         client?.close()
-        button.text = "Подключиться"
+        mButtonText.set("Подключиться")
     }
-
-
 }

@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent
 import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.adb.ADBStatus
-import ru.shadowsparky.client.view.VideoView
+import ru.shadowsparky.client.views.VideoView
 import tornadofx.Controller
 import java.awt.Dimension
 import java.awt.Toolkit
