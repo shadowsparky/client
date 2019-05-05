@@ -18,13 +18,13 @@ import tornadofx.*
 import java.awt.Color
 
 class AdbView : BaseView() {
-    override val root = StackPane()
-    var input = styles.defaultList
+    override val root = styles.getDefaultStackPane()
+    var input = styles.getDefaultList()
     private val controller: AdbController = AdbController(this)
 
     fun updateDevices() = Platform.runLater {
         input.items.clear()
-        input = styles.defaultList.apply {
+        input = styles.getDefaultList().apply {
             controller.updateDevices()
         }
     }
@@ -36,13 +36,13 @@ class AdbView : BaseView() {
                 this += styles.getLabel("Выберите устройство")
                 this += input
                 addClass(styles.wrapper)
-                this += styles.buttonStyle.apply {
+                this += styles.getDefaultButton().apply {
                     action {
                         controller.startProjection()
                     }
                 }
                 addClass(styles.wrapper)
-                this += Styles().buttonStyle.apply {
+                this += styles.getDefaultButton().apply {
                     text = "Справка"
                     action {
                         controller.showHelp()

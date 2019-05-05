@@ -11,6 +11,7 @@ import javafx.scene.control.Label
 import javafx.scene.control.ListView
 import javafx.scene.control.TabPane
 import javafx.scene.control.TextField
+import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
 import javafx.scene.text.FontPosture
 import tornadofx.*
@@ -26,7 +27,7 @@ class Styles : Stylesheet() {
         }
     }
 
-    val wifiTextField = TextField().apply {
+    fun getDefaultTextField() = TextField().apply {
         maxWidth = 400.0
         minWidth = 400.0
         minHeight = 55.0
@@ -36,7 +37,7 @@ class Styles : Stylesheet() {
         }
     }
 
-    val buttonStyle = JFXButton().apply {
+    fun getDefaultButton() = JFXButton().apply {
         style {
             backgroundColor += Color.web("#5B5B5D")
             text = "Подключиться"
@@ -48,22 +49,30 @@ class Styles : Stylesheet() {
         buttonType = JFXButton.ButtonType.RAISED
     }
 
-    val defaultList = ListView<Label>().apply {
+    fun getDefaultList() = ListView<Label>().apply {
         maxWidth = 400.0
         minWidth = 400.0
         minHeight = 60.0
         maxHeight = 60.0
     }
 
-    val test by cssclass()
 
-    val defaultTabPane = TabPane().apply {
+    fun getDefaultTabPane() = TabPane().apply {
         tabMinHeight = 50.0
         tabMinWidth = 50.0
         minWidth = 600.0
+        maxWidth = 600.0
+        maxHeight = 500.0
         minHeight = 500.0
         tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
     }
+
+    fun getDefaultStackPane() = StackPane().apply {
+        minWidth = 600.0
+        minHeight = 500.0
+    }
+
+    val test by cssclass()
 
     val defaultColor = c("#1B1B22")
 

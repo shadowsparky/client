@@ -17,7 +17,7 @@ import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.ImageCallback
 import tornadofx.*
 
-class VideoView(type: ConnectionType) : View(), ImageCallback {
+class VideoView(type: ConnectionType) : View("Трансляцияй"), ImageCallback {
     val image: ImageView
     val controller: VideoController
     var client: Client? = null

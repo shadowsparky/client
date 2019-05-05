@@ -42,10 +42,6 @@ abstract class BaseView : View(""), Resultable {
         }
     }
 
-    protected fun setStyle() {
-        JMetro(JMetro.Style.DARK).applyTheme(root)
-    }
-
     override fun onSuccess() = Platform.runLater {
         video!!.stage = video!!.openWindow(StageStyle.UNDECORATED)?.apply {
             isFullScreen = true
