@@ -13,7 +13,7 @@ import tornadofx.*
 
 open class MainView : View("Главное меню"){
     private val styles = Injection.provideStyles()
-    override val root = styles.getDefaultTabPane()
+    override val root = styles.getDefaultStackPane()
 
     private fun setStyle() {
         JMetro(JMetro.Style.DARK).applyTheme(root)
@@ -22,18 +22,20 @@ open class MainView : View("Главное меню"){
     init {
         val adb = AdbView()
         root.apply {
-            addClass(styles.test)
-            tab("WIFI") {
-                add(WifiView().root)
-            }
+            this += styles.getDefaultTabPane().apply {
+                tab("WIFI") {
+                    add(WifiView().root)
+                }
 
-            tab("ADB") {
-                adb.updateDevices()
-                add(adb.root)
+                tab("ADB") {
+                    adb.updateDevices()
+                    add(adb.root)
+                }
+                selectionModel.selectedItemProperty().addListener { obs, ov, nv ->
+                    adb.updateDevices()
+                }
             }
-            selectionModel.selectedItemProperty().addListener { obs, ov, nv ->
-                adb.updateDevices()
-            }
+            addClass(styles.test)
         }
         setStyle()
     }

@@ -60,16 +60,20 @@ class Styles : Stylesheet() {
     fun getDefaultTabPane() = TabPane().apply {
         tabMinHeight = 50.0
         tabMinWidth = 50.0
+        minHeight = 560.0
         minWidth = 600.0
-        maxWidth = 600.0
-        maxHeight = 500.0
-        minHeight = 500.0
+        useMaxWidth = true
+        useMaxHeight = true
         tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
     }
 
     fun getDefaultStackPane() = StackPane().apply {
-        minWidth = 600.0
+        useMaxWidth = true
+        useMaxHeight = true
         minHeight = 500.0
+        minWidth = 500.0
+//        minWidth = 600.0
+//        minHeight = 500.0
     }
 
     val test by cssclass()

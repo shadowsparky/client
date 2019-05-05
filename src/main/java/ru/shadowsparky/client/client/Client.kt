@@ -131,11 +131,11 @@ class Client(
         val decoder = Decoder()
         while (handling) {
             val item = saved_data.take()
-            decoder.use {
-                val asyncImage = async(Dispatchers.IO) { decoder?.decode(item) }
-                val image = asyncImage.await()
-                if (image != null) callback.handleImage(image)
-            }
+//            decoder.use {
+            val asyncImage = async(Dispatchers.IO) { decoder?.decode(item) }
+            val image = asyncImage.await()
+            if (image != null) callback.handleImage(image)
+//            }
         }
     }
 }

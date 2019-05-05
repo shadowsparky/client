@@ -50,9 +50,8 @@ class AdbController(private val view: AdbView) {
     fun startProjection() {
         view.video = VideoView(ConnectionType.adb)
         view.video?.client = Client(view.video!!, view, "127.0.0.1", Extras.FORWARD_PORT)
-        val strDevice = view.input.selectionModel?.selectedItem?.text
-        if (strDevice != null) {
-            val device = Parser.deviceToStr(strDevice)
+        if (view.deviceAddr != null) {
+            val device = Parser.deviceToStr(view.deviceAddr!!)
             if (device != null) {
                 adb.forwardPort(device.id)
                 view.video?.client?.start()

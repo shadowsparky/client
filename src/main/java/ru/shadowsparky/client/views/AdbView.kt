@@ -21,6 +21,7 @@ class AdbView : BaseView() {
     override val root = styles.getDefaultStackPane()
     var input = styles.getDefaultList()
     private val controller: AdbController = AdbController(this)
+    var deviceAddr: String? = null
 
     fun updateDevices() = Platform.runLater {
         input.items.clear()
@@ -34,7 +35,11 @@ class AdbView : BaseView() {
         with(root) {
             vbox {
                 this += styles.getLabel("Выберите устройство")
-                this += input
+                this += input.apply {
+                    selectionModel.selectedItemProperty().addListener { obs, ov, nv ->
+                        deviceAddr = nv.text
+                    }
+                }
                 addClass(styles.wrapper)
                 this += styles.getDefaultButton().apply {
                     action {
