@@ -5,7 +5,12 @@
 package ru.shadowsparky.client.client
 
 import com.google.protobuf.InvalidProtocolBufferException
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ru.shadowsparky.client.entities.TransferBuffer
+import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.Extras.Companion.PORT
 import ru.shadowsparky.client.utils.ImageCallback
 import ru.shadowsparky.client.utils.Injection
@@ -33,10 +38,16 @@ class Client(
         saved_data.clear()
     }
 
+    private val type: ConnectionType
+
+    init {
+        type = if (addr == "127.0.0.1") ConnectionType.adb else ConnectionType.wifi
+    }
+
     private var socket: Socket? = null
     private val log = Injection.provideLogger()
     private lateinit var pData: PreparingDataOuterClass.PreparingData
-    private var saved_data = LinkedBlockingQueue<ByteArray>()
+    private var saved_data = LinkedBlockingQueue<TransferBuffer>()
     var handling: Boolean = false
         set(value) {
             if (value) {
@@ -106,8 +117,8 @@ class Client(
                 val picture = HandledPictureOuterClass
                         .HandledPicture
                         .parseDelimitedFrom(socket!!.getInputStream())
-//                if (picture != null)
-                    saved_data.add(picture.encodedPicture.toByteArray())
+                val buffer = TransferBuffer(picture.encodedPicture.toByteArray(), picture.flags)
+                saved_data.add(buffer)
             }
         } catch (e: SocketException) {
             log.printInfo("Handling disabled by: SocketException. ${e.message}")
@@ -128,14 +139,12 @@ class Client(
 
     fun decode() = GlobalScope.launch(Dispatchers.IO) {
         log.printInfo("Decoder initialized")
-        val decoder = Decoder()
+        var decoder = Decoder()
         while (handling) {
             val item = saved_data.take()
-//            decoder.use {
-            val asyncImage = async(Dispatchers.IO) { decoder?.decode(item) }
-            val image = asyncImage.await()
-            if (image != null) callback.handleImage(image)
-//            }
+            val image = withContext(Dispatchers.IO) { decoder.decode(item.data) }
+            log.printInfo("Image decoded: ${item.data} ${saved_data.size}")
+//            if (image != null) callback.handleImage(image)
         }
     }
 }

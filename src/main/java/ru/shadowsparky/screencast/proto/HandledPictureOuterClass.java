@@ -19,19 +19,14 @@ public final class HandledPictureOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional int32 width = 1;</code>
-     */
-    int getWidth();
-
-    /**
-     * <code>optional int32 height = 2;</code>
-     */
-    int getHeight();
-
-    /**
-     * <code>optional bytes encoded_picture = 3;</code>
+     * <code>optional bytes encoded_picture = 1;</code>
      */
     com.google.protobuf.ByteString getEncodedPicture();
+
+    /**
+     * <code>optional int32 flags = 2;</code>
+     */
+    int getFlags();
   }
   /**
    * Protobuf type {@code ru.shadowsparky.screencast.proto.HandledPicture}
@@ -45,9 +40,8 @@ public final class HandledPictureOuterClass {
       super(builder);
     }
     private HandledPicture() {
-      width_ = 0;
-      height_ = 0;
       encodedPicture_ = com.google.protobuf.ByteString.EMPTY;
+      flags_ = 0;
     }
 
     @java.lang.Override
@@ -75,19 +69,14 @@ public final class HandledPictureOuterClass {
               }
               break;
             }
-            case 8: {
+            case 10: {
 
-              width_ = input.readInt32();
+              encodedPicture_ = input.readBytes();
               break;
             }
             case 16: {
 
-              height_ = input.readInt32();
-              break;
-            }
-            case 26: {
-
-              encodedPicture_ = input.readBytes();
+              flags_ = input.readInt32();
               break;
             }
           }
@@ -113,31 +102,22 @@ public final class HandledPictureOuterClass {
               ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture.class, ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture.Builder.class);
     }
 
-    public static final int WIDTH_FIELD_NUMBER = 1;
-    private int width_;
-    /**
-     * <code>optional int32 width = 1;</code>
-     */
-    public int getWidth() {
-      return width_;
-    }
-
-    public static final int HEIGHT_FIELD_NUMBER = 2;
-    private int height_;
-    /**
-     * <code>optional int32 height = 2;</code>
-     */
-    public int getHeight() {
-      return height_;
-    }
-
-    public static final int ENCODED_PICTURE_FIELD_NUMBER = 3;
+    public static final int ENCODED_PICTURE_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString encodedPicture_;
     /**
-     * <code>optional bytes encoded_picture = 3;</code>
+     * <code>optional bytes encoded_picture = 1;</code>
      */
     public com.google.protobuf.ByteString getEncodedPicture() {
       return encodedPicture_;
+    }
+
+    public static final int FLAGS_FIELD_NUMBER = 2;
+    private int flags_;
+    /**
+     * <code>optional int32 flags = 2;</code>
+     */
+    public int getFlags() {
+      return flags_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -152,14 +132,11 @@ public final class HandledPictureOuterClass {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (width_ != 0) {
-        output.writeInt32(1, width_);
-      }
-      if (height_ != 0) {
-        output.writeInt32(2, height_);
-      }
       if (!encodedPicture_.isEmpty()) {
-        output.writeBytes(3, encodedPicture_);
+        output.writeBytes(1, encodedPicture_);
+      }
+      if (flags_ != 0) {
+        output.writeInt32(2, flags_);
       }
     }
 
@@ -168,17 +145,13 @@ public final class HandledPictureOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (width_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, width_);
-      }
-      if (height_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, height_);
-      }
       if (!encodedPicture_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(3, encodedPicture_);
+          .computeBytesSize(1, encodedPicture_);
+      }
+      if (flags_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, flags_);
       }
       memoizedSize = size;
       return size;
@@ -196,12 +169,10 @@ public final class HandledPictureOuterClass {
       ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture other = (ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture) obj;
 
       boolean result = true;
-      result = result && (getWidth()
-          == other.getWidth());
-      result = result && (getHeight()
-          == other.getHeight());
       result = result && getEncodedPicture()
           .equals(other.getEncodedPicture());
+      result = result && (getFlags()
+          == other.getFlags());
       return result;
     }
 
@@ -212,12 +183,10 @@ public final class HandledPictureOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptorForType().hashCode();
-      hash = (37 * hash) + WIDTH_FIELD_NUMBER;
-      hash = (53 * hash) + getWidth();
-      hash = (37 * hash) + HEIGHT_FIELD_NUMBER;
-      hash = (53 * hash) + getHeight();
       hash = (37 * hash) + ENCODED_PICTURE_FIELD_NUMBER;
       hash = (53 * hash) + getEncodedPicture().hashCode();
+      hash = (37 * hash) + FLAGS_FIELD_NUMBER;
+      hash = (53 * hash) + getFlags();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -336,11 +305,9 @@ public final class HandledPictureOuterClass {
       }
       public Builder clear() {
         super.clear();
-        width_ = 0;
-
-        height_ = 0;
-
         encodedPicture_ = com.google.protobuf.ByteString.EMPTY;
+
+        flags_ = 0;
 
         return this;
       }
@@ -364,9 +331,8 @@ public final class HandledPictureOuterClass {
 
       public ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture buildPartial() {
         ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture result = new ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture(this);
-        result.width_ = width_;
-        result.height_ = height_;
         result.encodedPicture_ = encodedPicture_;
+        result.flags_ = flags_;
         onBuilt();
         return result;
       }
@@ -408,14 +374,11 @@ public final class HandledPictureOuterClass {
 
       public Builder mergeFrom(ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture other) {
         if (other == ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture.getDefaultInstance()) return this;
-        if (other.getWidth() != 0) {
-          setWidth(other.getWidth());
-        }
-        if (other.getHeight() != 0) {
-          setHeight(other.getHeight());
-        }
         if (other.getEncodedPicture() != com.google.protobuf.ByteString.EMPTY) {
           setEncodedPicture(other.getEncodedPicture());
+        }
+        if (other.getFlags() != 0) {
+          setFlags(other.getFlags());
         }
         onChanged();
         return this;
@@ -443,67 +406,15 @@ public final class HandledPictureOuterClass {
         return this;
       }
 
-      private int width_ ;
-      /**
-       * <code>optional int32 width = 1;</code>
-       */
-      public int getWidth() {
-        return width_;
-      }
-      /**
-       * <code>optional int32 width = 1;</code>
-       */
-      public Builder setWidth(int value) {
-        
-        width_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 width = 1;</code>
-       */
-      public Builder clearWidth() {
-        
-        width_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int height_ ;
-      /**
-       * <code>optional int32 height = 2;</code>
-       */
-      public int getHeight() {
-        return height_;
-      }
-      /**
-       * <code>optional int32 height = 2;</code>
-       */
-      public Builder setHeight(int value) {
-        
-        height_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 height = 2;</code>
-       */
-      public Builder clearHeight() {
-        
-        height_ = 0;
-        onChanged();
-        return this;
-      }
-
       private com.google.protobuf.ByteString encodedPicture_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional bytes encoded_picture = 3;</code>
+       * <code>optional bytes encoded_picture = 1;</code>
        */
       public com.google.protobuf.ByteString getEncodedPicture() {
         return encodedPicture_;
       }
       /**
-       * <code>optional bytes encoded_picture = 3;</code>
+       * <code>optional bytes encoded_picture = 1;</code>
        */
       public Builder setEncodedPicture(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -515,11 +426,37 @@ public final class HandledPictureOuterClass {
         return this;
       }
       /**
-       * <code>optional bytes encoded_picture = 3;</code>
+       * <code>optional bytes encoded_picture = 1;</code>
        */
       public Builder clearEncodedPicture() {
         
         encodedPicture_ = getDefaultInstance().getEncodedPicture();
+        onChanged();
+        return this;
+      }
+
+      private int flags_ ;
+      /**
+       * <code>optional int32 flags = 2;</code>
+       */
+      public int getFlags() {
+        return flags_;
+      }
+      /**
+       * <code>optional int32 flags = 2;</code>
+       */
+      public Builder setFlags(int value) {
+        
+        flags_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 flags = 2;</code>
+       */
+      public Builder clearFlags() {
+        
+        flags_ = 0;
         onChanged();
         return this;
       }
@@ -587,9 +524,9 @@ public final class HandledPictureOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n#src/main/proto/HandledPicture.proto\022 r" +
-      "u.shadowsparky.screencast.proto\"H\n\016Handl" +
-      "edPicture\022\r\n\005width\030\001 \001(\005\022\016\n\006height\030\002 \001(\005" +
-      "\022\027\n\017encoded_picture\030\003 \001(\014b\006proto3"
+      "u.shadowsparky.screencast.proto\"8\n\016Handl" +
+      "edPicture\022\027\n\017encoded_picture\030\001 \001(\014\022\r\n\005fl" +
+      "ags\030\002 \001(\005b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -608,7 +545,7 @@ public final class HandledPictureOuterClass {
     internal_static_ru_shadowsparky_screencast_proto_HandledPicture_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ru_shadowsparky_screencast_proto_HandledPicture_descriptor,
-        new java.lang.String[] { "Width", "Height", "EncodedPicture", });
+        new java.lang.String[] { "EncodedPicture", "Flags", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

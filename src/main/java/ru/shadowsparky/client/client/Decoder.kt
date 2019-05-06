@@ -5,10 +5,7 @@
 package ru.shadowsparky.client.client
 
 import javafx.scene.image.Image
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.bytedeco.javacpp.*
 import org.bytedeco.javacpp.avcodec.*
 import org.bytedeco.javacpp.avutil.*
@@ -19,29 +16,13 @@ import java.io.Closeable
 import java.io.DataOutputStream
 import java.nio.ByteBuffer
 
-class Decoder(
-//        private val callback: ImageCallback//,
-//        private var pData: PreparingData
-) : Closeable {
-
-    override fun close() {
-        codec.close()
-        c.close()
-        picture.close()
-        RGBPicture.close()
-        packet.close()
-        buffer?.close()
-        convert_ctx?.close()
-    }
-
+class Decoder {
     private val log = Injection.provideLogger()
     private var codec = avcodec_find_decoder(AV_CODEC_ID_H264)
     private var c = AVCodecContext()
     private var picture = av_frame_alloc()
     private var RGBPicture = av_frame_alloc()
     private var packet = av_packet_alloc()
-    private var process: Process? = null
-    private var mOut: DataOutputStream? = null
     private var converter = Injection.provideConverter()
     private var bytes: Int? = null
     private var buffer: BytePointer? = null
@@ -88,20 +69,12 @@ class Decoder(
                     SWS_BICUBIC,
                     null,
                     null,
-                    DoublePointer())
+                    DoublePointer()
+            )
         }
-
         swscale.sws_scale(convert_ctx, picture.data(), picture.linesize(), 0, c.height(), RGBPicture.data(), RGBPicture.linesize())
         val mats = withContext(Dispatchers.Default) { opencv_core.Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0), RGBPicture.linesize(0).toLong()) }
-        val image = withContext(Dispatchers.Default) { converter.Mat2Image(mats) }
-        GlobalScope.launch(Dispatchers.IO) {
-            c.deallocate()
-            mats.release()
-            packet.deallocate()
-            picture.deallocate()
-            RGBPicture.deallocate()
-        }
-        return image
-//        callback.handleImage(image)
+//        return converter.Mat2Image(mats)
+        return null
     }
 }

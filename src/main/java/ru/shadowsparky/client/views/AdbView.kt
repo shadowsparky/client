@@ -57,9 +57,9 @@ class AdbView : BaseView() {
                     }
                 }
 //                addClass(styles.wrapper)
-                this += ProgressBar().apply {
-                    progress = INDETERMINATE_PROGRESS
-                }
+//                this += ProgressBar().apply {
+//                    progress = INDETERMINATE_PROGRESS
+//                }
                 useMaxWidth = true
                 alignment = Pos.CENTER
             }
