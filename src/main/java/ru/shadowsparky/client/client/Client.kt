@@ -144,7 +144,7 @@ class Client(
             val item = saved_data.take()
             val image = withContext(Dispatchers.IO) { decoder.decode(item.data) }
             log.printInfo("Image decoded: ${item.data} ${saved_data.size}")
-//            if (image != null) callback.handleImage(image)
+            if (image != null) callback.handleImage(image)
         }
     }
 }

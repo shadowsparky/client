@@ -5,16 +5,30 @@
 package ru.shadowsparky.client.client
 
 import javafx.scene.image.Image
-import kotlinx.coroutines.*
-import org.bytedeco.javacpp.*
-import org.bytedeco.javacpp.avcodec.*
-import org.bytedeco.javacpp.avutil.*
-import org.bytedeco.javacpp.opencv_core.CV_8UC3
-import org.bytedeco.javacpp.swscale.SWS_BICUBIC
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.bytedeco.ffmpeg.avcodec.AVCodecContext
+import org.bytedeco.ffmpeg.avutil.AVDictionary
+import org.bytedeco.ffmpeg.global.avcodec.*
+import org.bytedeco.ffmpeg.global.avutil
+import org.bytedeco.ffmpeg.global.avutil.*
+import org.bytedeco.ffmpeg.global.swscale
+import org.bytedeco.ffmpeg.global.swscale.SWS_BICUBIC
+import org.bytedeco.ffmpeg.swscale.SwsContext
+import org.bytedeco.javacpp.BytePointer
+import org.bytedeco.javacpp.DoublePointer
+import org.bytedeco.javacv.CanvasFrame
+import org.bytedeco.javacv.OpenCVFrameConverter
+import org.bytedeco.opencv.global.opencv_core.CV_8UC3
+import org.opencv.core.Core
+import org.opencv.core.Mat
+import org.opencv.core.MatOfByte
+import org.opencv.imgcodecs.Imgcodecs
+import org.opencv.osgi.OpenCVNativeLoader
 import ru.shadowsparky.client.utils.Injection
-import java.io.Closeable
-import java.io.DataOutputStream
+import java.io.ByteArrayInputStream
 import java.nio.ByteBuffer
+import javax.swing.WindowConstants
 
 class Decoder {
     private val log = Injection.provideLogger()
@@ -23,16 +37,17 @@ class Decoder {
     private var picture = av_frame_alloc()
     private var RGBPicture = av_frame_alloc()
     private var packet = av_packet_alloc()
-    private var converter = Injection.provideConverter()
+//    private var converter = Injection.provideConverter()
     private var bytes: Int? = null
     private var buffer: BytePointer? = null
-    private var convert_ctx: swscale.SwsContext? = null
+    private var convert_ctx: SwsContext? = null
     private var saved_width: Int = 0
     private var saved_height: Int = 0
 
     init {
+        OpenCVNativeLoader().init()
         c = avcodec_alloc_context3(codec)
-        avcodec_open2(c, codec, avutil.AVDictionary())
+        avcodec_open2(c, codec, AVDictionary())
     }
 
     fun intelliParams() {
@@ -73,8 +88,13 @@ class Decoder {
             )
         }
         swscale.sws_scale(convert_ctx, picture.data(), picture.linesize(), 0, c.height(), RGBPicture.data(), RGBPicture.linesize())
-        val mats = withContext(Dispatchers.Default) { opencv_core.Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0), RGBPicture.linesize(0).toLong()) }
-//        return converter.Mat2Image(mats)
-        return null
+        val mats = withContext(Dispatchers.Default) { Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer()) }
+        return getImage(mats)
+    }
+
+    fun getImage(frame: Mat) : Image {
+        val buffer = MatOfByte()
+        Imgcodecs.imencode(".bmp", frame, buffer)
+        return Image(ByteArrayInputStream(buffer.toArray()));
     }
 }
