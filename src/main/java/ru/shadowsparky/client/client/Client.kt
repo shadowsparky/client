@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import ru.shadowsparky.client.entities.TransferBuffer
 import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.Extras.Companion.PORT
-import ru.shadowsparky.client.utils.ImageCallback
+import ru.shadowsparky.client.utils.ImageHandler
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.Resultable
 import ru.shadowsparky.client.utils.exceptions.CorruptedDataException
@@ -27,7 +27,7 @@ import java.net.SocketException
 import java.util.concurrent.LinkedBlockingQueue
 
 class Client(
-        private val callback: ImageCallback,
+        private val callback: ImageHandler,
         private val handler: Resultable,
         val addr: String,
         private val port: Int = PORT
@@ -36,6 +36,8 @@ class Client(
     override fun close() {
         socket?.close()
         saved_data.clear()
+        decoder = null
+        System.gc()
     }
 
     private val type: ConnectionType
@@ -48,6 +50,7 @@ class Client(
     private val log = Injection.provideLogger()
     private lateinit var pData: PreparingDataOuterClass.PreparingData
     private var saved_data = LinkedBlockingQueue<TransferBuffer>()
+    private var decoder: Decoder? = null
     var handling: Boolean = false
         set(value) {
             if (value) {
@@ -61,9 +64,7 @@ class Client(
         }
 
     fun start() {
-        this.use {
-            connectToServer()
-        }
+        connectToServer()
     }
 
     private fun connectToServer() = GlobalScope.launch {
@@ -138,13 +139,13 @@ class Client(
     }
 
     fun decode() = GlobalScope.launch(Dispatchers.IO) {
-        log.printInfo("Decoder initialized")
-        var decoder = Decoder()
-        while (handling) {
-            val item = saved_data.take()
-            val image = withContext(Dispatchers.IO) { decoder.decode(item.data) }
-            log.printInfo("Image decoded: ${item.data} ${saved_data.size}")
-            if (image != null) callback.handleImage(image)
-        }
+        decoder = Decoder()
+//        Decoder().use {
+            while (handling) {
+                val item = saved_data.take()
+                val image = withContext(Dispatchers.IO) { decoder?.decode(item.data, saved_data.size) }
+                if (image != null) callback.setImage(image)
+            }
+//        }
     }
 }

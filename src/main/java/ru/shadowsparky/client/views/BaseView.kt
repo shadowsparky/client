@@ -43,7 +43,7 @@ abstract class BaseView : View(""), Resultable {
     }
 
     override fun onSuccess() = Platform.runLater {
-        video!!.stage = video!!.openWindow(StageStyle.UNDECORATED)?.apply {
+        video!!.stage = video!!.openWindow()?.apply {
             isFullScreen = true
         }
         video!!.stage?.addEventFilter(KeyEvent.KEY_PRESSED) {

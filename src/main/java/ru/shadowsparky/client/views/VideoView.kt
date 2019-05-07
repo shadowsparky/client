@@ -14,10 +14,10 @@ import javafx.stage.Stage
 import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.controllers.VideoController
 import ru.shadowsparky.client.utils.ConnectionType
-import ru.shadowsparky.client.utils.ImageCallback
+import ru.shadowsparky.client.utils.ImageHandler
 import tornadofx.*
 
-class VideoView(type: ConnectionType) : View("Трансляция"), ImageCallback {
+class VideoView(type: ConnectionType) : View("Трансляция"), ImageHandler {
     val image: ImageView
     val controller: VideoController
     var client: Client? = null
@@ -39,7 +39,7 @@ class VideoView(type: ConnectionType) : View("Трансляция"), ImageCallb
         controller = VideoController(this, type)
     }
 
-    override fun handleImage(image: Image) {
+    override fun setImage(image: Image) {
         this.image.image = image
         val screenSize = controller.getScreenSize(image)
         controller.updateIncfelicity(image.width, image.height)

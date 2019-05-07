@@ -6,6 +6,6 @@ package ru.shadowsparky.client.utils
 
 import javafx.scene.image.Image
 
-interface ImageCallback {
-    fun handleImage(image: Image)
+interface ImageHandler {
+    fun setImage(image: Image)
 }

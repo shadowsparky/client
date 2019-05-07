@@ -4,8 +4,11 @@
 
 package ru.shadowsparky.client.client
 
+import javafx.embed.swing.SwingFXUtils
 import javafx.scene.image.Image
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.bytedeco.ffmpeg.avcodec.AVCodecContext
 import org.bytedeco.ffmpeg.avutil.AVDictionary
@@ -17,27 +20,26 @@ import org.bytedeco.ffmpeg.global.swscale.SWS_BICUBIC
 import org.bytedeco.ffmpeg.swscale.SwsContext
 import org.bytedeco.javacpp.BytePointer
 import org.bytedeco.javacpp.DoublePointer
-import org.bytedeco.javacv.CanvasFrame
-import org.bytedeco.javacv.OpenCVFrameConverter
 import org.bytedeco.opencv.global.opencv_core.CV_8UC3
-import org.opencv.core.Core
 import org.opencv.core.Mat
 import org.opencv.core.MatOfByte
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.osgi.OpenCVNativeLoader
 import ru.shadowsparky.client.utils.Injection
+import java.awt.image.BufferedImage
+import java.awt.image.DataBufferByte
 import java.io.ByteArrayInputStream
+import java.io.Closeable
 import java.nio.ByteBuffer
-import javax.swing.WindowConstants
 
-class Decoder {
+
+class Decoder : Closeable {
     private val log = Injection.provideLogger()
     private var codec = avcodec_find_decoder(AV_CODEC_ID_H264)
     private var c = AVCodecContext()
     private var picture = av_frame_alloc()
     private var RGBPicture = av_frame_alloc()
     private var packet = av_packet_alloc()
-//    private var converter = Injection.provideConverter()
     private var bytes: Int? = null
     private var buffer: BytePointer? = null
     private var convert_ctx: SwsContext? = null
@@ -61,14 +63,14 @@ class Decoder {
         }
     }
 
-    suspend fun decode(data: ByteArray) : Image? {
+    suspend fun decode(data: ByteArray, size: Int) : Image? {
         packet.data(BytePointer(ByteBuffer.wrap(data)))
         packet.size(data.size)
-        var len = withContext(Dispatchers.Default) { avcodec_send_packet(c, packet) }
+        var len = avcodec_send_packet(c, packet)
         if (len != 0) {
             return null
         }
-        len = withContext(Dispatchers.Default) { avcodec_receive_frame(c, picture) }
+        len = avcodec_receive_frame(c, picture)
         if (len != 0) {
             return null
         }
@@ -87,14 +89,50 @@ class Decoder {
                     DoublePointer()
             )
         }
-        swscale.sws_scale(convert_ctx, picture.data(), picture.linesize(), 0, c.height(), RGBPicture.data(), RGBPicture.linesize())
-        val mats = withContext(Dispatchers.Default) { Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer()) }
-        return getImage(mats)
+        swscale.sws_scale(convert_ctx, picture.data(), picture.linesize(),  0, c.height(), RGBPicture.data(), RGBPicture.linesize())
+        val mats = Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer())
+        use {
+            return if (size > 10) {
+                log.printInfo("Drop frame")
+                null
+            } else {
+                mats.toImage(mats)
+            }
+        }
+//        mats.toImage(param)
+
     }
 
-    fun getImage(frame: Mat) : Image {
-        val buffer = MatOfByte()
-        Imgcodecs.imencode(".bmp", frame, buffer)
-        return Image(ByteArrayInputStream(buffer.toArray()));
+    fun toBufferedImage(m: Mat) : Image? {
+        var type = BufferedImage.TYPE_BYTE_GRAY
+        if ( m.channels() > 1 ) {
+          type = BufferedImage.TYPE_3BYTE_BGR;
+        }
+        val bufferSize = m.channels()*m.cols()*m.rows();
+        val b = ByteArray(bufferSize)
+        m.get(0,0,b)
+        val image = BufferedImage(m.cols(),m.rows(), type);
+        val targetPixels = ((image.raster.dataBuffer) as DataBufferByte).data;
+        System.arraycopy(b, 0, targetPixels, 0, b.size);
+        return SwingFXUtils.toFXImage(image, null)
+//        return null
     }
+
+    override fun close() {
+        GlobalScope.launch {
+            codec.close()
+            c.close()
+            picture.close()
+            RGBPicture.close()
+            packet.close()
+            buffer?.close()
+            convert_ctx?.close()
+        }
+    }
+}
+
+fun Mat.toImage(frame: Mat) : Image {
+    val buffer = MatOfByte()
+    Imgcodecs.imencode(".bmp", frame, buffer)
+    return Image(ByteArrayInputStream(buffer.toArray()));
 }
