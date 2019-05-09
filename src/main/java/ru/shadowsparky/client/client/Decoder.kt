@@ -20,6 +20,8 @@ import org.bytedeco.ffmpeg.global.swscale.SWS_BICUBIC
 import org.bytedeco.ffmpeg.swscale.SwsContext
 import org.bytedeco.javacpp.BytePointer
 import org.bytedeco.javacpp.DoublePointer
+import org.bytedeco.javacv.CanvasFrame
+import org.bytedeco.javacv.OpenCVFrameConverter
 import org.bytedeco.opencv.global.opencv_core.CV_8UC3
 import org.opencv.core.Mat
 import org.opencv.core.MatOfByte
@@ -31,6 +33,10 @@ import java.awt.image.DataBufferByte
 import java.io.ByteArrayInputStream
 import java.io.Closeable
 import java.nio.ByteBuffer
+import org.bytedeco.librealsense.frame
+import org.opencv.core.CvType.channels
+import ru.shadowsparky.client.views.CanvasVideoFrame
+import kotlin.math.roundToInt
 
 
 class Decoder : Closeable {
@@ -41,15 +47,19 @@ class Decoder : Closeable {
     private var RGBPicture = av_frame_alloc()
     private var packet = av_packet_alloc()
     private var bytes: Int? = null
+    private val converter = OpenCVFrameConverter.ToMat()
     private var buffer: BytePointer? = null
     private var convert_ctx: SwsContext? = null
     private var saved_width: Int = 0
     private var saved_height: Int = 0
+    private val canvas = CanvasVideoFrame("test")
+    private var skipper = 0;
 
     init {
         OpenCVNativeLoader().init()
         c = avcodec_alloc_context3(codec)
         avcodec_open2(c, codec, AVDictionary())
+
     }
 
     fun intelliParams() {
@@ -59,6 +69,7 @@ class Decoder : Closeable {
             av_image_fill_arrays(RGBPicture.data(), RGBPicture.linesize(), buffer, AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
             saved_width = c.width()
             saved_height = c.height()
+            canvas.setCanvasSize(saved_width, saved_height)
             log.printInfo("Orientation changed!")
         }
     }
@@ -91,31 +102,11 @@ class Decoder : Closeable {
         }
         swscale.sws_scale(convert_ctx, picture.data(), picture.linesize(),  0, c.height(), RGBPicture.data(), RGBPicture.linesize())
         val mats = Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer())
-        use {
-            return if (size > 10) {
-                log.printInfo("Drop frame")
-                null
-            } else {
-                mats.toImage(mats)
-            }
-        }
-//        mats.toImage(param)
-
-    }
-
-    fun toBufferedImage(m: Mat) : Image? {
-        var type = BufferedImage.TYPE_BYTE_GRAY
-        if ( m.channels() > 1 ) {
-          type = BufferedImage.TYPE_3BYTE_BGR;
-        }
-        val bufferSize = m.channels()*m.cols()*m.rows();
-        val b = ByteArray(bufferSize)
-        m.get(0,0,b)
-        val image = BufferedImage(m.cols(),m.rows(), type);
-        val targetPixels = ((image.raster.dataBuffer) as DataBufferByte).data;
-        System.arraycopy(b, 0, targetPixels, 0, b.size);
-        return SwingFXUtils.toFXImage(image, null)
-//        return null
+        log.printInfo("$size")
+        Thread {
+            canvas.showImage(converter.convert(mats))
+        }.start()
+        return null
     }
 
     override fun close() {
@@ -131,8 +122,26 @@ class Decoder : Closeable {
     }
 }
 
-fun Mat.toImage(frame: Mat) : Image {
+fun Mat.toImage2() : Image {
     val buffer = MatOfByte()
-    Imgcodecs.imencode(".bmp", frame, buffer)
-    return Image(ByteArrayInputStream(buffer.toArray()));
+    Imgcodecs.imencode(".bmp", this, buffer);
+    return Image(ByteArrayInputStream(buffer.toArray()))
+}
+
+fun Mat.toImage() : Image {
+    var type = BufferedImage.TYPE_BYTE_GRAY
+    if (this.channels() > 1) {
+        type = BufferedImage.TYPE_3BYTE_BGR
+    }
+    val bufferSize = this.channels() * this.cols() * this.rows()
+    val b = ByteArray(bufferSize)
+    this.get(0, 0, b)
+    val image = BufferedImage(this.cols(), this.rows(), type)
+    val targetPixels = (image.raster.dataBuffer as DataBufferByte).data
+    System.arraycopy(b, 0, targetPixels, 0, b.size)
+    return SwingFXUtils.toFXImage(image, null)
+//    val buffer = MatOfByte()
+//    Imgcodecs.imencode(".bmp", frame, buffer)
+//    val image = Image(ByteArrayInputStream(buffer.toArray()));
+//    return image
 }

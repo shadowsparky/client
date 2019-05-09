@@ -38,6 +38,7 @@ class Client(
         saved_data.clear()
         decoder = null
         System.gc()
+        System.runFinalization()
     }
 
     private val type: ConnectionType
@@ -144,7 +145,7 @@ class Client(
             while (handling) {
                 val item = saved_data.take()
                 val image = withContext(Dispatchers.IO) { decoder?.decode(item.data, saved_data.size) }
-                if (image != null) callback.setImage(image)
+//                if (image != null) callback.setImage(image)
             }
 //        }
     }

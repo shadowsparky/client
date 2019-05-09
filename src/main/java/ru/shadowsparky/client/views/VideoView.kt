@@ -6,6 +6,7 @@
 package ru.shadowsparky.client.views
 
 import javafx.geometry.Pos
+import javafx.scene.CacheHint
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.HBox
@@ -16,6 +17,9 @@ import ru.shadowsparky.client.controllers.VideoController
 import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.ImageHandler
 import tornadofx.*
+import javafx.scene.effect.Lighting
+
+
 
 class VideoView(type: ConnectionType) : View("Трансляция"), ImageHandler {
     val image: ImageView
@@ -37,6 +41,9 @@ class VideoView(type: ConnectionType) : View("Трансляция"), ImageHandl
             }
         }
         controller = VideoController(this, type)
+        val lighting = Lighting()
+        image.cacheHint = CacheHint.SPEED
+        image.effect = lighting
     }
 
     override fun setImage(image: Image) {
