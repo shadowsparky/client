@@ -21,6 +21,7 @@ import org.bytedeco.ffmpeg.swscale.SwsContext
 import org.bytedeco.javacpp.BytePointer
 import org.bytedeco.javacpp.DoublePointer
 import org.bytedeco.javacv.CanvasFrame
+import org.bytedeco.javacv.Frame
 import org.bytedeco.javacv.OpenCVFrameConverter
 import org.bytedeco.opencv.global.opencv_core.CV_8UC3
 import org.opencv.core.Mat
@@ -35,11 +36,12 @@ import java.io.Closeable
 import java.nio.ByteBuffer
 import org.bytedeco.librealsense.frame
 import org.opencv.core.CvType.channels
+import ru.shadowsparky.client.utils.OrientationHandler
 import ru.shadowsparky.client.views.CanvasVideoFrame
 import kotlin.math.roundToInt
 
 
-class Decoder : Closeable {
+class Decoder(val handler: OrientationHandler) : Closeable {
     private val log = Injection.provideLogger()
     private var codec = avcodec_find_decoder(AV_CODEC_ID_H264)
     private var c = AVCodecContext()
@@ -47,12 +49,10 @@ class Decoder : Closeable {
     private var RGBPicture = av_frame_alloc()
     private var packet = av_packet_alloc()
     private var bytes: Int? = null
-    private val converter = OpenCVFrameConverter.ToMat()
     private var buffer: BytePointer? = null
     private var convert_ctx: SwsContext? = null
     private var saved_width: Int = 0
     private var saved_height: Int = 0
-    private val canvas = CanvasVideoFrame("test")
     private var skipper = 0;
 
     init {
@@ -69,12 +69,12 @@ class Decoder : Closeable {
             av_image_fill_arrays(RGBPicture.data(), RGBPicture.linesize(), buffer, AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
             saved_width = c.width()
             saved_height = c.height()
-            canvas.setCanvasSize(saved_width, saved_height)
+            handler.orientationChanged(saved_width, saved_height)
             log.printInfo("Orientation changed!")
         }
     }
 
-    suspend fun decode(data: ByteArray, size: Int) : Image? {
+    suspend fun decode(data: ByteArray, size: Int) : Mat? {
         packet.data(BytePointer(ByteBuffer.wrap(data)))
         packet.size(data.size)
         var len = avcodec_send_packet(c, packet)
@@ -102,11 +102,7 @@ class Decoder : Closeable {
         }
         swscale.sws_scale(convert_ctx, picture.data(), picture.linesize(),  0, c.height(), RGBPicture.data(), RGBPicture.linesize())
         val mats = Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer())
-        log.printInfo("$size")
-        Thread {
-            canvas.showImage(converter.convert(mats))
-        }.start()
-        return null
+        return mats
     }
 
     override fun close() {
@@ -120,28 +116,4 @@ class Decoder : Closeable {
             convert_ctx?.close()
         }
     }
-}
-
-fun Mat.toImage2() : Image {
-    val buffer = MatOfByte()
-    Imgcodecs.imencode(".bmp", this, buffer);
-    return Image(ByteArrayInputStream(buffer.toArray()))
-}
-
-fun Mat.toImage() : Image {
-    var type = BufferedImage.TYPE_BYTE_GRAY
-    if (this.channels() > 1) {
-        type = BufferedImage.TYPE_3BYTE_BGR
-    }
-    val bufferSize = this.channels() * this.cols() * this.rows()
-    val b = ByteArray(bufferSize)
-    this.get(0, 0, b)
-    val image = BufferedImage(this.cols(), this.rows(), type)
-    val targetPixels = (image.raster.dataBuffer as DataBufferByte).data
-    System.arraycopy(b, 0, targetPixels, 0, b.size)
-    return SwingFXUtils.toFXImage(image, null)
-//    val buffer = MatOfByte()
-//    Imgcodecs.imencode(".bmp", frame, buffer)
-//    val image = Image(ByteArrayInputStream(buffer.toArray()));
-//    return image
 }

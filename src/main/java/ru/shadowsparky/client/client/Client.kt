@@ -10,13 +10,11 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.shadowsparky.client.entities.TransferBuffer
-import ru.shadowsparky.client.utils.ConnectionType
+import ru.shadowsparky.client.utils.*
 import ru.shadowsparky.client.utils.Extras.Companion.PORT
-import ru.shadowsparky.client.utils.ImageHandler
-import ru.shadowsparky.client.utils.Injection
-import ru.shadowsparky.client.utils.Resultable
 import ru.shadowsparky.client.utils.exceptions.CorruptedDataException
 import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
+import ru.shadowsparky.client.views.CanvasVideoFrame
 import ru.shadowsparky.screencast.proto.HandledPictureOuterClass
 import ru.shadowsparky.screencast.proto.PreparingDataOuterClass
 import java.io.Closeable
@@ -27,26 +25,11 @@ import java.net.SocketException
 import java.util.concurrent.LinkedBlockingQueue
 
 class Client(
-        private val callback: ImageHandler,
         private val handler: Resultable,
+        private val frame: CanvasVideoFrame,
         val addr: String,
         private val port: Int = PORT
 ) : Closeable {
-
-    override fun close() {
-        socket?.close()
-        saved_data.clear()
-        decoder = null
-        System.gc()
-        System.runFinalization()
-    }
-
-    private val type: ConnectionType
-
-    init {
-        type = if (addr == "127.0.0.1") ConnectionType.adb else ConnectionType.wifi
-    }
-
     private var socket: Socket? = null
     private val log = Injection.provideLogger()
     private lateinit var pData: PreparingDataOuterClass.PreparingData
@@ -66,6 +49,14 @@ class Client(
 
     fun start() {
         connectToServer()
+    }
+
+    override fun close() {
+        socket?.close()
+        saved_data.clear()
+        decoder = null
+        System.gc()
+        System.runFinalization()
     }
 
     private fun connectToServer() = GlobalScope.launch {
@@ -102,7 +93,7 @@ class Client(
                 handler.onError(CorruptedDataException("Corrupted pData"))
             }
         } catch(e: InvalidProtocolBufferException) {
-            // ignore
+            log.printInfo("InvalidProtocolBufferException in handlePreparingData method")
         }
         return false
     }
@@ -140,13 +131,11 @@ class Client(
     }
 
     fun decode() = GlobalScope.launch(Dispatchers.IO) {
-        decoder = Decoder()
-//        Decoder().use {
-            while (handling) {
-                val item = saved_data.take()
-                val image = withContext(Dispatchers.IO) { decoder?.decode(item.data, saved_data.size) }
-//                if (image != null) callback.setImage(image)
-            }
-//        }
+        decoder = Decoder(frame)
+        while (handling) {
+            val item = saved_data.take()
+            val image = withContext(Dispatchers.IO) { decoder?.decode(item.data, saved_data.size) }
+            if (image != null) frame.showImage(image)
+        }
     }
 }

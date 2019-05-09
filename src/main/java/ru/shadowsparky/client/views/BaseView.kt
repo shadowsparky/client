@@ -30,7 +30,7 @@ abstract class BaseView : View(""), Resultable {
     abstract override val root: StackPane
 
     protected val styles = Injection.provideStyles()
-    var video: VideoView? = null
+    var video: CanvasVideoFrame? = null
     lateinit var dialog: Dialog
     var mButtonStatus = SimpleBooleanProperty(false)
     var loading = SimpleBooleanProperty(false)
@@ -43,22 +43,22 @@ abstract class BaseView : View(""), Resultable {
     }
 
     override fun onSuccess() = Platform.runLater {
-        video!!.stage = video!!.openWindow()?.apply {
-            isFullScreen = true
-        }
-        video!!.stage?.addEventFilter(KeyEvent.KEY_PRESSED) {
-            if (it.code == KeyCode.ESCAPE) {
-                video!!.client?.close()
-            }
-        }
-        if (video?.controller?.type == ConnectionType.adb)
-            video?.controller?.enableADBActions()
+//        video!!.stage = video!!.openWindow()?.apply {
+//            isFullScreen = true
+//        }
+//        video!!.stage?.addEventFilter(KeyEvent.KEY_PRESSED) {
+//            if (it.code == KeyCode.ESCAPE) {
+//                video!!.client?.close()
+//            }
+//        }
+//        if (video?.controller?.type == ConnectionType.adb)
+//            video?.controller?.enableADBActions()
         mButtonStatus.set(true)
     }
 
     override fun onError(e: Exception) = Platform.runLater {
         mButtonStatus.set(false)
-        video?.stage?.close()
+        video?.dispose()
         log.info("onError: $e")
         val error = when (e) {
             is ConnectException -> "При соединении произошла ошибка.\nСервер не найден"

@@ -22,35 +22,31 @@ import javafx.scene.effect.Lighting
 
 
 class VideoView(type: ConnectionType) : View("Трансляция"), ImageHandler {
-    val image: ImageView
-    val controller: VideoController
-    var client: Client? = null
-    var stage: Stage? = null
-
-    override val root = HBox()
-
-    init {
-        root.apply {
-            alignment = Pos.CENTER
-            image = imageview {
-                useMaxHeight = true
-                useMaxWidth = true
-            }
-            style {
-                backgroundColor += Color.BLACK
-            }
-        }
-        controller = VideoController(this, type)
-        val lighting = Lighting()
-        image.cacheHint = CacheHint.SPEED
-        image.effect = lighting
-    }
-
     override fun setImage(image: Image) {
-        this.image.image = image
-        val screenSize = controller.getScreenSize(image)
-        controller.updateIncfelicity(image.width, image.height)
-        this.image.fitHeight = screenSize.getHeight()
-        this.image.fitWidth = screenSize.getWidth()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    //    val image: ImageView
+//    val controller: VideoController
+//    var client: Client? = null
+//    var stage: Stage? = null
+//
+    override val root = HBox()
+//
+//    init {
+//        root.apply {
+//            alignment = Pos.CENTER
+//            image = imageview {
+//                useMaxHeight = true
+//                useMaxWidth = true
+//            }
+//            style {
+//                backgroundColor += Color.BLACK
+//            }
+//        }
+//        controller = VideoController(this, type)
+//        val lighting = Lighting()
+//        image.cacheHint = CacheHint.SPEED
+//        image.effect = lighting
+
 }
