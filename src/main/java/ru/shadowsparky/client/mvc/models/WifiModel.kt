@@ -5,5 +5,4 @@
 
 package ru.shadowsparky.client.mvc.models
 
-class WifiModel {
-}
+class WifiModel

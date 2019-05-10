@@ -9,12 +9,13 @@ import javafx.application.Platform
 import javafx.geometry.Pos
 import ru.shadowsparky.client.mvc.controllers.AdbController
 import ru.shadowsparky.client.utils.*
+import ru.shadowsparky.client.utils.objects.Injection
 import tornadofx.*
 
 class AdbView : BaseView() {
     override val root = styles.getDefaultStackPane()
     var input = styles.getDefaultList()
-    private val controller: AdbController = AdbController(this)
+    private val controller = Injection.provideAdbController(this)
     var deviceAddr: String? = null
 
     fun updateDevices() = Platform.runLater {

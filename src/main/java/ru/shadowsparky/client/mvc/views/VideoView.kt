@@ -15,6 +15,7 @@ import ru.shadowsparky.client.utils.objects.Constants
 import ru.shadowsparky.client.utils.objects.Constants.LOCALHOST
 import ru.shadowsparky.client.utils.interfaces.handlers.OrientationHandler
 import ru.shadowsparky.client.utils.interfaces.Resultable
+import ru.shadowsparky.client.utils.objects.Injection
 import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
@@ -40,7 +41,7 @@ class VideoView (
         } else {
             ConnectionType.wifi
         }
-        controller = VideoController(this, type)
+        controller = Injection.provideVideoController(this, type)
     }
 
     override fun setCanvasSize(width: Int, height: Int) {

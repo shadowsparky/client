@@ -9,12 +9,13 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
 import ru.shadowsparky.client.mvc.controllers.WifiController
 import ru.shadowsparky.client.utils.Dialog
+import ru.shadowsparky.client.utils.objects.Injection
 import tornadofx.*
 
 class WifiView : BaseView() {
     override val root = styles.getDefaultStackPane()
     var mInputText = SimpleStringProperty("192.168.31.221")
-    private var controller: WifiController = WifiController(this)
+    private var controller = Injection.provideWifiController(this)
 
     init {
         root.apply {
