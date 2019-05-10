@@ -17,4 +17,5 @@ object Constants {
     const val PORT = 1337
     const val FORWARD_PORT = 7331
     const val LOCALHOST = "127.0.0.1"
+    const val DEFAULT_LIB = "opencv_java410"
 }

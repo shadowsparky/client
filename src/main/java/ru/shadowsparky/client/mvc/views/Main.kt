@@ -5,19 +5,26 @@
 
 package ru.shadowsparky.client.mvc.views
 
+import javafx.scene.control.Alert
 import javafx.stage.Stage
+import org.scijava.nativelib.NativeLoader
 import ru.shadowsparky.client.mvc.Styles
 import tornadofx.App
 import tornadofx.reloadStylesheetsOnFocus
+import java.io.IOException
 
 class Main : App(MainView::class, Styles::class) {
     override fun start(stage: Stage) {
         stage.apply {
-            minWidthProperty().set(600.0)
-            minHeightProperty().set(500.0)
-//            maxWidthProperty().set(600.0)
-//            maxHeightProperty().set(600.0)
-            super.start(this)
+            try {
+                NativeLoader.loadLibrary("opencv_java4102");
+                minWidthProperty().set(600.0)
+                minHeightProperty().set(500.0)
+                super.start(this)
+            } catch(e : IOException) {
+                Alert(Alert.AlertType.ERROR, "Невозможно загрузить библиотеку\nдля работы с видео!").show()
+                return@apply
+            }
         }
     }
 

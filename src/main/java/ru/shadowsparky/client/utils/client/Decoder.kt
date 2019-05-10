@@ -40,7 +40,6 @@ class Decoder(val handler: OrientationHandler) : Closeable {
     private var saved_height: Int = 0
 
     init {
-        OpenCVNativeLoader().init()
         c = avcodec_alloc_context3(codec)
         avcodec_open2(c, codec, AVDictionary())
     }
