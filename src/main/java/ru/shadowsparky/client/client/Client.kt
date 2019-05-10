@@ -51,6 +51,10 @@ class Client(
         connectToServer()
     }
 
+    fun stop() {
+        socket?.close()
+    }
+
     override fun close() {
         socket?.close()
         saved_data.clear()

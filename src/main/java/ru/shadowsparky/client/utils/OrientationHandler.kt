@@ -6,5 +6,5 @@
 package ru.shadowsparky.client.utils
 
 interface OrientationHandler {
-    fun orientationChanged(newWidth: Int, newHeight: Int)
+    fun onOrientationChanged(newWidth: Int, newHeight: Int)
 }

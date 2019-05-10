@@ -10,6 +10,8 @@ import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.adb.ADBStatus
 import ru.shadowsparky.client.views.CanvasVideoFrame
 import tornadofx.Controller
+import java.awt.Dimension
+import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.*
 
@@ -20,29 +22,33 @@ class VideoController(private val view: CanvasVideoFrame, val type: ConnectionTy
     private val _log = Injection.provideLogger()
 
     init {
+        setupKeyboard()
         if (type == ConnectionType.adb) enableADBActions()
     }
 
     private fun enableADBActions() {
         setupMouse()
-        setupKeyboard()
         _log.printInfo("Setup is done")
     }
 
     private fun setupKeyboard() = view.canvas.addKeyListener(view)
 
     fun onKeyPressed(event: KeyEvent?) {
-        _log.printInfo("Key pressed invoked")
         if (event == null) return
-        when (event.keyCode) {
-            VK_UP -> adb.invokeScrollUp()
-            VK_DOWN -> adb.invokeScrollDown()
-            VK_LEFT -> adb.invokeScrollLeft()
-            VK_RIGHT -> adb.invokeScrollRight()
-            VK_B, VK_Z -> adb.invokeBackButton()
-            VK_R, VK_C -> adb.invokeRecentApplicationsButton()
-            VK_H, VK_X -> adb.invokeHomeButton()
-            else -> _log.printInfo("KEY PRESSED ${event.keyCode}")
+        if (type == ConnectionType.adb) {
+            when (event.keyCode) {
+                VK_UP -> adb.invokeScrollUp()
+                VK_DOWN -> adb.invokeScrollDown()
+                VK_LEFT -> adb.invokeScrollLeft()
+                VK_RIGHT -> adb.invokeScrollRight()
+                VK_B, VK_Z -> adb.invokeBackButton()
+                VK_R, VK_C -> adb.invokeRecentApplicationsButton()
+                VK_H, VK_X -> adb.invokeHomeButton()
+                else -> _log.printInfo("KEY PRESSED ${event.keyCode}")
+            }
+        }
+        if (event.keyCode == VK_ESCAPE) {
+            view.stopProjection()
         }
     }
 
@@ -60,6 +66,16 @@ class VideoController(private val view: CanvasVideoFrame, val type: ConnectionTy
                 _log.printInfo("CoordX: (${x}) ${event.x} CoordY: (${y}) ${event.y}")
             }
         }
+    }
+
+
+    fun getFixedSize(width: Int, height: Int) : Dimension {
+        val screenSize = Toolkit.getDefaultToolkit().screenSize
+        if (width < height) {
+            val _height = (screenSize.height)
+            screenSize.width = (_height * 0.55).toInt()
+        }
+        return screenSize
     }
 
     private fun setupMouse() = view.canvas.addMouseListener(view)

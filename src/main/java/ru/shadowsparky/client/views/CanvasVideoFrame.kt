@@ -12,71 +12,72 @@ import ru.shadowsparky.client.client.Client
 import ru.shadowsparky.client.controllers.VideoController
 import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.Extras
+import ru.shadowsparky.client.utils.Extras.Companion.LOCALHOST
 import ru.shadowsparky.client.utils.OrientationHandler
 import ru.shadowsparky.client.utils.Resultable
-import java.awt.Dimension
-import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
+
+// String title, int screenNumber, DisplayMode displayMode, double gamma
 
 class CanvasVideoFrame(
         title: String = "test",
         handler: Resultable,
         addr: String,
         port: Int = Extras.PORT
-) : CanvasFrame(title, 1.0), OrientationHandler, MouseListener, KeyListener {
+) : /*CanvasFrame(title, 1.0)*/ CanvasFrame(title, 0, null, 1.0), OrientationHandler, MouseListener, KeyListener {
     val client = Client(handler, this, addr, port)
-    val controller: VideoController
+    private val controller: VideoController
+    private val converter = OpenCVFrameConverter.ToMat()
 
     init {
         this.isResizable = false
         this.canvas.isFocusable = true
         this.canvas.requestFocus()
-        controller = if (addr == "127.0.0.1") {
-            VideoController(this, ConnectionType.adb)
+        val type = if (addr == LOCALHOST) {
+            ConnectionType.adb
         } else {
-            VideoController(this, ConnectionType.wifi)
+            ConnectionType.wifi
         }
+        controller = VideoController(this, type)
     }
 
-    fun startProjection() {
-        client.start()
-    }
-
-    override fun orientationChanged(newWidth: Int, newHeight: Int) {
-        this.setSize(newWidth, newHeight)
-    }
-
-    private val converter = OpenCVFrameConverter.ToMat()
-
-    fun showImage(image: Mat) {
-        super.showImage(converter.convert(image))
-    }
-
-    override fun setSize(width: Int, height: Int) {
-        val fixed = getFixedSize(width, height)
-        super.setSize(fixed.width, fixed.height)
+    override fun setCanvasSize(width: Int, height: Int) {
+        val fixed = controller.getFixedSize(width, height)
         this.canvas.setSize(fixed.width, fixed.height)
         controller.updateIncfelicity(width, height)
     }
 
-    private fun getFixedSize(width: Int, height: Int) : Dimension {
-        val screenSize = Toolkit.getDefaultToolkit().screenSize
-        if (width < height) {
-            val _height = (screenSize.height)
-            screenSize.width = (_height * 0.55).toInt()
-        }
-        return screenSize
+    /*override fun setSize(width: Int, height: Int) {
+        val fixed = controller.getFixedSize(width, height)
+        super.setSize(fixed.width, fixed.height)
+        this.canvas.setSize(fixed.width, fixed.height)
+        controller.updateIncfelicity(width, height)
+    }*/
+
+    fun stopProjection() {
+        client.stop()
     }
 
+    fun startProjection() = client.start()
+    fun showImage(image: Mat) {
+        super.showImage(converter.convert(image))
+    }
+
+    override fun onOrientationChanged(newWidth: Int, newHeight: Int) {
+
+        this.setLocationRelativeTo(null);
+        this.setVisible(true)
+        this.setCanvasSize(newWidth, newHeight)
+    }
     override fun keyPressed(e: KeyEvent?) = controller.onKeyPressed(e)
     override fun mouseClicked(e: MouseEvent?) = controller.onMouseClicked(e)
-    override fun mouseReleased(e: MouseEvent?){}
-    override fun mouseEntered(e: MouseEvent?) {}
-    override fun mouseExited(e: MouseEvent?) {}
-    override fun mousePressed(e: MouseEvent?) {}
-    override fun keyTyped(e: KeyEvent?) {}
-    override fun keyReleased(e: KeyEvent?) {}
+    override fun mouseReleased(e: MouseEvent?){ /* nothing */ }
+    override fun mouseEntered(e: MouseEvent?) { /* nothing */ }
+    override fun mouseExited(e: MouseEvent?) { /* nothing */ }
+    override fun mousePressed(e: MouseEvent?) { /* nothing */ }
+    override fun keyTyped(e: KeyEvent?) { /* nothing */ }
+    override fun keyReleased(e: KeyEvent?) { /* nothing */ }
 }

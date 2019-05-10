@@ -15,5 +15,6 @@ class Extras {
         val NOT_FOUND_IPV4 = "ipv4 not found"
         val BUFFER_FLAG_KEY_FRAME = 0x00000001
         val BUFFER_FLAG_END_OF_STREAM = 0x00000004
+        val LOCALHOST = "127.0.0.1"
     }
 }

@@ -69,7 +69,7 @@ class Decoder(val handler: OrientationHandler) : Closeable {
             av_image_fill_arrays(RGBPicture.data(), RGBPicture.linesize(), buffer, AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
             saved_width = c.width()
             saved_height = c.height()
-            handler.orientationChanged(saved_width, saved_height)
+            handler.onOrientationChanged(saved_width, saved_height)
             log.printInfo("Orientation changed!")
         }
     }
