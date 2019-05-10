@@ -6,11 +6,11 @@
 
 package ru.shadowsparky.client.utils.adb
 
-import ru.shadowsparky.client.utils.Extras
-import ru.shadowsparky.client.utils.Extras.Companion.APP_SWITCH_BUTTON
-import ru.shadowsparky.client.utils.Extras.Companion.BACK_BUTTON
-import ru.shadowsparky.client.utils.Extras.Companion.HOME_BUTTON
-import ru.shadowsparky.client.utils.Injection
+import ru.shadowsparky.client.utils.objects.Constants
+import ru.shadowsparky.client.utils.objects.Constants.APP_SWITCH_BUTTON
+import ru.shadowsparky.client.utils.objects.Constants.BACK_BUTTON
+import ru.shadowsparky.client.utils.objects.Constants.HOME_BUTTON
+import ru.shadowsparky.client.utils.objects.Injection
 import ru.shadowsparky.client.utils.exceptions.ConsoleExecutorException
 
 class ADBWorker {
@@ -19,7 +19,7 @@ class ADBWorker {
 
     fun forwardPort(device_id: String) : ADBResult {
         return try {
-            val result = executor.executeCommand(listOf("adb", "-s", device_id, "forward", "tcp:${Extras.FORWARD_PORT}", "tcp:${Extras.PORT}"))
+            val result = executor.executeCommand(listOf("adb", "-s", device_id, "forward", "tcp:${Constants.FORWARD_PORT}", "tcp:${Constants.PORT}"))
             baseEmptyChecking(result)
         } catch (e: ConsoleExecutorException) {
             ADBResult(ADBStatus.ERROR, "${e.message}")
