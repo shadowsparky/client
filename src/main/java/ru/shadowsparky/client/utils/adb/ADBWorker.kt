@@ -60,7 +60,7 @@ class ADBWorker {
         }
     }
 
-    fun invokeScrollDown() : ADBResult {                                                    // x1   //y1  // x2   //y2  // time
+    fun invokeScrollDown() : ADBResult {
         return try {
             val result = executor.executeCommand(listOf("adb", "shell", "input", "swipe", "100", "600", "100", "300", "100"))
             baseEmptyChecking(result)

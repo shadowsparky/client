@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="scenicView">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/scenicView.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
