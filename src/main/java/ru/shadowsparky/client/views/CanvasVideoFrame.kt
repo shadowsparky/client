@@ -15,10 +15,21 @@ import ru.shadowsparky.client.utils.Extras
 import ru.shadowsparky.client.utils.Extras.Companion.LOCALHOST
 import ru.shadowsparky.client.utils.OrientationHandler
 import ru.shadowsparky.client.utils.Resultable
+import java.awt.Color
+import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
+import javax.swing.Spring.height
+import javax.swing.Spring.width
+import java.awt.Toolkit.getDefaultToolkit
+import javax.swing.Spring.height
+import javax.swing.Spring.width
+
+
+
+
 
 // String title, int screenNumber, DisplayMode displayMode, double gamma
 
@@ -67,10 +78,10 @@ class CanvasVideoFrame(
     }
 
     override fun onOrientationChanged(newWidth: Int, newHeight: Int) {
-
-        this.setLocationRelativeTo(null);
-        this.setVisible(true)
         this.setCanvasSize(newWidth, newHeight)
+        val fdim = controller.getFixedSize(newWidth, newHeight)
+        val dim = Toolkit.getDefaultToolkit().screenSize
+        this.canvas.setLocation(dim.width / 2 - fdim.width / 2, 0)
     }
     override fun keyPressed(e: KeyEvent?) = controller.onKeyPressed(e)
     override fun mouseClicked(e: MouseEvent?) = controller.onMouseClicked(e)
