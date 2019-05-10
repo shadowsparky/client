@@ -5,19 +5,11 @@
 
 package ru.shadowsparky.client.controllers
 
-import javafx.scene.image.Image
-import javafx.scene.input.KeyCode
-import javafx.scene.input.MouseButton
-import javafx.scene.input.MouseEvent
 import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.Injection
 import ru.shadowsparky.client.utils.adb.ADBStatus
 import ru.shadowsparky.client.views.CanvasVideoFrame
-import ru.shadowsparky.client.views.VideoView
 import tornadofx.Controller
-import java.awt.Dimension
-import java.awt.RenderingHints
-import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.*
 
@@ -28,20 +20,19 @@ class VideoController(private val view: CanvasVideoFrame, val type: ConnectionTy
     private val _log = Injection.provideLogger()
 
     init {
-        if (type == ConnectionType.adb)
-            enableADBActions()
+        if (type == ConnectionType.adb) enableADBActions()
     }
 
     private fun enableADBActions() {
         setupMouse()
         setupKeyboard()
+        _log.printInfo("Setup is done")
     }
 
-    private fun setupKeyboard() {
-        view.contentPane.addKeyListener(view)
-    }
+    private fun setupKeyboard() = view.canvas.addKeyListener(view)
 
     fun onKeyPressed(event: KeyEvent?) {
+        _log.printInfo("Key pressed invoked")
         if (event == null) return
         when (event.keyCode) {
             VK_UP -> adb.invokeScrollUp()
@@ -51,7 +42,7 @@ class VideoController(private val view: CanvasVideoFrame, val type: ConnectionTy
             VK_B, VK_Z -> adb.invokeBackButton()
             VK_R, VK_C -> adb.invokeRecentApplicationsButton()
             VK_H, VK_X -> adb.invokeHomeButton()
-            else -> _log.printInfo("KEY PRESSED")
+            else -> _log.printInfo("KEY PRESSED ${event.keyCode}")
         }
     }
 

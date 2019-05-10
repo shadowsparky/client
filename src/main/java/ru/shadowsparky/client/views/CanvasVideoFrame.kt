@@ -32,6 +32,8 @@ class CanvasVideoFrame(
 
     init {
         this.isResizable = false
+        this.canvas.isFocusable = true
+        this.canvas.requestFocus()
         controller = if (addr == "127.0.0.1") {
             VideoController(this, ConnectionType.adb)
         } else {
@@ -64,7 +66,7 @@ class CanvasVideoFrame(
         val screenSize = Toolkit.getDefaultToolkit().screenSize
         if (width < height) {
             val _height = (screenSize.height)
-            screenSize.width = (_height * 0.6).toInt()
+            screenSize.width = (_height * 0.55).toInt()
         }
         return screenSize
     }
