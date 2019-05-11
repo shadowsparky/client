@@ -3,7 +3,7 @@
  *
  */
 
-package ru.shadowsparky.client.utils.client
+package ru.shadowsparky.client.utils.projection
 
 import com.google.protobuf.InvalidProtocolBufferException
 import kotlinx.coroutines.Dispatchers
@@ -13,9 +13,11 @@ import kotlinx.coroutines.withContext
 import ru.shadowsparky.client.utils.exceptions.CorruptedDataException
 import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
 import ru.shadowsparky.client.mvc.views.VideoView
+import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.objects.Constants.PORT
 import ru.shadowsparky.client.utils.objects.Injection
 import ru.shadowsparky.client.utils.interfaces.Resultable
+import ru.shadowsparky.client.utils.objects.Constants.LOCALHOST
 import ru.shadowsparky.screencast.proto.HandledPictureOuterClass
 import ru.shadowsparky.screencast.proto.PreparingDataOuterClass
 import java.io.Closeable
@@ -23,19 +25,19 @@ import java.io.EOFException
 import java.io.OptionalDataException
 import java.net.Socket
 import java.net.SocketException
-import java.util.concurrent.LinkedBlockingQueue
 
-class Client(
+class ProjectionWorker(
         private val handler: Resultable,
-        private val frame: VideoView,
         val addr: String,
         private val port: Int = PORT
 ) : Closeable {
+    private var video: VideoView? = null
     private var socket: Socket? = null
     private val log = Injection.provideLogger()
     private lateinit var pData: PreparingDataOuterClass.PreparingData
     private var saved_data = Injection.provideQueue()
     private var decoder: Decoder? = null
+    private val type: ConnectionType = if (addr == LOCALHOST) ConnectionType.adb else ConnectionType.wifi
     var handling: Boolean = false
         set(value) {
             if (value) {
@@ -48,18 +50,18 @@ class Client(
             field = value
         }
 
-    fun start() {
-        connectToServer()
+    fun showProjection() {
+        video = VideoView(this, "Проецирование", type)
+        decode()
     }
-
-    fun stop() {
-        socket?.close()
-    }
+    fun start() = connectToServer()
+    fun stop() = socket?.close()
 
     override fun close() {
         socket?.close()
         saved_data.clear()
         decoder = null
+        video?.dispose()
         System.gc()
         System.runFinalization()
     }
@@ -85,7 +87,7 @@ class Client(
             val pData = PreparingDataOuterClass.PreparingData.parseDelimitedFrom(socket?.getInputStream())
             if (pData != null) {
                 if (pData.password == "") {
-                    this@Client.pData = pData
+                    this@ProjectionWorker.pData = pData
                     log.printInfo("True Password")
                     return true
                 } else {
@@ -97,8 +99,9 @@ class Client(
                 handling = false
                 handler.onError(CorruptedDataException("Corrupted pData"))
             }
-        } catch(e: InvalidProtocolBufferException) {
-            log.printInfo("InvalidProtocolBufferException in handlePreparingData method")
+        } catch(e: Exception){
+            handler.onError(e)
+            handling = false
         }
         return false
     }
@@ -109,7 +112,6 @@ class Client(
             return@launch
         log.printInfo("Data Handling enabled")
         handler.onSuccess()
-        decode()
         try {
             while (handling) {
                 val picture = HandledPictureOuterClass
@@ -118,17 +120,7 @@ class Client(
                 val buffer = picture.encodedPicture.toByteArray()
                 saved_data.add(buffer)
             }
-        } catch (e: SocketException) {
-            log.printInfo("Handling disabled by: SocketException. ${e.message}")
-            handler.onError(e)
-        } catch (e: RuntimeException) {
-            log.printInfo("Handling disabled by: RuntimeException. ${e.message}")
-            handler.onError(e)
-        } catch (e: EOFException) {
-            log.printInfo("Handling disabled by: EOFException. ${e.message}")
-            handler.onError(e)
-        } catch (e: OptionalDataException) {
-            log.printInfo("Handling disabled by: OptionalDataException. ${e.message}")
+        } catch (e: Exception) {
             handler.onError(e)
         } finally {
             handling = false
@@ -136,11 +128,11 @@ class Client(
     }
 
     fun decode() = GlobalScope.launch(Dispatchers.IO) {
-        decoder = Decoder(frame)
+        decoder = Decoder(video!!)
         while (handling) {
             val item = saved_data.take()
             val image = withContext(Dispatchers.IO) { decoder?.decode(item) }
-            if (image != null) frame.showImage(image)
+            if (image != null) video?.showImage(image)
         }
     }
 }

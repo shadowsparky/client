@@ -19,15 +19,18 @@ open class MainView : View("Главное меню"){
 
     init {
         val adb = AdbView()
+        val wifi = WifiView()
         root.apply {
             this += styles.getDefaultTabPane().apply {
                 tab("WIFI") {
-                    add(WifiView().root)
+                    log.info("Wifi attached")
+                    add(wifi.root)
                 }
 
                 tab("ADB") {
-                    adb.updateDevices()
+                    log.info("ADB attached")
                     add(adb.root)
+
                 }
                 selectionModel.selectedItemProperty().addListener { obs, ov, nv ->
                     adb.updateDevices()

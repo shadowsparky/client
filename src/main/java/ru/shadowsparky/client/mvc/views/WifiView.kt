@@ -7,6 +7,8 @@ package ru.shadowsparky.client.mvc.views
 
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
+import javafx.scene.control.ProgressBar
+import javafx.scene.control.ProgressIndicator
 import ru.shadowsparky.client.mvc.controllers.WifiController
 import ru.shadowsparky.client.utils.Dialog
 import ru.shadowsparky.client.utils.objects.Injection
@@ -27,8 +29,12 @@ class WifiView : BaseView() {
                 addClass(styles.wrapper)
                 this += styles.getDefaultButton().apply {
                     bind(mButtonText)
-                    isDisable.toProperty().bind(mButtonStatus)
+                    disableProperty().bind(isLocked)
                     action { controller.startProjection() }
+                }
+                this += ProgressBar().apply {
+                    visibleProperty().bind(!this@WifiView.isLoaded)
+                    progress = ProgressIndicator.INDETERMINATE_PROGRESS
                 }
                 useMaxWidth = true
                 alignment = Pos.CENTER

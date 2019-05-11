@@ -17,7 +17,7 @@ class Main : App(MainView::class, Styles::class) {
     override fun start(stage: Stage) {
         stage.apply {
             try {
-                NativeLoader.loadLibrary("opencv_java4102");
+                NativeLoader.loadLibrary("opencv_java410");
                 minWidthProperty().set(600.0)
                 minHeightProperty().set(500.0)
                 super.start(this)

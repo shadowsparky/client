@@ -59,6 +59,10 @@ class Styles : Stylesheet() {
         minWidth = 400.0
         minHeight = 60.0
         maxHeight = 60.0
+        style {
+            textFill = Color.WHITE
+            backgroundColor += Color.WHITE
+        }
     }
 
 

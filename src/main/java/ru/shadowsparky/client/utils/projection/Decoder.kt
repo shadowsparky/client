@@ -3,7 +3,7 @@
  *
  */
 
-package ru.shadowsparky.client.utils.client
+package ru.shadowsparky.client.utils.projection
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -20,7 +20,6 @@ import org.bytedeco.javacpp.BytePointer
 import org.bytedeco.javacpp.DoublePointer
 import org.bytedeco.opencv.global.opencv_core.CV_8UC3
 import org.opencv.core.Mat
-import org.opencv.osgi.OpenCVNativeLoader
 import ru.shadowsparky.client.utils.objects.Injection
 import java.io.Closeable
 import java.nio.ByteBuffer
@@ -51,7 +50,7 @@ class Decoder(val handler: OrientationHandler) : Closeable {
             av_image_fill_arrays(RGBPicture.data(), RGBPicture.linesize(), buffer, AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
             saved_width = c.width()
             saved_height = c.height()
-            handler.onOrientationChanged(saved_width, saved_height)
+            handler?.onOrientationChanged(saved_width, saved_height)
             log.printInfo("Orientation changed!")
         }
     }

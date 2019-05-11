@@ -9,13 +9,14 @@ import ru.shadowsparky.client.utils.ConnectionType
 import ru.shadowsparky.client.utils.objects.Injection
 import ru.shadowsparky.client.utils.adb.ADBStatus
 import ru.shadowsparky.client.mvc.views.VideoView
+import ru.shadowsparky.client.utils.interfaces.Controllerable
 import tornadofx.Controller
 import java.awt.Dimension
 import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.*
 
-class VideoController(private val view: VideoView, val type: ConnectionType) : Controller() {
+class VideoController(private val view: VideoView, val type: ConnectionType) : Controller(), Controllerable {
     private var infelicity_width: Double = 0.0
     private var infelicity_height: Double = 0.0
     private val _log = Injection.provideLogger()

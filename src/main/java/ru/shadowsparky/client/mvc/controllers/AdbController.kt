@@ -5,32 +5,32 @@
 
 package ru.shadowsparky.client.mvc.controllers
 
-import javafx.scene.control.Label
-import ru.shadowsparky.client.mvc.models.AdbModel
-import ru.shadowsparky.client.utils.objects.Constants
-import ru.shadowsparky.client.utils.objects.Injection
-import ru.shadowsparky.client.utils.objects.Parser
-import ru.shadowsparky.client.utils.adb.ADBDevice
-import ru.shadowsparky.client.utils.adb.ADBStatus
 import ru.shadowsparky.client.mvc.views.AdbView
-import ru.shadowsparky.client.mvc.views.VideoView
+import ru.shadowsparky.client.utils.interfaces.Controllerable
+import ru.shadowsparky.client.utils.objects.Constants.FORWARD_PORT
+import ru.shadowsparky.client.utils.objects.Constants.LOCALHOST
+import ru.shadowsparky.client.utils.objects.Injection
+import ru.shadowsparky.client.utils.projection.ProjectionWorker
+import tornadofx.Controller
 
-class AdbController(private val view: AdbView) {
+class AdbController(private val view: AdbView) : Controller(), Controllerable {
     private val model = Injection.provideAdbModel()
+    private val _log = Injection.provideLogger()
 
     fun updateDevices() {
-        view.input.items.clear()
+        view.clearDevices()
         val devices = model.getDevicesRequest()
         if (devices != null) {
-            view.input.isDisable = if (devices.isNotEmpty()) {
+            val result = if (devices.isNotEmpty()) {
                 devices.forEach {
-                    view.input.items.add(Label(it.toString()))
+                    view.addDevice("$it")
                 }
                 false
             } else {
-                view.input.items.add(Label("Нет устройств"))
+                view.addDevice("Нет подключенных устройств")
                 true
             }
+            view.isDisable.set(result)
         }
     }
 
@@ -46,10 +46,11 @@ class AdbController(private val view: AdbView) {
     }
 
     fun startProjection() {
-        view.video = VideoView("Проецирование", view, "127.0.0.1", Constants.FORWARD_PORT)
+        view.isLoaded.value = false
         if (view.deviceAddr != null) {
             if (model.forwardPort(view.deviceAddr!!)) {
-                view.video?.startProjection()
+                view.projection = ProjectionWorker(view, LOCALHOST, FORWARD_PORT)
+                view.projection?.start()
             } else {
                 view.dialog.showDialog("Ошибка", "Во время открытия порта произошла неизвестная ошибка.")
             }
