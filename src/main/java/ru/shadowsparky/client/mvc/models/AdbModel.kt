@@ -10,10 +10,10 @@ import ru.shadowsparky.client.adb.ADBStatus
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.objects.Parser
 
-class AdbModel {
+open class AdbModel {
     private val adb = Injection.provideAdb()
 
-    fun getDevicesRequest() : ArrayList<ADBDevice>? {
+    open fun getDevicesRequest() : ArrayList<ADBDevice>? {
         val request = adb.getDevices()
         if (request.status == ADBStatus.OK) {
             return Parser.strToDevices(request.info)
@@ -21,7 +21,7 @@ class AdbModel {
         return null
     }
 
-    fun forwardPort(addr: String) : Boolean {
+    open fun forwardPort(addr: String) : Boolean {
         val device = getDevice(addr)
         if (device != null) {
             val result = adb.forwardPort(device.id)
@@ -31,5 +31,5 @@ class AdbModel {
         return false
     }
 
-    fun getDevice(device: String) = Parser.deviceToStr(device)
+    open fun getDevice(device: String) = Parser.deviceToStr(device)
 }

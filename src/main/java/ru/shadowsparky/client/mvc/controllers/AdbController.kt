@@ -8,14 +8,17 @@ package ru.shadowsparky.client.mvc.controllers
 import ru.shadowsparky.client.mvc.views.AdbView
 import ru.shadowsparky.client.mvc.views.BaseView
 import ru.shadowsparky.client.interfaces.Controllerable
+import ru.shadowsparky.client.mvc.models.AdbModel
 import ru.shadowsparky.client.objects.Constants.FORWARD_PORT
 import ru.shadowsparky.client.objects.Constants.LOCALHOST
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.projection.ProjectionWorker
 import tornadofx.Controller
 
-class AdbController(private val view: AdbView) : Controller(), Controllerable {
-    private val model = Injection.provideAdbModel()
+class AdbController(
+        private val view: AdbView,
+        private val model: AdbModel = Injection.provideAdbModel()
+) : Controller(), Controllerable {
     private val _log = Injection.provideLogger()
 
     fun updateDevices() {
@@ -31,7 +34,7 @@ class AdbController(private val view: AdbView) : Controller(), Controllerable {
                 view.addDevice("Нет подключенных устройств")
                 true
             }
-            view.isDisable.set(result)
+            view.setDisable(result)
         }
     }
 

@@ -18,7 +18,7 @@ import ru.shadowsparky.client.Dialog
 import ru.shadowsparky.client.objects.Injection
 import tornadofx.*
 
-class AdbView : BaseView() {
+open class AdbView : BaseView() {
     override val root = styles.getDefaultStackPane()
     val isDisable = SimpleBooleanProperty(false)
     private val items = SimpleObjectProperty<ObservableList<Label>>()
@@ -26,13 +26,14 @@ class AdbView : BaseView() {
     private val controller = Injection.provideAdbController(this)
     var deviceAddr: String? = null
 
-    fun updateDevices() = Platform.runLater {
+    open fun updateDevices() = Platform.runLater {
         controller.updateDevices()
     }
 
-    fun addDevice(device: String) = items.get().add(Label(device))
-    fun addAllDevices(devices: ObservableList<Label>) { items.value = devices }
-    fun clearDevices() = input.items.clear()
+    open fun addDevice(device: String) = items.get().add(Label(device))
+    open fun addAllDevices(devices: ObservableList<Label>) { items.value = devices }
+    open fun clearDevices() = input.items.clear()
+    open fun setDisable(flag: Boolean) { isDisable.value = flag }
 
     init {
         items.set(FXCollections.observableArrayList())

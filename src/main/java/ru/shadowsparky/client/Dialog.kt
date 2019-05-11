@@ -11,8 +11,8 @@ import javafx.scene.control.Label
 import javafx.scene.layout.StackPane
 import javafx.scene.text.Font
 
-class Dialog(val root: StackPane) {
-    fun showDialog(title: String, text: String, showTitle: Boolean = false) {
+open class Dialog(val root: StackPane) {
+    open fun showDialog(title: String, text: String, showTitle: Boolean = false) {
         val content = JFXDialogLayout()
         val title_lab = Label(title)
         title_lab.font = Font(20.0)
