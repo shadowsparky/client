@@ -5,7 +5,7 @@
 
 package ru.shadowsparky.client.mvc.models
 
-import ru.shadowsparky.client.utils.objects.Injection
+import ru.shadowsparky.client.objects.Injection
 import java.awt.Dimension
 import java.awt.Toolkit
 

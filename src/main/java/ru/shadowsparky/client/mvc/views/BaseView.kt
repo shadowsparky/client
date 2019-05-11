@@ -9,14 +9,13 @@ import javafx.application.Platform
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.scene.layout.StackPane
-import ru.shadowsparky.client.utils.Dialog
-import ru.shadowsparky.client.utils.objects.Injection
-import ru.shadowsparky.client.utils.interfaces.Resultable
-import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
-import ru.shadowsparky.client.utils.exceptions.ProjectionAlreadyStartedException
-import ru.shadowsparky.client.utils.projection.ProjectionWorker
+import ru.shadowsparky.client.Dialog
+import ru.shadowsparky.client.objects.Injection
+import ru.shadowsparky.client.interfaces.Resultable
+import ru.shadowsparky.client.exceptions.IncorrectPasswordException
+import ru.shadowsparky.client.exceptions.ProjectionAlreadyStartedException
+import ru.shadowsparky.client.projection.ProjectionWorker
 import tornadofx.View
-import tornadofx.onChange
 import java.io.EOFException
 import java.net.ConnectException
 

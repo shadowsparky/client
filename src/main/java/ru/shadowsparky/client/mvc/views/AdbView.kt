@@ -6,25 +6,17 @@
 package ru.shadowsparky.client.mvc.views
 
 import javafx.application.Platform
-import javafx.beans.binding.ListBinding
-import javafx.beans.property.ListProperty
 import javafx.beans.property.SimpleBooleanProperty
-import javafx.beans.property.SimpleListProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
-import javafx.collections.ObservableListBase
-import javafx.collections.transformation.FilteredList
-import javafx.collections.transformation.TransformationList
 import javafx.geometry.Pos
 import javafx.scene.control.Label
 import javafx.scene.control.ProgressBar
 import javafx.scene.control.ProgressIndicator.INDETERMINATE_PROGRESS
-import ru.shadowsparky.client.mvc.controllers.AdbController
-import ru.shadowsparky.client.utils.*
-import ru.shadowsparky.client.utils.objects.Injection
+import ru.shadowsparky.client.Dialog
+import ru.shadowsparky.client.objects.Injection
 import tornadofx.*
-import java.util.*
 
 class AdbView : BaseView() {
     override val root = styles.getDefaultStackPane()

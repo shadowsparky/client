@@ -9,7 +9,7 @@ import javafx.scene.control.Alert
 import javafx.stage.Stage
 import org.scijava.nativelib.NativeLoader
 import ru.shadowsparky.client.mvc.Styles
-import ru.shadowsparky.client.utils.objects.Constants.DEFAULT_LIB
+import ru.shadowsparky.client.objects.Constants.DEFAULT_LIB
 import tornadofx.App
 import tornadofx.reloadStylesheetsOnFocus
 import java.io.IOException

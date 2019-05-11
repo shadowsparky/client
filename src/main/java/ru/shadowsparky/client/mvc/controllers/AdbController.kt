@@ -7,11 +7,11 @@ package ru.shadowsparky.client.mvc.controllers
 
 import ru.shadowsparky.client.mvc.views.AdbView
 import ru.shadowsparky.client.mvc.views.BaseView
-import ru.shadowsparky.client.utils.interfaces.Controllerable
-import ru.shadowsparky.client.utils.objects.Constants.FORWARD_PORT
-import ru.shadowsparky.client.utils.objects.Constants.LOCALHOST
-import ru.shadowsparky.client.utils.objects.Injection
-import ru.shadowsparky.client.utils.projection.ProjectionWorker
+import ru.shadowsparky.client.interfaces.Controllerable
+import ru.shadowsparky.client.objects.Constants.FORWARD_PORT
+import ru.shadowsparky.client.objects.Constants.LOCALHOST
+import ru.shadowsparky.client.objects.Injection
+import ru.shadowsparky.client.projection.ProjectionWorker
 import tornadofx.Controller
 
 class AdbController(private val view: AdbView) : Controller(), Controllerable {

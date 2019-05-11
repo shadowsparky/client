@@ -5,10 +5,10 @@
 
 package ru.shadowsparky.client.mvc.models
 
-import ru.shadowsparky.client.utils.adb.ADBDevice
-import ru.shadowsparky.client.utils.adb.ADBStatus
-import ru.shadowsparky.client.utils.objects.Injection
-import ru.shadowsparky.client.utils.objects.Parser
+import ru.shadowsparky.client.adb.ADBDevice
+import ru.shadowsparky.client.adb.ADBStatus
+import ru.shadowsparky.client.objects.Injection
+import ru.shadowsparky.client.objects.Parser
 
 class AdbModel {
     private val adb = Injection.provideAdb()

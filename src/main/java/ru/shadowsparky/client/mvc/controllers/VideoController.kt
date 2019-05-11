@@ -5,14 +5,13 @@
 
 package ru.shadowsparky.client.mvc.controllers
 
-import ru.shadowsparky.client.utils.ConnectionType
-import ru.shadowsparky.client.utils.objects.Injection
-import ru.shadowsparky.client.utils.adb.ADBStatus
+import ru.shadowsparky.client.ConnectionType
+import ru.shadowsparky.client.objects.Injection
+import ru.shadowsparky.client.adb.ADBStatus
 import ru.shadowsparky.client.mvc.views.VideoView
-import ru.shadowsparky.client.utils.interfaces.Controllerable
+import ru.shadowsparky.client.interfaces.Controllerable
 import tornadofx.Controller
 import java.awt.Dimension
-import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.*
 

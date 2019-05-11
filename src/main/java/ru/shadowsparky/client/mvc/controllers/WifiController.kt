@@ -7,9 +7,9 @@ package ru.shadowsparky.client.mvc.controllers
 
 import ru.shadowsparky.client.mvc.views.BaseView
 import ru.shadowsparky.client.mvc.views.WifiView
-import ru.shadowsparky.client.utils.exceptions.ProjectionAlreadyStartedException
-import ru.shadowsparky.client.utils.interfaces.Controllerable
-import ru.shadowsparky.client.utils.projection.ProjectionWorker
+import ru.shadowsparky.client.exceptions.ProjectionAlreadyStartedException
+import ru.shadowsparky.client.interfaces.Controllerable
+import ru.shadowsparky.client.projection.ProjectionWorker
 import tornadofx.Controller
 
 class WifiController(private val view: WifiView) : Controller(), Controllerable {

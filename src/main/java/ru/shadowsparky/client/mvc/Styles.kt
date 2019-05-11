@@ -18,7 +18,7 @@ import javafx.scene.control.TabPane
 import javafx.scene.control.TextField
 import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
-import ru.shadowsparky.client.utils.objects.Injection
+import ru.shadowsparky.client.objects.Injection
 import tornadofx.*
 
 class Styles : Stylesheet() {

@@ -8,14 +8,11 @@ package ru.shadowsparky.client.mvc.views
 import org.bytedeco.javacv.CanvasFrame
 import org.bytedeco.javacv.OpenCVFrameConverter
 import org.opencv.core.Mat
-import ru.shadowsparky.client.utils.projection.ProjectionWorker
+import ru.shadowsparky.client.projection.ProjectionWorker
 import ru.shadowsparky.client.mvc.controllers.VideoController
-import ru.shadowsparky.client.utils.ConnectionType
-import ru.shadowsparky.client.utils.objects.Constants
-import ru.shadowsparky.client.utils.objects.Constants.LOCALHOST
-import ru.shadowsparky.client.utils.interfaces.handlers.OrientationHandler
-import ru.shadowsparky.client.utils.interfaces.Resultable
-import ru.shadowsparky.client.utils.objects.Injection
+import ru.shadowsparky.client.ConnectionType
+import ru.shadowsparky.client.interfaces.handlers.OrientationHandler
+import ru.shadowsparky.client.objects.Injection
 import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
@@ -23,9 +20,9 @@ import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 
 class VideoView (
-    private val projection: ProjectionWorker,
-    title: String = "test",
-    type: ConnectionType = ConnectionType.wifi
+        private val projection: ProjectionWorker,
+        title: String = "test",
+        type: ConnectionType = ConnectionType.wifi
 ) : CanvasFrame(title, 0, null, 1.0), OrientationHandler, MouseListener, KeyListener {
     private val controller: VideoController
     private val converter = OpenCVFrameConverter.ToMat()

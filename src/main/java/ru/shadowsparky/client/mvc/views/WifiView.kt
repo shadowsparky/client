@@ -9,9 +9,8 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
 import javafx.scene.control.ProgressBar
 import javafx.scene.control.ProgressIndicator
-import ru.shadowsparky.client.mvc.controllers.WifiController
-import ru.shadowsparky.client.utils.Dialog
-import ru.shadowsparky.client.utils.objects.Injection
+import ru.shadowsparky.client.Dialog
+import ru.shadowsparky.client.objects.Injection
 import tornadofx.*
 
 class WifiView : BaseView() {
