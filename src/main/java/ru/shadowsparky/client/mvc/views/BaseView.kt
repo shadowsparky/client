@@ -25,8 +25,10 @@ abstract class BaseView : View(""), Resultable {
     protected val styles = Injection.provideStyles()
     var projection: ProjectionWorker? = null
     lateinit var dialog: Dialog
-    var isLocked = SimpleBooleanProperty(false)
-    var isLoaded = SimpleBooleanProperty(true)
+    companion object {
+        val isLocked = SimpleBooleanProperty(false)
+        val isLoaded = SimpleBooleanProperty(true)
+    }
     var mButtonText = SimpleStringProperty("Подключиться")
 
     override fun onSuccess() = Platform.runLater {

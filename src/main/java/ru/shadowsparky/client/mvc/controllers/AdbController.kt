@@ -6,6 +6,7 @@
 package ru.shadowsparky.client.mvc.controllers
 
 import ru.shadowsparky.client.mvc.views.AdbView
+import ru.shadowsparky.client.mvc.views.BaseView
 import ru.shadowsparky.client.utils.interfaces.Controllerable
 import ru.shadowsparky.client.utils.objects.Constants.FORWARD_PORT
 import ru.shadowsparky.client.utils.objects.Constants.LOCALHOST
@@ -46,7 +47,7 @@ class AdbController(private val view: AdbView) : Controller(), Controllerable {
     }
 
     fun startProjection() {
-        view.isLoaded.value = false
+        BaseView.isLoaded.value = false
         if (view.deviceAddr != null) {
             if (model.forwardPort(view.deviceAddr!!)) {
                 view.projection = ProjectionWorker(view, LOCALHOST, FORWARD_PORT)

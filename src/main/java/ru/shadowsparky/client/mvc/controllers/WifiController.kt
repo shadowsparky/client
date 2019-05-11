@@ -5,6 +5,7 @@
 
 package ru.shadowsparky.client.mvc.controllers
 
+import ru.shadowsparky.client.mvc.views.BaseView
 import ru.shadowsparky.client.mvc.views.WifiView
 import ru.shadowsparky.client.utils.exceptions.ProjectionAlreadyStartedException
 import ru.shadowsparky.client.utils.interfaces.Controllerable
@@ -14,7 +15,7 @@ import tornadofx.Controller
 class WifiController(private val view: WifiView) : Controller(), Controllerable {
 
     fun startProjection() {
-        view.isLoaded.value = false
+        BaseView.isLoaded.value = false
         if (view.mInputText.get().isNotEmpty()) {
             if ((view.projection == null) or (view.projection?.handling == false)) {
                 log.info("ProjectionWorker initializing...")

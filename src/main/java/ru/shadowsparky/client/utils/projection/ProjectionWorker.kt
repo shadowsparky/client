@@ -5,26 +5,22 @@
 
 package ru.shadowsparky.client.utils.projection
 
-import com.google.protobuf.InvalidProtocolBufferException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.shadowsparky.client.utils.exceptions.CorruptedDataException
-import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
 import ru.shadowsparky.client.mvc.views.VideoView
 import ru.shadowsparky.client.utils.ConnectionType
-import ru.shadowsparky.client.utils.objects.Constants.PORT
-import ru.shadowsparky.client.utils.objects.Injection
+import ru.shadowsparky.client.utils.exceptions.CorruptedDataException
+import ru.shadowsparky.client.utils.exceptions.IncorrectPasswordException
 import ru.shadowsparky.client.utils.interfaces.Resultable
 import ru.shadowsparky.client.utils.objects.Constants.LOCALHOST
+import ru.shadowsparky.client.utils.objects.Constants.PORT
+import ru.shadowsparky.client.utils.objects.Injection
 import ru.shadowsparky.screencast.proto.HandledPictureOuterClass
 import ru.shadowsparky.screencast.proto.PreparingDataOuterClass
 import java.io.Closeable
-import java.io.EOFException
-import java.io.OptionalDataException
 import java.net.Socket
-import java.net.SocketException
 
 class ProjectionWorker(
         private val handler: Resultable,

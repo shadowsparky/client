@@ -74,7 +74,7 @@ class AdbView : BaseView() {
                 }
                 addClass(styles.wrapper)
                 this += ProgressBar().apply {
-                    visibleProperty().bind(!this@AdbView.isLoaded)
+                    visibleProperty().bind(!isLoaded)
                     progress = INDETERMINATE_PROGRESS
                 }
                 useMaxWidth = true

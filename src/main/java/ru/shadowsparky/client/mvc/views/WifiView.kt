@@ -33,7 +33,7 @@ class WifiView : BaseView() {
                     action { controller.startProjection() }
                 }
                 this += ProgressBar().apply {
-                    visibleProperty().bind(!this@WifiView.isLoaded)
+                    visibleProperty().bind(!isLoaded)
                     progress = ProgressIndicator.INDETERMINATE_PROGRESS
                 }
                 useMaxWidth = true
