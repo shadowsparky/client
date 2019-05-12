@@ -9,13 +9,21 @@ import ru.shadowsparky.client.mvc.views.AdbView
 import ru.shadowsparky.client.mvc.views.BaseView
 import ru.shadowsparky.client.interfaces.Controllerable
 import ru.shadowsparky.client.mvc.models.AdbModel
+import ru.shadowsparky.client.objects.Constants
+import ru.shadowsparky.client.objects.Constants.ADB_NOT_FOUND
+import ru.shadowsparky.client.objects.Constants.CHOOSE_DEVICE_ERROR
+import ru.shadowsparky.client.objects.Constants.ERROR
+import ru.shadowsparky.client.objects.Constants.FAQ
+import ru.shadowsparky.client.objects.Constants.FAQ_MESSAGE
+import ru.shadowsparky.client.objects.Constants.FORWARD_ERROR
 import ru.shadowsparky.client.objects.Constants.FORWARD_PORT
 import ru.shadowsparky.client.objects.Constants.LOCALHOST
+import ru.shadowsparky.client.objects.Constants.NO_CONNECTED_DEVICES
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.projection.ProjectionWorker
 import tornadofx.Controller
 
-class AdbController(
+open class AdbController(
         private val view: AdbView,
         private val model: AdbModel = Injection.provideAdbModel()
 ) : Controller(), Controllerable {
@@ -23,43 +31,37 @@ class AdbController(
 
     fun updateDevices() {
         view.clearDevices()
+        var result = true
         val devices = model.getDevicesRequest()
         if (devices != null) {
-            val result = if (devices.isNotEmpty()) {
+            result = if (devices.isNotEmpty()) {
                 devices.forEach {
                     view.addDevice("$it")
                 }
                 false
             } else {
-                view.addDevice("Нет подключенных устройств")
+                view.addDevice(NO_CONNECTED_DEVICES)
                 true
             }
-            view.setDisable(result)
+        } else {
+            view.addDevice(ADB_NOT_FOUND)
         }
+        view.setDisable(result)
     }
 
-    fun showHelp() {
-        view.dialog.showDialog(
-                "Справка",
-                "Для того, чтобы нажимать на экран мобильного устройства, используйте левую кнопку мыши.\n" +
-                        "Для возвращения назад нажмите на кнопку Z или B, \n" +
-                        "Для открытия меню недавних приложений нажмите на C или R, \n" +
-                        "Для нажатия на кнопку 'Домой' нажмите на X или H.",
-                true
-        )
-    }
+    fun showHelp() = view.dialog.showDialog(FAQ, FAQ_MESSAGE, true)
 
-    fun startProjection() {
+    open fun startProjection() {
         BaseView.isLoaded.value = false
         if (view.deviceAddr != null) {
             if (model.forwardPort(view.deviceAddr!!)) {
                 view.projection = ProjectionWorker(view, LOCALHOST, FORWARD_PORT)
                 view.projection?.start()
             } else {
-                view.dialog.showDialog("Ошибка", "Во время открытия порта произошла неизвестная ошибка.")
+                view.dialog.showDialog(ERROR, FORWARD_ERROR, true)
             }
         } else {
-            view.dialog.showDialog("Ошибка", "Вы должны выбрать устройство.")
+            view.dialog.showDialog(ERROR, CHOOSE_DEVICE_ERROR)
         }
     }
 }

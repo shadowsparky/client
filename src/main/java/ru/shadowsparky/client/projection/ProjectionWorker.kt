@@ -22,7 +22,7 @@ import ru.shadowsparky.screencast.proto.PreparingDataOuterClass
 import java.io.Closeable
 import java.net.Socket
 
-class ProjectionWorker(
+open class ProjectionWorker(
         private val handler: Resultable,
         val addr: String,
         private val port: Int = PORT
@@ -50,7 +50,7 @@ class ProjectionWorker(
         video = VideoView(this, "Проецирование", type)
         decode()
     }
-    fun start() = connectToServer()
+    open fun start() = connectToServer()
     fun stop() = socket?.close()
 
     override fun close() {
@@ -62,7 +62,7 @@ class ProjectionWorker(
         System.runFinalization()
     }
 
-    private fun connectToServer() = GlobalScope.launch {
+    open fun connectToServer() = GlobalScope.launch {
         try {
             socket = Socket(addr, port)
             socket!!.tcpNoDelay = true

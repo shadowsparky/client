@@ -15,7 +15,9 @@ import javafx.scene.control.Label
 import javafx.scene.control.ProgressBar
 import javafx.scene.control.ProgressIndicator.INDETERMINATE_PROGRESS
 import ru.shadowsparky.client.Dialog
+import ru.shadowsparky.client.objects.Constants
 import ru.shadowsparky.client.objects.Injection
+import ru.shadowsparky.client.projection.ProjectionWorker
 import tornadofx.*
 
 open class AdbView : BaseView() {
@@ -24,12 +26,11 @@ open class AdbView : BaseView() {
     private val items = SimpleObjectProperty<ObservableList<Label>>()
     var input = styles.getDefaultList()
     private val controller = Injection.provideAdbController(this)
-    var deviceAddr: String? = null
+    open var deviceAddr: String? = null
 
     open fun updateDevices() = Platform.runLater {
         controller.updateDevices()
     }
-
     open fun addDevice(device: String) = items.get().add(Label(device))
     open fun addAllDevices(devices: ObservableList<Label>) { items.value = devices }
     open fun clearDevices() = input.items.clear()
