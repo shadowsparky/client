@@ -9,12 +9,13 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers
+import org.mockito.Mockito
 import org.mockito.Mockito.*
 import ru.shadowsparky.client.adb.ADBDevice
-import ru.shadowsparky.client.mvc.controllers.AdbController
-import ru.shadowsparky.client.mvc.models.AdbModel
-import ru.shadowsparky.client.mvc.views.AdbView
-import ru.shadowsparky.client.mvc.views.BaseView
+import ru.shadowsparky.client.mvvm.viewmodels.AdbViewModel
+import ru.shadowsparky.client.mvvm.models.AdbModel
+import ru.shadowsparky.client.mvvm.views.AdbView
+import ru.shadowsparky.client.mvvm.views.BaseView
 import ru.shadowsparky.client.objects.Constants.ADB_NOT_FOUND
 import ru.shadowsparky.client.objects.Constants.CHOOSE_DEVICE_ERROR
 import ru.shadowsparky.client.objects.Constants.ERROR
@@ -28,14 +29,11 @@ import ru.shadowsparky.client.objects.Parser
 import ru.shadowsparky.client.projection.ProjectionWorker
 
 class TestAdbController {
-    private var view: AdbView
-    private var model: AdbModel
-    private var controller: AdbController
+    private val view: AdbView = mock()
+    private val model: AdbModel = mock()
+    private var controller = AdbViewModel(view, model)
 
     init {
-        view = mock()
-        model = mock()
-        controller = AdbController(view, model)
         view.dialog = mock()
         BaseView.isLoaded = mock()
         view.projection = mock()
@@ -84,7 +82,7 @@ class TestAdbController {
         controller.startProjection()
         doReturn(LOCALHOST).`when`(view).deviceAddr
         doReturn(true).`when`(model).forwardPort(LOCALHOST)
-        doReturn(mock(ProjectionWorker::class.java)).`when`(view).projection
+        Mockito.`when`(view.projection).thenReturn(mock())
         verify(BaseView.isLoaded, times(1)).value = false
         assert(view.deviceAddr != null)
         assert(model.forwardPort(LOCALHOST))

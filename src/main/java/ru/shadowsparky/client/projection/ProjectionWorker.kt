@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.shadowsparky.client.mvc.views.VideoView
+import ru.shadowsparky.client.mvvm.views.VideoView
 import ru.shadowsparky.client.ConnectionType
 import ru.shadowsparky.client.exceptions.CorruptedDataException
 import ru.shadowsparky.client.exceptions.IncorrectPasswordException

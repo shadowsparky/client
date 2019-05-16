@@ -7,7 +7,7 @@ import javafx.scene.control.TabPane
 import org.junit.jupiter.api.Test
 import org.testfx.api.FxToolkit
 import org.testfx.framework.junit5.ApplicationTest
-import ru.shadowsparky.client.mvc.views.MainView
+import ru.shadowsparky.client.mvvm.views.MainView
 import tornadofx.content
 
 class TestTest : ApplicationTest() {

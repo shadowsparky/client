@@ -197,7 +197,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>ru.shadowsparky.client.mvc.views.Main</mainClass>
+                            <mainClass>ru.shadowsparky.client.mvvm.views.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
