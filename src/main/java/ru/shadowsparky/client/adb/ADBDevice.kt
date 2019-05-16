@@ -12,3 +12,4 @@ data class ADBDevice(
         return "$model, id:$id"
     }
 }
+// test
