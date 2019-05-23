@@ -23,7 +23,7 @@ import java.net.UnknownHostException
 abstract class BaseView : View(""), Resultable {
     abstract override val root: StackPane
     protected val styles = Injection.provideStyles()
-    open var projection: ProjectionWorker? = null
+    var projection: ProjectionWorker? = null
     lateinit var dialog: Dialog
     companion object {
         var isLocked = SimpleBooleanProperty(false)

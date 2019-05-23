@@ -26,5 +26,5 @@ object Constants {
             "Для нажатия на кнопку 'Домой' нажмите на X или H."
     const val FORWARD_ERROR = "Во время открытия порта произошла неизвестная ошибка."
     const val CHOOSE_DEVICE_ERROR = "Вы должны выбрать устройство."
-
+    const val INCORRECT_IP = "Вы должны ввести IP адрес Android устройства"
 }

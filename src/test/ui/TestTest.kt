@@ -11,7 +11,11 @@ import ru.shadowsparky.client.mvvm.views.MainView
 import tornadofx.content
 
 class TestTest : ApplicationTest() {
-    val pStage = FxToolkit.registerPrimaryStage()
+
+    init {
+        FxToolkit.registerPrimaryStage()
+    }
+
     val main = MainView()
 
     @Test

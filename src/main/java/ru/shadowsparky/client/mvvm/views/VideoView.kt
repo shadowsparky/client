@@ -5,8 +5,9 @@
 
 package ru.shadowsparky.client.mvvm.views
 
-import org.bytedeco.javacv.CanvasFrame
+//import org.bytedeco.javacpp
 import org.bytedeco.javacv.OpenCVFrameConverter
+import org.bytedeco.javacv.CanvasFrame
 import org.opencv.core.Mat
 import ru.shadowsparky.client.projection.ProjectionWorker
 import ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel
@@ -19,7 +20,7 @@ import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 
-class VideoView (
+open class VideoView (
         private val projection: ProjectionWorker,
         title: String = "test",
         type: ConnectionType = ConnectionType.wifi

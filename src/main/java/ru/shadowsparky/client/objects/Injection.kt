@@ -23,6 +23,9 @@ import ru.shadowsparky.client.ConnectionType
 import ru.shadowsparky.client.ConsoleExecutor
 import ru.shadowsparky.client.Logger
 import ru.shadowsparky.client.adb.ADBWorker
+import ru.shadowsparky.client.interfaces.Resultable
+import ru.shadowsparky.client.objects.Constants.PORT
+import ru.shadowsparky.client.projection.ProjectionWorker
 import java.util.concurrent.LinkedBlockingQueue
 
 object Injection {
@@ -37,6 +40,6 @@ object Injection {
     fun provideAdbController(view: AdbView) = AdbViewModel(view)
     fun provideVideoController(view: VideoView, type: ConnectionType) = VideoViewModel(view, type)
     fun provideWifiController(view: WifiView) = WifiViewModel(view)
-
+    fun provideProjectionWorker(handler: Resultable, addr: String, port: Int = PORT) = ProjectionWorker(handler, addr, port)
     fun provideExecutor() = ConsoleExecutor()
 }

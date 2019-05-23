@@ -7,6 +7,8 @@ package unit
 
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
+import org.junit.Before
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
@@ -29,17 +31,24 @@ import ru.shadowsparky.client.objects.Parser
 import ru.shadowsparky.client.projection.ProjectionWorker
 
 class TestAdbController {
-    private val view: AdbView = mock()
-    private val model: AdbModel = mock()
-    private var controller = AdbViewModel(view, model)
+    private lateinit var view: AdbView
+    private lateinit var model: AdbModel
+    private lateinit var controller: AdbViewModel
+
+    private fun provideAdbDevices() : ArrayList<ADBDevice> = Parser.strToDevices(MOCKED_DEVICE)
 
     init {
+        prepare()
+    }
+
+    fun prepare() {
+        view = mock()
+        model = mock()
+        controller = AdbViewModel(view, model)
         view.dialog = mock()
         BaseView.isLoaded = mock()
         view.projection = mock()
     }
-
-    private fun provideAdbDevices() : ArrayList<ADBDevice> = Parser.strToDevices(MOCKED_DEVICE)
 
     // ADB найден и найдены устройства
     @Test fun updateNotNullAndNotEmptyDevices() {
@@ -82,18 +91,18 @@ class TestAdbController {
         controller.startProjection()
         doReturn(LOCALHOST).`when`(view).deviceAddr
         doReturn(true).`when`(model).forwardPort(LOCALHOST)
-        Mockito.`when`(view.projection).thenReturn(mock())
+        view.projection = mock()
         verify(BaseView.isLoaded, times(1)).value = false
         assert(view.deviceAddr != null)
         assert(model.forwardPort(LOCALHOST))
-        verify(view).projection = ArgumentMatchers.any(ProjectionWorker::class.java)
+//        verify(view).projection = ArgumentMatchers.any(ProjectionWorker::class.java)
 //        verify(view.projection)!!.start()
     }
 
     // Начало проецирования c невыбранным устройством
     @Test fun startProjectionWithNullDevice() {
-        controller.startProjection()
         doReturn(null).`when`(view).deviceAddr
+        controller.startProjection()
         verify(BaseView.isLoaded, times(1)).value = false
         assert(view.deviceAddr == null)
         verify(view.dialog).showDialog(ERROR, CHOOSE_DEVICE_ERROR)

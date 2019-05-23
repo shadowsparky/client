@@ -10,16 +10,20 @@ import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.adb.ADBStatus
 import ru.shadowsparky.client.mvvm.views.VideoView
 import ru.shadowsparky.client.interfaces.Controllerable
+import ru.shadowsparky.client.mvvm.models.VideoModel
 import tornadofx.Controller
 import java.awt.Dimension
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.*
 
-class VideoViewModel(private val view: VideoView, val type: ConnectionType) : Controller(), Controllerable {
+class VideoViewModel(
+        private val view: VideoView,
+        val type: ConnectionType,
+        private val model: VideoModel = Injection.provideVideoModel()
+) : Controller(), Controllerable {
     private var infelicity_width: Double = 0.0
     private var infelicity_height: Double = 0.0
     private val _log = Injection.provideLogger()
-    private val model = Injection.provideVideoModel()
 
     init {
         setupKeyboard()

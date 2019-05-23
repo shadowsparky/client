@@ -12,8 +12,6 @@ import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.geometry.Pos
 import javafx.scene.control.Label
-import javafx.scene.control.ProgressBar
-import javafx.scene.control.ProgressIndicator.INDETERMINATE_PROGRESS
 import ru.shadowsparky.client.Dialog
 import ru.shadowsparky.client.objects.Injection
 import tornadofx.*
@@ -25,14 +23,6 @@ open class AdbView : BaseView() {
     var input = styles.getDefaultList()
     private val controller = Injection.provideAdbController(this)
     open var deviceAddr: String? = null
-
-    open fun updateDevices() = Platform.runLater {
-        controller.updateDevices()
-    }
-    open fun addDevice(device: String) = items.get().add(Label(device))
-    open fun addAllDevices(devices: ObservableList<Label>) { items.value = devices }
-    open fun clearDevices() = input.items.clear()
-    open fun setDisable(flag: Boolean) { isDisable.value = flag }
 
     init {
         items.set(FXCollections.observableArrayList())
@@ -74,4 +64,12 @@ open class AdbView : BaseView() {
             }
         }
     }
+
+    open fun updateDevices() = Platform.runLater {
+        controller.updateDevices()
+    }
+    open fun addDevice(device: String) = items.get().add(Label(device))
+    open fun addAllDevices(devices: ObservableList<Label>) { items.value = devices }
+    open fun clearDevices() = input.items.clear()
+    open fun setDisable(flag: Boolean) { isDisable.value = flag }
 }

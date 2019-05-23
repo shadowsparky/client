@@ -5,14 +5,14 @@
 
 package unit
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import ru.shadowsparky.client.mvvm.viewmodels.WifiViewModel
 import ru.shadowsparky.client.mvvm.models.WifiModel
+import ru.shadowsparky.client.mvvm.viewmodels.WifiViewModel
 import ru.shadowsparky.client.mvvm.views.BaseView
 import ru.shadowsparky.client.mvvm.views.WifiView
+import ru.shadowsparky.client.objects.Constants.ERROR
+import ru.shadowsparky.client.objects.Constants.INCORRECT_IP
 import ru.shadowsparky.client.objects.Constants.LOCALHOST
 import ru.shadowsparky.client.objects.Injection
 
@@ -23,29 +23,35 @@ class TestWifiController {
     private val log = Injection.provideLogger()
 
     init {
-        view.dialog = mock()
         BaseView.isLoaded = mock()
         view.mInputText = mock()
-        Mockito.`when`(view.mInputText.get()).thenReturn(LOCALHOST)
-        Mockito.`when`(view.projection).thenReturn(mock())
     }
 
     @Test fun notEmptyStartProjection() {
+        given(view.mInputText.get()).willReturn(LOCALHOST)
         controller.startProjection()
-        verify(BaseView.isLoaded).value = false
         assert(view.mInputText.get().isNotEmpty())
-        assert((view.projection == null) or (view.projection?.handling == false))
-        verify(view.projection)!!.start()
+        assert(((view.projection == null) or (view.projection?.handling == false)))
+        assert(view.projection != null)
+        verifyNoMoreInteractions(view, model)
     }
 
-    @Test fun alreadyStartedProjeciton() {
-        Mockito.`when`(view.projection!!.handling).thenReturn(true)
+    @Test fun alreadyStartedProjection() {
+        given(view.mInputText.get()).willReturn(LOCALHOST)
+        view.projection = Injection.provideProjectionWorker(view, view.mInputText.get())
+        view.projection?.handling = true
         controller.startProjection()
-//        doReturn(true).`when`(view.projection.handling)
-//        verify(BaseView.isLoaded).value = false
-//        assert(view.mInputText.get().isNotEmpty())
-//        assert(!((view.projection == null) or (view.projection?.handling == false)))
+        assert(view.mInputText.get().isNotEmpty())
+        assert(!((view.projection == null) or (view.projection?.handling == false)))
+        verify(view).onError(any())
+        verifyNoMoreInteractions(view, model)
+    }
 
-//        Mockito.`when`(view.projection?.handling).thenReturn(true)
+    @Test fun incorrectIpAddr() {
+        given(view.mInputText.get()).willReturn("")
+        view.dialog = mock()
+        controller.startProjection()
+        view.dialog.showDialog(ERROR, INCORRECT_IP)
+        verifyNoMoreInteractions(view, model)
     }
 }

@@ -9,7 +9,7 @@ import ru.shadowsparky.client.objects.Injection
 import java.awt.Dimension
 import java.awt.Toolkit
 
-class VideoModel {
+open class VideoModel {
     private val adb = Injection.provideAdb()
 
     fun up() = adb.invokeScrollUp()
