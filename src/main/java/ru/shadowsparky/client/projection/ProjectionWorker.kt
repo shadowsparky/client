@@ -46,14 +46,11 @@ open class ProjectionWorker(
             field = value
         }
 
-    fun showProjection() {
-        video = VideoView(this, "Проецирование", type)
-    }
-
     fun start() : Boolean {
         if (!connectToServer())
             return false
         upstream()
+        video = VideoView(this, "Проецирование", type)
         decode()
         return true
     }
@@ -111,7 +108,6 @@ open class ProjectionWorker(
             return@launch
         log.printInfo("Data Handling enabled")
         handler.onSuccess()
-        decode()
         try {
             while (handling) {
                 val picture = HandledPictureOuterClass

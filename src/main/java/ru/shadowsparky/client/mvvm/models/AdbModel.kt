@@ -5,16 +5,14 @@
 
 package ru.shadowsparky.client.mvvm.models
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 import ru.shadowsparky.client.adb.ADBDevice
 import ru.shadowsparky.client.adb.ADBStatus
 import ru.shadowsparky.client.exceptions.ADBDevicesNotFoundException
 import ru.shadowsparky.client.exceptions.ADBMissingException
 import ru.shadowsparky.client.exceptions.ForwardException
+import ru.shadowsparky.client.exceptions.MissingDeviceException
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.objects.Parser
-import java.lang.Exception
 
 open class AdbModel {
     private val adb = Injection.provideAdb()
@@ -40,6 +38,8 @@ open class AdbModel {
         }
         throw ForwardException()
     }
+
+    open fun checkDevice(device: String?) = device ?: throw MissingDeviceException()
 
     open fun getDevice(device: String) = Parser.deviceToStr(device)
 }

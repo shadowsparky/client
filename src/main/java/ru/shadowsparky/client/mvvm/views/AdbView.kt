@@ -19,13 +19,14 @@ import tornadofx.*
 open class AdbView : BaseView() {
     override val root = styles.getDefaultStackPane()
     private val viewModel = Injection.provideAdbController(this)
+    private val devices = styles.getDefaultList()
 
     init {
         dialog = Dialog(root)
         with(root) {
             vbox {
                 this += styles.getLabel("Выберите устройство")
-                this += viewModel.devices.apply {
+                this += devices.apply {
                     disableProperty().bind(viewModel.isDisable)
                     itemsProperty().bind(viewModel.items)
                     selectionModel.selectedItemProperty().addListener { _, _, nv: Label? ->

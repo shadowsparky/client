@@ -42,7 +42,6 @@ open class AdbViewModel(
 ) : Controller(), Controllerable {
     private val _log = Injection.provideLogger()
     private val styles = Injection.provideStyles()
-    val devices = styles.getDefaultList()
     val isDisable = SimpleBooleanProperty(false)
     var device: String? = null
     val items = SimpleObjectProperty<ObservableList<Label>>()
@@ -52,14 +51,18 @@ open class AdbViewModel(
     }
 
     fun updateDevices() = runAsync {
-        ui { items.get().clear() }
         model.getDevicesRequest()
-    } success {
-        it.forEach { items.get().add(Label("$it")) }
-        isDisable.set(false)
-    } fail {
-        items.get().add(Label(it.message))
-        isDisable.set(true)
+    }.apply {
+        setOnRunning {
+            items.get().clear()
+        }
+        success  {
+            it.forEach { items.get().add(Label("$it")) }
+            isDisable.set(false)
+        } fail {
+            items.get().add(Label(it.message))
+            isDisable.set(true)
+        }
     }
 
     fun showHelp() = view.dialog.showDialog(FAQ, FAQ_MESSAGE, true)
@@ -68,17 +71,21 @@ open class AdbViewModel(
         model.forwardPort(device!!)
     } success {
         view.projection = ProjectionWorker(view, LOCALHOST, FORWARD_PORT)
-        view.projection!!.start()
+        view.projection?.start()
     } fail {
-        view.dialog.showDialog(ERROR, FORWARD_ERROR, true)
+        view.onError(it as Exception)
     }
 
-    open fun startProjection() {
-        BaseView.isLoaded.value = false
-        if (!device.isNullOrEmpty()) {
+    open fun startProjection() = runAsync {
+        model.checkDevice(device)
+    }.apply {
+        setOnRunning {
+            BaseView.isLoaded.value = false
+        }
+        success {
             forwardPort()
-        } else {
-            view.dialog.showDialog(ERROR, CHOOSE_DEVICE_ERROR)
+        } fail {
+            view.onError(it as Exception)
         }
     }
 }

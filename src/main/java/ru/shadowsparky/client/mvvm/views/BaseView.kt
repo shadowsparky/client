@@ -10,6 +10,8 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.scene.layout.StackPane
 import ru.shadowsparky.client.Dialog
+import ru.shadowsparky.client.exceptions.EmptyAddressException
+import ru.shadowsparky.client.exceptions.ForwardException
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.interfaces.Resultable
 import ru.shadowsparky.client.exceptions.IncorrectPasswordException
@@ -33,7 +35,6 @@ abstract class BaseView : View(""), Resultable {
 
     override fun onSuccess() = Platform.runLater {
         isLoaded.value = true
-        projection?.showProjection()
         isLocked.value = true
     }
 
@@ -44,6 +45,9 @@ abstract class BaseView : View(""), Resultable {
         val error = when (e) {
             is ConnectException, is UnknownHostException-> "При соединении произошла ошибка.\nСервер не найден"
             is EOFException -> "Произошло отключение от сервера"
+            is EmptyAddressException -> e.message!!
+            is ForwardException -> e.message!!
+
             is ProjectionAlreadyStartedException -> "При соединении произошла ошибка. \nВы не отключились от предыдущего соединения"
             is IncorrectPasswordException -> "При соединении с сервером произошла ошибка. Вы ввели неправильный пароль"
             else -> "Соединение было разорвано"
