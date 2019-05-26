@@ -5,6 +5,17 @@
 
 package ru.shadowsparky.client.mvvm.viewmodels
 
+import javafx.beans.property.SimpleBooleanProperty
+import javafx.beans.property.SimpleObjectProperty
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
+import javafx.scene.control.Label
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import ru.shadowsparky.client.adb.ADBDevice
+import ru.shadowsparky.client.exceptions.ADBDevicesNotFoundException
+import ru.shadowsparky.client.exceptions.ADBMissingException
 import ru.shadowsparky.client.mvvm.views.AdbView
 import ru.shadowsparky.client.mvvm.views.BaseView
 import ru.shadowsparky.client.interfaces.Controllerable
@@ -21,44 +32,51 @@ import ru.shadowsparky.client.objects.Constants.NO_CONNECTED_DEVICES
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.projection.ProjectionWorker
 import tornadofx.Controller
+import tornadofx.asyncItems
+import tornadofx.fail
+import tornadofx.success
 
 open class AdbViewModel(
         private val view: AdbView,
         private val model: AdbModel = Injection.provideAdbModel()
 ) : Controller(), Controllerable {
     private val _log = Injection.provideLogger()
+    private val styles = Injection.provideStyles()
+    val devices = styles.getDefaultList()
+    val isDisable = SimpleBooleanProperty(false)
+    var device: String? = null
+    val items = SimpleObjectProperty<ObservableList<Label>>()
 
-    fun updateDevices() {
-        view.clearDevices()
-        var result = true
-        val devices = model.getDevicesRequest()
-        if (devices != null) {
-            result = if (devices.isNotEmpty()) {
-                devices.forEach {
-                    view.addDevice("$it")
-                }
-                false
-            } else {
-                view.addDevice(NO_CONNECTED_DEVICES)
-                true
-            }
-        } else {
-            view.addDevice(ADB_NOT_FOUND)
-        }
-        view.setDisable(result)
+    init {
+        items.set(FXCollections.observableArrayList())
+    }
+
+    fun updateDevices() = runAsync {
+        ui { items.get().clear() }
+        model.getDevicesRequest()
+    } success {
+        it.forEach { items.get().add(Label("$it")) }
+        isDisable.set(false)
+    } fail {
+        items.get().add(Label(it.message))
+        isDisable.set(true)
     }
 
     fun showHelp() = view.dialog.showDialog(FAQ, FAQ_MESSAGE, true)
 
+    private fun forwardPort() = runAsync {
+        model.forwardPort(device!!)
+    } success {
+        view.projection = ProjectionWorker(view, LOCALHOST, FORWARD_PORT)
+        view.projection!!.start()
+    } fail {
+        view.dialog.showDialog(ERROR, FORWARD_ERROR, true)
+    }
+
     open fun startProjection() {
         BaseView.isLoaded.value = false
-        if (view.deviceAddr != null) {
-            if (model.forwardPort(view.deviceAddr!!)) {
-                view.projection = ProjectionWorker(view, LOCALHOST, FORWARD_PORT)
-                view.projection?.start()
-            } else {
-                view.dialog.showDialog(ERROR, FORWARD_ERROR, true)
-            }
+        if (!device.isNullOrEmpty()) {
+            forwardPort()
         } else {
             view.dialog.showDialog(ERROR, CHOOSE_DEVICE_ERROR)
         }

@@ -5,31 +5,27 @@
 
 package ru.shadowsparky.client.mvvm.views
 
-import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
-import javafx.scene.control.ProgressBar
-import javafx.scene.control.ProgressIndicator
 import ru.shadowsparky.client.Dialog
 import ru.shadowsparky.client.objects.Injection
 import tornadofx.*
 
-open class WifiView : BaseView() {
+class WifiView : BaseView() {
     override val root = styles.getDefaultStackPane()
-    var mInputText = SimpleStringProperty("192.168.31.221")
-    private var controller = Injection.provideWifiController(this)
+    private var viewModel = Injection.provideWifiController(this)
 
     init {
         root.apply {
             vbox {
                 this += styles.getLabel("Введите IP адрес")
                 this += styles.getDefaultTextField().apply {
-                    bind(mInputText)
+                    bind(viewModel.mDeviceAddr)
                 }
                 addClass(styles.wrapper)
                 this += styles.getDefaultButton().apply {
                     bind(mButtonText)
                     disableProperty().bind(isLocked)
-                    action { controller.startProjection() }
+                    action { viewModel.startProjection() }
                 }
 //                this += ProgressBar().apply {
 //                    visibleProperty().bind(!isLoaded)

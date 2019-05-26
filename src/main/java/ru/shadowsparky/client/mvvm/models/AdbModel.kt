@@ -5,20 +5,30 @@
 
 package ru.shadowsparky.client.mvvm.models
 
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import ru.shadowsparky.client.adb.ADBDevice
 import ru.shadowsparky.client.adb.ADBStatus
+import ru.shadowsparky.client.exceptions.ADBDevicesNotFoundException
+import ru.shadowsparky.client.exceptions.ADBMissingException
+import ru.shadowsparky.client.exceptions.ForwardException
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.objects.Parser
+import java.lang.Exception
 
 open class AdbModel {
     private val adb = Injection.provideAdb()
+    private val log = Injection.provideLogger()
 
-    open fun getDevicesRequest() : ArrayList<ADBDevice>? {
+    open fun getDevicesRequest() : ArrayList<ADBDevice> {
         val request = adb.getDevices()
         if (request.status == ADBStatus.OK) {
-            return Parser.strToDevices(request.info)
+            val devices = Parser.strToDevices(request.info)
+            if (devices.isEmpty()) throw ADBDevicesNotFoundException()
+            return devices
+        } else {
+            throw ADBMissingException()
         }
-        return null
     }
 
     open fun forwardPort(addr: String) : Boolean {
@@ -28,7 +38,7 @@ open class AdbModel {
             if (result.status == ADBStatus.OK)
                 return true
         }
-        return false
+        throw ForwardException()
     }
 
     open fun getDevice(device: String) = Parser.deviceToStr(device)

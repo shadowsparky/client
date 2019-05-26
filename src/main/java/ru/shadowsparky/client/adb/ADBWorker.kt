@@ -13,7 +13,7 @@ import ru.shadowsparky.client.objects.Constants.HOME_BUTTON
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.exceptions.ConsoleExecutorException
 
-class ADBWorker {
+open class ADBWorker {
     private val log = Injection.provideLogger()
     private val executor = Injection.provideExecutor()
 

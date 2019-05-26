@@ -48,9 +48,16 @@ open class ProjectionWorker(
 
     fun showProjection() {
         video = VideoView(this, "Проецирование", type)
-        decode()
     }
-    open fun start() = connectToServer()
+
+    fun start() : Boolean {
+        if (!connectToServer())
+            return false
+        upstream()
+        decode()
+        return true
+    }
+
     fun stop() = socket?.close()
 
     override fun close() {
@@ -62,20 +69,16 @@ open class ProjectionWorker(
         System.runFinalization()
     }
 
-    open fun connectToServer() = GlobalScope.launch {
+    open fun connectToServer() : Boolean {
         try {
             socket = Socket(addr, port)
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
-            return@launch
+            return false
         }
         log.printInfo("Connected to the Server")
-        streamUp()
-    }
-
-    private fun streamUp() {
-        enableDataHandling()
+        return true
     }
 
     private fun handlePreparingData() : Boolean {
@@ -102,12 +105,13 @@ open class ProjectionWorker(
         return false
     }
 
-    private fun enableDataHandling() = GlobalScope.launch(Dispatchers.IO) {
+    private fun upstream() = GlobalScope.launch(Dispatchers.IO) {
         handling = true
          if (!handlePreparingData())
             return@launch
         log.printInfo("Data Handling enabled")
         handler.onSuccess()
+        decode()
         try {
             while (handling) {
                 val picture = HandledPictureOuterClass

@@ -33,7 +33,6 @@ class Decoder(val handler: OrientationHandler) : Closeable {
     private var convert_ctx: SwsContext? = null
     private var saved_width: Int = 0
     private var saved_height: Int = 0
-//    private val writer = VideoWriter("test.264")
 
     init {
         c = avcodec_alloc_context3(codec)
@@ -57,28 +56,28 @@ class Decoder(val handler: OrientationHandler) : Closeable {
 
     private fun getConvertContext() : SwsContext {
         return swscale.sws_getContext(
-                c.width(),
-                c.height(),
-                c.pix_fmt(),
-                c.width(),
-                c.height(),
-                AV_PIX_FMT_BGR24,
-                SWS_BICUBIC,
-                null,
-                null,
-                DoublePointer()
+            c.width(),
+            c.height(),
+            c.pix_fmt(),
+            c.width(),
+            c.height(),
+            AV_PIX_FMT_BGR24,
+            SWS_BICUBIC,
+            null,
+            null,
+            DoublePointer()
         )
     }
 
     private fun fillRGBPicture() {
         swscale.sws_scale(
-                convert_ctx,
-                picture.data(),
-                picture.linesize(),
-                0,
-                c.height(),
-                RGBPicture.data(),
-                RGBPicture.linesize()
+            convert_ctx,
+            picture.data(),
+            picture.linesize(),
+            0,
+            c.height(),
+            RGBPicture.data(),
+            RGBPicture.linesize()
         )
     }
 
@@ -92,12 +91,10 @@ class Decoder(val handler: OrientationHandler) : Closeable {
         checkOrientation()
         convert_ctx = getConvertContext()
         fillRGBPicture()
-//        writer.writeToFile(data)
         return Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer())
     }
 
     override fun close() {
-//        writer.close()
         codec.close()
         c.close()
         picture.close()

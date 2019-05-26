@@ -5,6 +5,6 @@
 package ru.shadowsparky.client.adb
 
 data class ADBResult (
-        val status: ADBStatus,
-        val info: String = ""
+    val status: ADBStatus,
+    val info: String = ""
 )

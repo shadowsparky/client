@@ -16,7 +16,7 @@ import java.awt.Dimension
 import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.*
 
-class VideoViewModel(
+open class VideoViewModel(
         private val view: VideoView,
         val type: ConnectionType,
         private val model: VideoModel = Injection.provideVideoModel()
