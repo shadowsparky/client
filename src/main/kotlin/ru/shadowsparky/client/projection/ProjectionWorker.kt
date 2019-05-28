@@ -9,16 +9,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.shadowsparky.client.mvvm.views.VideoView
 import ru.shadowsparky.client.ConnectionType
 import ru.shadowsparky.client.exceptions.CorruptedDataException
-import ru.shadowsparky.client.exceptions.IncorrectPasswordException
 import ru.shadowsparky.client.interfaces.Resultable
+import ru.shadowsparky.client.mvvm.views.VideoView
 import ru.shadowsparky.client.objects.Constants.LOCALHOST
 import ru.shadowsparky.client.objects.Constants.PORT
 import ru.shadowsparky.client.objects.Injection
-import ru.shadowsparky.screencast.proto.HandledPictureOuterClass
-import ru.shadowsparky.screencast.proto.PreparingDataOuterClass
+import ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture as HandledPicture
+import ru.shadowsparky.screencast.proto.PreparingDataOuterClass.PreparingData
 import java.io.Closeable
 import java.net.Socket
 
@@ -30,7 +29,7 @@ open class ProjectionWorker(
     private var video: VideoView? = null
     private var socket: Socket? = null
     private val log = Injection.provideLogger()
-    private lateinit var pData: PreparingDataOuterClass.PreparingData
+    private lateinit var pData: PreparingData
     private var saved_data = Injection.provideQueue()
     private var decoder: Decoder? = null
     private val type: ConnectionType = if (addr == LOCALHOST) ConnectionType.adb else ConnectionType.wifi
@@ -67,7 +66,7 @@ open class ProjectionWorker(
     open fun connectToServer() : Boolean {
         try {
             socket = Socket(addr, port)
-            socket!!.soTimeout = 1000
+            socket!!.soTimeout = 5000
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
@@ -79,21 +78,15 @@ open class ProjectionWorker(
 
     private fun handlePreparingData() : Boolean {
         try {
-            val pData = PreparingDataOuterClass.PreparingData.parseDelimitedFrom(socket?.getInputStream())
-            if (pData != null) {
-                if (pData.password == "") {
-                    this@ProjectionWorker.pData = pData
-                    log.printInfo("True Password")
-                    video = VideoView(this@ProjectionWorker, "Проецирование", type)
-                    decode()
-                    log.printInfo("Data Handling enabled")
-                    handler.onSuccess()
-                    return true
-                } else {
-                    log.printInfo("Incorrect password")
-                    handling = false
-                    handler.onError(IncorrectPasswordException())
-                }
+            val pData = PreparingData.parseDelimitedFrom(socket?.getInputStream())
+            if (pData?.password == "") {
+                this@ProjectionWorker.pData = pData
+                log.printInfo("True Password")
+                video = VideoView(this@ProjectionWorker, "Проецирование", type)
+                decode()
+                log.printInfo("Data Handling enabled")
+                handler.onSuccess()
+                return true
             } else {
                 handling = false
                 handler.onError(CorruptedDataException("Corrupted pData"))
@@ -113,9 +106,7 @@ open class ProjectionWorker(
         try {
             while (handling) {
                 if (stream.available() > 0) {
-                    val picture = HandledPictureOuterClass
-                        .HandledPicture
-                        .parseDelimitedFrom(socket!!.getInputStream())
+                    val picture = HandledPicture.parseDelimitedFrom(socket!!.getInputStream())
                     val buffer = picture.encodedPicture.toByteArray()
                     saved_data.add(buffer)
                 }

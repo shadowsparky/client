@@ -5,7 +5,17 @@
 
 package ru.shadowsparky.client
 
+/**
+ * Тип соединения
+ */
 enum class ConnectionType {
+    /**
+     * По ADB
+     */
     adb,
+
+    /**
+     * По Wifi
+     */
     wifi
 }

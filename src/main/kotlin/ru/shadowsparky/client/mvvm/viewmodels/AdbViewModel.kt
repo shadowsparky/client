@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.scene.control.Label
+import ru.shadowsparky.client.Dialog
 import ru.shadowsparky.client.mvvm.views.AdbView
 import ru.shadowsparky.client.mvvm.views.BaseView
 import ru.shadowsparky.client.interfaces.ViewModelable
@@ -21,40 +22,63 @@ import ru.shadowsparky.client.objects.Constants.LOCALHOST
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.projection.ProjectionWorker
 import tornadofx.Controller
+import tornadofx.ViewModel
 import tornadofx.fail
 import tornadofx.success
 
+/**
+ * ViewModel из MVVM для работы с ADB
+ *
+ * @param view подробнее: [AdbView]
+ * @param model подробнее: [AdbModel]
+ * @property isDisable проперти, к которому привязывается состояние isDisabled в ListView
+ * @property device наименование выбранного устройства в ListView
+ * @property items проперти, к которому привязываются элементы из списка ListView
+ */
 open class AdbViewModel(
         private val view: AdbView,
         private val model: AdbModel = Injection.provideAdbModel()
-) : Controller(), ViewModelable {
-    private val _log = Injection.provideLogger()
-    private val styles = Injection.provideStyles()
+) : ViewModel() {
     val isDisable = SimpleBooleanProperty(false)
     var device: String? = null
     val items = SimpleObjectProperty<ObservableList<Label>>()
 
     init {
-        items.set(FXCollections.observableArrayList())
+        items.set(FXCollections.observableArrayList()) // инициализация списка
     }
 
+    /**
+     * Получение списка устройств, подключенных по ADB
+     */
     fun updateDevices() = runAsync {
         model.getDevicesRequest()
     }.apply {
         setOnRunning {
+            // очистка предыдущего списка
             items.get().clear()
         }
-        success  {
+        success {
+            // добавление полученных устройств в ListView
             it.forEach { items.get().add(Label("$it")) }
-            isDisable.set(false)
+            isDisable.set(false) // включение взаимодействия с ListView
         } fail {
-            items.get().add(Label(it.message))
-            isDisable.set(true)
+            items.get().add(Label(it.message)) // добавление ошибки в ListView
+            isDisable.set(true) // отключение взаимодействия с ListView
         }
     }
 
+    /**
+     * Отображение справки
+     *
+     * @see [Dialog]
+     */
     fun showHelp() = view.dialog.showDialog(FAQ, FAQ_MESSAGE, true)
 
+    /**
+     * Переопределение порта
+     *
+     * @see AdbModel.forwardPort, [ProjectionWorker]
+     */
     private fun forwardPort() = runAsync {
         model.forwardPort(device!!)
     } success {
@@ -64,17 +88,22 @@ open class AdbViewModel(
         view.onError(it as Exception)
     }
 
+    /**
+     * Запуск проецирования
+     *
+     * @see AdbModel.checkDevice
+     */
     open fun startProjection() = runAsync {
-        model.checkDevice(device)
+        model.checkDevice(device) // Проверка устройства
     }.apply {
         setOnRunning {
             BaseView.isLoaded.value = false
             BaseView.isLocked.value = true
         }
         success {
-            forwardPort()
+            forwardPort() // если устройство корректное, то выполняется переопределение порта
         } fail {
-            view.onError(it as Exception)
+            view.onError(it as Exception) // если некорректное, то ошибка
         }
     }
 }

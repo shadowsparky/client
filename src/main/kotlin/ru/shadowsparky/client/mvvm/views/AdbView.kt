@@ -51,10 +51,6 @@ open class AdbView : BaseView() {
                     }
                 }
                 addClass(styles.wrapper)
-//                this += ProgressBar().apply {
-//                    visibleProperty().bind(!isLoaded)
-//                    progress = INDETERMINATE_PROGRESS
-//                }
                 useMaxWidth = true
                 alignment = Pos.CENTER
             }

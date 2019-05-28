@@ -6,33 +6,38 @@
 package ru.shadowsparky.client.mvvm.viewmodels
 
 import javafx.beans.property.SimpleStringProperty
-import ru.shadowsparky.client.exceptions.EmptyAddressException
+import ru.shadowsparky.client.mvvm.models.WifiModel
 import ru.shadowsparky.client.mvvm.views.BaseView
 import ru.shadowsparky.client.mvvm.views.WifiView
-import ru.shadowsparky.client.exceptions.ProjectionAlreadyStartedException
-import ru.shadowsparky.client.interfaces.ViewModelable
-import ru.shadowsparky.client.mvvm.models.WifiModel
 import ru.shadowsparky.client.objects.Injection
-import tornadofx.Controller
+import tornadofx.ViewModel
 
+/**
+ * ViewModel из MVVM для работы с wifi
+ *
+ * @param view подробнее: [WifiView]
+ * @param model подробнее: [WifiModel]
+ * @property mDeviceAddr проперти, связанное с EditText, в котором вводится адрес устройства (binding)
+ */
 class WifiViewModel(
         private val view: WifiView,
         private val model: WifiModel = WifiModel()
-) : Controller(), ViewModelable {
+) : ViewModel() {
     val mDeviceAddr = SimpleStringProperty("192.168.31.221")
 
+    /**
+     * Запуск проецирования
+     */
     fun startProjection() {
         BaseView.isLoaded.value = false
         BaseView.isLocked.value = true
-        if (mDeviceAddr.get().isNotEmpty()) {
-            if ((view.projection == null) or (view.projection?.handling == false)) {
-                view.projection = Injection.provideProjectionWorker(view, mDeviceAddr.get())
-                view.projection!!.start()
-            } else {
-                view.onError(ProjectionAlreadyStartedException())
-            }
-        } else {
-            view.onError(EmptyAddressException())
+        try {
+            model.checkIpAddress(mDeviceAddr.get())
+            model.checkProjection(view.projection)
+            view.projection = Injection.provideProjectionWorker(view, mDeviceAddr.get())
+            view.projection!!.start()
+        } catch (e: Exception) {
+            view.onError(e)
         }
     }
 }

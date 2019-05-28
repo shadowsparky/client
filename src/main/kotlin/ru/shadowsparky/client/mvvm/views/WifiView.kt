@@ -27,10 +27,6 @@ class WifiView : BaseView() {
                     disableProperty().bind(isLocked)
                     action { viewModel.startProjection() }
                 }
-//                this += ProgressBar().apply {
-//                    visibleProperty().bind(!isLoaded)
-//                    progress = ProgressIndicator.INDETERMINATE_PROGRESS
-//                }
                 useMaxWidth = true
                 alignment = Pos.CENTER
             }

@@ -41,7 +41,7 @@ open class VideoView (
         val fixed = viewModel.getFixedSize(width, height)
         this.canvas.setSize(fixed.width, fixed.height)
         log.printInfo("test: ${fixed.width} ${fixed.height}")
-        viewModel.updateIncfelicity(width, height)
+        viewModel.updateInfelicity(width, height)
     }
 
     fun showImage(image: Mat) = super.showImage(converter.convert(image))
