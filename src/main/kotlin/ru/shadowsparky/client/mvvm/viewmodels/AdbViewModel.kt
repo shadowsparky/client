@@ -69,6 +69,7 @@ open class AdbViewModel(
     }.apply {
         setOnRunning {
             BaseView.isLoaded.value = false
+            BaseView.isLocked.value = true
         }
         success {
             forwardPort()

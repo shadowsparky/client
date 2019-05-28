@@ -7,6 +7,7 @@ package ru.shadowsparky.client.projection
 
 import org.bytedeco.ffmpeg.avcodec.AVCodecContext
 import org.bytedeco.ffmpeg.avutil.AVDictionary
+import org.bytedeco.ffmpeg.avutil.AVRational
 import org.bytedeco.ffmpeg.global.avcodec.*
 import org.bytedeco.ffmpeg.global.avutil.*
 import org.bytedeco.ffmpeg.global.swscale

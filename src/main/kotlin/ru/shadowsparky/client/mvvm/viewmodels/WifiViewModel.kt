@@ -23,6 +23,7 @@ class WifiViewModel(
 
     fun startProjection() {
         BaseView.isLoaded.value = false
+        BaseView.isLocked.value = true
         if (mDeviceAddr.get().isNotEmpty()) {
             if ((view.projection == null) or (view.projection?.handling == false)) {
                 view.projection = Injection.provideProjectionWorker(view, mDeviceAddr.get())

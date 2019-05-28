@@ -50,8 +50,6 @@ open class ProjectionWorker(
         if (!connectToServer())
             return false
         upstream()
-        video = VideoView(this, "Проецирование", type)
-        decode()
         return true
     }
 
@@ -69,6 +67,7 @@ open class ProjectionWorker(
     open fun connectToServer() : Boolean {
         try {
             socket = Socket(addr, port)
+            socket!!.soTimeout = 1000
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
@@ -85,6 +84,10 @@ open class ProjectionWorker(
                 if (pData.password == "") {
                     this@ProjectionWorker.pData = pData
                     log.printInfo("True Password")
+                    video = VideoView(this@ProjectionWorker, "Проецирование", type)
+                    decode()
+                    log.printInfo("Data Handling enabled")
+                    handler.onSuccess()
                     return true
                 } else {
                     log.printInfo("Incorrect password")
@@ -104,17 +107,18 @@ open class ProjectionWorker(
 
     private fun upstream() = GlobalScope.launch(Dispatchers.IO) {
         handling = true
+        val stream = socket!!.getInputStream()
          if (!handlePreparingData())
             return@launch
-        log.printInfo("Data Handling enabled")
-        handler.onSuccess()
         try {
             while (handling) {
-                val picture = HandledPictureOuterClass
+                if (stream.available() > 0) {
+                    val picture = HandledPictureOuterClass
                         .HandledPicture
                         .parseDelimitedFrom(socket!!.getInputStream())
-                val buffer = picture.encodedPicture.toByteArray()
-                saved_data.add(buffer)
+                    val buffer = picture.encodedPicture.toByteArray()
+                    saved_data.add(buffer)
+                }
             }
         } catch (e: Exception) {
             handler.onError(e)
