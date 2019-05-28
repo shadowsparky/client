@@ -178,11 +178,11 @@ open class ADBWorker {
     }
 
     /**
-     * Проверка существования ADB устройств
+     * Получение всех подключенных ADB устройств
      *
      * @return результат выполнения команды. Подробнее: [ADBResult]
      */
-    fun checkDevices() : ADBResult {
+    fun adbDevices() : ADBResult {
         return try {
             val result = executor.executeCommand(listOf("adb", "devices", "-l"))
             baseNotEmptyChecking(result)
