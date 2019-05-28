@@ -10,6 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.shadowsparky.client.ConnectionType
+import ru.shadowsparky.client.Logger
 import ru.shadowsparky.client.exceptions.CorruptedDataException
 import ru.shadowsparky.client.interfaces.Resultable
 import ru.shadowsparky.client.mvvm.views.VideoView
@@ -21,6 +22,21 @@ import ru.shadowsparky.screencast.proto.PreparingDataOuterClass.PreparingData
 import java.io.Closeable
 import java.net.Socket
 
+/**
+ * Класс, реализующий функции клиента.
+ * В нем происходит вывод изображения на экран, получение данных от сервера и декодирование изображения
+ *
+ * @param handler подробнее: [Resultable]
+ * @param addr ip адрес
+ * @param port порт устройства
+ * @property video подробнее: [VideoView]
+ * @property socket сокет, с помощью которого можно соединиться с сервером
+ * @property pData proto модель с данными
+ * @property saved_data подробнее: [Injection.provideQueue]
+ * @property decoder подробнее: [Decoder]
+ * @property type подробнее: [ConnectionType]
+ * @property handling статус подключения к серверу
+ */
 open class ProjectionWorker(
         private val handler: Resultable,
         val addr: String,
@@ -45,6 +61,12 @@ open class ProjectionWorker(
             field = value
         }
 
+    /**
+     * Запуск процесса подключения
+     *
+     * @return true если подключение установлено, иначе false
+     * @see [connectToServer], [upstream]
+     */
     fun start() : Boolean {
         if (!connectToServer())
             return false
@@ -52,8 +74,14 @@ open class ProjectionWorker(
         return true
     }
 
+    /**
+     * Закрытие соединения с сервером
+     */
     fun stop() = socket?.close()
 
+    /**
+     * Освобождение ресурсов
+     */
     override fun close() {
         socket?.close()
         saved_data.clear()
@@ -63,6 +91,11 @@ open class ProjectionWorker(
         System.runFinalization()
     }
 
+    /**
+     * Создание сокета и подключение к серверу
+     *
+     * @return true если успешно иначе false
+     */
     open fun connectToServer() : Boolean {
         try {
             socket = Socket(addr, port)
@@ -76,6 +109,12 @@ open class ProjectionWorker(
         return true
     }
 
+    /**
+     * Получение данных, необходимых для подготовки к старту проецирования
+     *
+     * @see [VideoView], [decode]
+     * @return true если данные получены, иначе false
+     */
     private fun handlePreparingData() : Boolean {
         try {
             val pData = PreparingData.parseDelimitedFrom(socket?.getInputStream())
@@ -98,6 +137,11 @@ open class ProjectionWorker(
         return false
     }
 
+    /**
+     * Получение данных от сервера и обработка
+     *
+     * @see [handlePreparingData]
+     */
     private fun upstream() = GlobalScope.launch(Dispatchers.IO) {
         handling = true
         val stream = socket!!.getInputStream()
@@ -118,6 +162,11 @@ open class ProjectionWorker(
         }
     }
 
+    /**
+     * Декодирование изображения и вывод на экран
+     *
+     * @see [Decoder]
+     */
     fun decode() = GlobalScope.launch(Dispatchers.IO) {
         decoder = Decoder(video!!)
         while (handling) {
