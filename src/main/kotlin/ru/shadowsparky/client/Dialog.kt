@@ -11,7 +11,20 @@ import javafx.scene.control.Label
 import javafx.scene.layout.StackPane
 import javafx.scene.text.Font
 
-open class Dialog(val root: StackPane) {
+/**
+ * Диалог. Просто диалог.
+ *
+ * @param root лейаут, поверх которого появится диалог
+ */
+open class Dialog(private val root: StackPane) {
+
+    /**
+     * Показ диалога
+     *
+     * @param title заголовок диалога
+     * @param text текст диалога
+     * @param showTitle если false, то заголовок диалога не показывается, если true, то показывается
+     */
     open fun showDialog(title: String, text: String, showTitle: Boolean = false) {
         val content = JFXDialogLayout()
         val title_lab = Label(title)

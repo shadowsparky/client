@@ -16,11 +16,28 @@ import org.bytedeco.javacpp.BytePointer
 import org.bytedeco.javacpp.DoublePointer
 import org.bytedeco.opencv.global.opencv_core.CV_8UC3
 import org.opencv.core.Mat
+import ru.shadowsparky.client.Logger
 import ru.shadowsparky.client.interfaces.handlers.OrientationHandler
 import ru.shadowsparky.client.objects.Injection
 import java.io.Closeable
 import java.nio.ByteBuffer
 
+/**
+ * Класс, предназначений для декодирования
+ * H264 пакета с данными и конвертация его в [Mat] объект
+ *
+ * @property log подробнее: [Logger]
+ * @property codec декодер h264
+ * @property c контекст декодера
+ * @property picture AVFrame c черно-белым изображением
+ * @property RGBPicture AVFrame с цветным изображением
+ * @property packet AVPacket содержит сжатые данные
+ * @property bytes размер байтов, необходимых для хранения изображения с заданными параметрами
+ * @property buffer буфер. Как ByteArray, только для OpenCV
+ * @property convert_ctx контекст, позволяемый конвертировать черно-белую картинку в цветную
+ * @property saved_width сохраненная ширина
+ * @property saved_height сохраненная высота
+ */
 class Decoder(val handler: OrientationHandler) : Closeable {
     private val log = Injection.provideLogger()
     private var codec = avcodec_find_decoder(AV_CODEC_ID_H264)
@@ -39,6 +56,10 @@ class Decoder(val handler: OrientationHandler) : Closeable {
         avcodec_open2(c, codec, AVDictionary())
     }
 
+    /**
+     * Проверка ориентации. Если сохраненные параметры не совпадают с текущими,
+     * значит ориентация сменилась и вызывается [OrientationHandler.onOrientationChanged]
+     */
     private fun checkOrientation() {
         if ((saved_width != c.width()) and (saved_height != c.height())) {
             bytes = av_image_get_buffer_size(AV_PIX_FMT_RGB24, c.width(), c.height(), 1)
@@ -51,9 +72,19 @@ class Decoder(val handler: OrientationHandler) : Closeable {
         }
     }
 
+    /**
+     * Конвертирование задекодированных h264 данных из packet'a и запись этого пакета в контекст
+     */
     private fun sendPacket() = avcodec_send_packet(c, packet) == 0
+
+    /**
+     * Конвертирование данных из контекста в картинку
+     */
     private fun receiveFrame() = avcodec_receive_frame(c, picture) == 0
 
+    /**
+     * @return выделение памяти и получение SwsContext
+     */
     private fun getConvertContext() : SwsContext {
         return swscale.sws_getContext(
             c.width(),
@@ -69,6 +100,9 @@ class Decoder(val handler: OrientationHandler) : Closeable {
         )
     }
 
+    /**
+     * Конвертирование черно-белой картинки в цветную
+     */
     private fun fillRGBPicture() {
         swscale.sws_scale(
             convert_ctx,
@@ -81,7 +115,14 @@ class Decoder(val handler: OrientationHandler) : Closeable {
         )
     }
 
+    /**
+     * Декодирование
+     *
+     * @see [sendPacket], [receiveFrame], [checkOrientation], [fillRGBPicture]
+     * @return возвращает декодированную картинку в [Mat]
+     */
     fun decode(data: ByteArray) : Mat? {
+        // запись данных в packet
         packet.apply {
             data(BytePointer(ByteBuffer.wrap(data)))
             size(data.size)
@@ -94,6 +135,9 @@ class Decoder(val handler: OrientationHandler) : Closeable {
         return Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer())
     }
 
+    /**
+     * Освобождение ресурсов
+     */
     override fun close() {
         codec.close()
         c.close()

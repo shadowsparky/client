@@ -101,7 +101,7 @@ open class ProjectionWorker(
     private fun upstream() = GlobalScope.launch(Dispatchers.IO) {
         handling = true
         val stream = socket!!.getInputStream()
-         if (!handlePreparingData())
+        if (!handlePreparingData())
             return@launch
         try {
             while (handling) {
