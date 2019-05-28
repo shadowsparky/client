@@ -45,9 +45,7 @@ abstract class BaseView : View(""), Resultable {
         val error = when (e) {
             is ConnectException, is UnknownHostException-> "При соединении произошла ошибка.\nСервер не найден"
             is EOFException -> "Произошло отключение от сервера"
-            is EmptyAddressException -> e.message!!
-            is ForwardException -> e.message!!
-
+            is EmptyAddressException, is ForwardException -> e.message!!
             is ProjectionAlreadyStartedException -> "При соединении произошла ошибка. \nВы не отключились от предыдущего соединения"
             is IncorrectPasswordException -> "При соединении с сервером произошла ошибка. Вы ввели неправильный пароль"
             else -> "Соединение было разорвано"

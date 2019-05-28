@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>VideoViewModel - client</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">client</a>&nbsp;/&nbsp;<a href="../index.html">ru.shadowsparky.client.mvvm.viewmodels</a>&nbsp;/&nbsp;<a href="./index.html">VideoViewModel</a><br/>
+<br/>
+<h1>VideoViewModel</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">VideoViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Controller</span><span class="symbol">, </span><a href="../../ru.shadowsparky.client.interfaces/-controllerable.html"><span class="identifier">Controllerable</span></a></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">VideoViewModel</span><span class="symbol">(</span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel$<init>(ru.shadowsparky.client.mvvm.views.VideoView, ru.shadowsparky.client.ConnectionType, ru.shadowsparky.client.mvvm.models.VideoModel)/view">view</span><span class="symbol">:</span>&nbsp;<a href="../../ru.shadowsparky.client.mvvm.views/-video-view/index.html"><span class="identifier">VideoView</span></a><span class="symbol">, </span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel$<init>(ru.shadowsparky.client.mvvm.views.VideoView, ru.shadowsparky.client.ConnectionType, ru.shadowsparky.client.mvvm.models.VideoModel)/type">type</span><span class="symbol">:</span>&nbsp;<a href="../../ru.shadowsparky.client/-connection-type/index.html"><span class="identifier">ConnectionType</span></a><span class="symbol">, </span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel$<init>(ru.shadowsparky.client.mvvm.views.VideoView, ru.shadowsparky.client.ConnectionType, ru.shadowsparky.client.mvvm.models.VideoModel)/model">model</span><span class="symbol">:</span>&nbsp;<a href="../../ru.shadowsparky.client.mvvm.models/-video-model/index.html"><span class="identifier">VideoModel</span></a>&nbsp;<span class="symbol">=</span>&nbsp;Injection.provideVideoModel()<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="type.html">type</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">type</span><span class="symbol">: </span><a href="../../ru.shadowsparky.client/-connection-type/index.html"><span class="identifier">ConnectionType</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="get-fixed-size.html">getFixedSize</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getFixedSize</span><span class="symbol">(</span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel$getFixedSize(kotlin.Int, kotlin.Int)/width">width</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel$getFixedSize(kotlin.Int, kotlin.Int)/height">height</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/awt/Dimension.html"><span class="identifier">Dimension</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-key-pressed.html">onKeyPressed</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onKeyPressed</span><span class="symbol">(</span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel$onKeyPressed(java.awt.event.KeyEvent)/event">event</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/awt/event/KeyEvent.html"><span class="identifier">KeyEvent</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-mouse-clicked.html">onMouseClicked</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onMouseClicked</span><span class="symbol">(</span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel$onMouseClicked(java.awt.event.MouseEvent)/event">event</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/awt/event/MouseEvent.html"><span class="identifier">MouseEvent</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="update-incfelicity.html">updateIncfelicity</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">updateIncfelicity</span><span class="symbol">(</span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel$updateIncfelicity(kotlin.Int, kotlin.Int)/width">width</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel$updateIncfelicity(kotlin.Int, kotlin.Int)/height">height</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

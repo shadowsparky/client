@@ -1,0 +1,15 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+ru.shadowsparky.client
+ru.shadowsparky.client.adb
+ru.shadowsparky.client.exceptions
+ru.shadowsparky.client.interfaces
+ru.shadowsparky.client.interfaces.handlers
+ru.shadowsparky.client.mvvm
+ru.shadowsparky.client.mvvm.models
+ru.shadowsparky.client.mvvm.viewmodels
+ru.shadowsparky.client.mvvm.views
+ru.shadowsparky.client.objects
+ru.shadowsparky.client.projection
+ru.shadowsparky.screencast.proto

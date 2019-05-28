@@ -19,7 +19,7 @@ open class AdbModel {
     private val log = Injection.provideLogger()
 
     open fun getDevicesRequest() : ArrayList<ADBDevice> {
-        val request = adb.getDevices()
+        val request = adb.checkDevices()
         if (request.status == ADBStatus.OK) {
             val devices = Parser.strToDevices(request.info)
             if (devices.isEmpty()) throw ADBDevicesNotFoundException()

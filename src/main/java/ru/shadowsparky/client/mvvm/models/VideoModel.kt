@@ -24,8 +24,7 @@ open class VideoModel {
     fun getFixedSize(width: Int, height: Int) : Dimension {
         val screenSize = Toolkit.getDefaultToolkit().screenSize
         if (width < height) {
-            val _height = (screenSize.height)
-            screenSize.width = (_height * 0.55).toInt()
+            screenSize.width = (screenSize.height * 0.55).toInt()
         }
         return screenSize
     }

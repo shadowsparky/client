@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AdbViewModel - client</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">client</a>&nbsp;/&nbsp;<a href="../index.html">ru.shadowsparky.client.mvvm.viewmodels</a>&nbsp;/&nbsp;<a href="./index.html">AdbViewModel</a><br/>
+<br/>
+<h1>AdbViewModel</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">AdbViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Controller</span><span class="symbol">, </span><a href="../../ru.shadowsparky.client.interfaces/-controllerable.html"><span class="identifier">Controllerable</span></a></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">AdbViewModel</span><span class="symbol">(</span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.AdbViewModel$<init>(ru.shadowsparky.client.mvvm.views.AdbView, ru.shadowsparky.client.mvvm.models.AdbModel)/view">view</span><span class="symbol">:</span>&nbsp;<a href="../../ru.shadowsparky.client.mvvm.views/-adb-view/index.html"><span class="identifier">AdbView</span></a><span class="symbol">, </span><span class="identifier" id="ru.shadowsparky.client.mvvm.viewmodels.AdbViewModel$<init>(ru.shadowsparky.client.mvvm.views.AdbView, ru.shadowsparky.client.mvvm.models.AdbModel)/model">model</span><span class="symbol">:</span>&nbsp;<a href="../../ru.shadowsparky.client.mvvm.models/-adb-model/index.html"><span class="identifier">AdbModel</span></a>&nbsp;<span class="symbol">=</span>&nbsp;Injection.provideAdbModel()<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="device.html">device</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">device</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-disable.html">isDisable</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isDisable</span><span class="symbol">: </span><span class="identifier">SimpleBooleanProperty</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="items.html">items</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">items</span><span class="symbol">: </span><span class="identifier">SimpleObjectProperty</span><span class="symbol">&lt;</span><span class="identifier">ObservableList</span><span class="symbol">&lt;</span><span class="identifier">Label</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="show-help.html">showHelp</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">showHelp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="start-projection.html">startProjection</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">startProjection</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Task</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="update-devices.html">updateDevices</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">updateDevices</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Task</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../ru.shadowsparky.client.adb/-a-d-b-device/index.html"><span class="identifier">ADBDevice</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
