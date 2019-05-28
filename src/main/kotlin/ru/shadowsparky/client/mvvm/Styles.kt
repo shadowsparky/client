@@ -21,10 +21,17 @@ import javafx.scene.paint.Color
 import ru.shadowsparky.client.objects.Injection
 import tornadofx.*
 
+/**
+ * Стили приложения
+ *
+ */
 class Styles : Stylesheet() {
     val wrapper by cssclass()
     val _log = Injection.provideLogger()
 
+    /**
+     * @return стилизованный Label
+     */
     fun getLabel(text: String) = Label(text).apply {
         style {
             fontSize = Dimension(16.0, Dimension.LinearUnits.px)
@@ -32,6 +39,9 @@ class Styles : Stylesheet() {
         }
     }
 
+    /**
+     * @return стилизованный TextField
+     */
     fun getDefaultTextField() = TextField().apply {
         maxWidth = 400.0
         minWidth = 400.0
@@ -42,6 +52,9 @@ class Styles : Stylesheet() {
         }
     }
 
+    /**
+     * @return стилизованный Button
+     */
     fun getDefaultButton() = JFXButton().apply {
         style {
             backgroundColor += Color.web("#5B5B5D")
@@ -54,6 +67,9 @@ class Styles : Stylesheet() {
         buttonType = JFXButton.ButtonType.RAISED
     }
 
+    /**
+     * @return стилизованный ListView
+     */
     fun getDefaultList() = ListView<Label>().apply {
         maxWidth = 400.0
         minWidth = 400.0
@@ -65,7 +81,9 @@ class Styles : Stylesheet() {
         }
     }
 
-
+    /**
+     * @return стилизованный TabPane
+     */
     fun getDefaultTabPane() = TabPane().apply {
         tabMinHeight = 50.0
         tabMinWidth = 50.0
@@ -76,6 +94,9 @@ class Styles : Stylesheet() {
         tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
     }
 
+    /**
+     * @return стилизованный StackPane
+     */
     fun getDefaultStackPane() = StackPane().apply {
         useMaxWidth = true
         useMaxHeight = true

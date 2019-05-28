@@ -51,12 +51,12 @@ open class AdbModel {
      * Отправка запроса на переопределение порта
      *
      * @param addr данные об устройстве
-     * @see [Parser.deviceToStr], [ADBWorker.forwardPort]
+     * @see [Parser.strToDevice], [ADBWorker.forwardPort]
      * @return всегда true
      * @exception ForwardException срабатыает, если во время переопределения порта произошла ошибка
      */
     open fun forwardPort(addr: String) : Boolean {
-        val device = Parser.deviceToStr(addr)
+        val device = Parser.strToDevice(addr)
         if (device != null) {
             val result = adb.forwardPort(device.id)
             if (result.status == ADBStatus.OK)

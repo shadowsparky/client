@@ -6,23 +6,27 @@
 package ru.shadowsparky.client.mvvm.views
 
 import javafx.application.Platform
-import javafx.beans.property.SimpleBooleanProperty
-import javafx.beans.property.SimpleObjectProperty
-import javafx.collections.FXCollections
-import javafx.collections.ObservableList
 import javafx.geometry.Pos
 import javafx.scene.control.Label
 import ru.shadowsparky.client.Dialog
+import ru.shadowsparky.client.mvvm.viewmodels.AdbViewModel
 import ru.shadowsparky.client.objects.Injection
 import tornadofx.*
 
+/**
+ * Фрагмент с разделом ADB
+ *
+ * @property root главный layout
+ * @property viewModel подробнее: [AdbViewModel]
+ * @property devices компонент ListView, в котором находятся устройства
+ */
 open class AdbView : BaseView() {
     override val root = styles.getDefaultStackPane()
-    private val viewModel = Injection.provideAdbController(this)
+    private val viewModel = Injection.provideAdbViewModel(this)
     private val devices = styles.getDefaultList()
 
     init {
-        dialog = Dialog(root)
+        dialog = Dialog(root) // инициализация диалога
         with(root) {
             vbox {
                 this += styles.getLabel("Выберите устройство")
@@ -34,29 +38,33 @@ open class AdbView : BaseView() {
                     }
                 }
                 addClass(styles.wrapper)
+                // Добавление кнопки "Подключиться"
                 this += styles.getDefaultButton().apply {
-                    disableProperty().bind(isLocked)
+                    disableProperty().bind(isLocked) // биндинг
                     action {
-                        viewModel.startProjection()
+                        viewModel.startProjection() // действие кнопки
                     }
                 }
                 addClass(styles.wrapper)
+                // Добавление кнопки "Справка"
                 this += styles.getDefaultButton().apply {
                     text = "Справка"
                     action {
-                        viewModel.showHelp()
+                        viewModel.showHelp() // действие кнопки.
                     }
                     style {
-                        backgroundColor += styles.defaultColor
+                        backgroundColor += styles.defaultColor // цвет кнопки
                     }
                 }
-                addClass(styles.wrapper)
                 useMaxWidth = true
                 alignment = Pos.CENTER
             }
         }
     }
 
+    /**
+     * @see AdbViewModel.updateDevices
+     */
     open fun updateDevices() = Platform.runLater {
         viewModel.updateDevices()
     }

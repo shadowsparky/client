@@ -6,9 +6,20 @@
 package ru.shadowsparky.client.mvvm.views
 
 import jfxtras.styles.jmetro8.JMetro
+import ru.shadowsparky.client.mvvm.Styles
 import ru.shadowsparky.client.objects.Injection
-import tornadofx.*
+import tornadofx.View
+import tornadofx.addClass
+import tornadofx.plusAssign
+import tornadofx.tab
 
+/**
+ * Основное окно приложение с TabPane из JavaFX
+ *
+ * @property styles подробнее: [Styles]
+ * @property root главный layout
+ * @property tabPane компонент TabPane
+ */
 open class MainView : View("Главное меню"){
     private val styles = Injection.provideStyles()
     override val root = styles.getDefaultStackPane()

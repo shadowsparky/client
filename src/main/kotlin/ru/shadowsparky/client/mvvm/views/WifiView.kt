@@ -7,12 +7,18 @@ package ru.shadowsparky.client.mvvm.views
 
 import javafx.geometry.Pos
 import ru.shadowsparky.client.Dialog
+import ru.shadowsparky.client.mvvm.viewmodels.WifiViewModel
 import ru.shadowsparky.client.objects.Injection
 import tornadofx.*
 
+/**
+ * Фрагмент с разделом Wifi
+ * @property root главный layout
+ * @property viewModel подробнее: [WifiViewModel]
+ */
 class WifiView : BaseView() {
     override val root = styles.getDefaultStackPane()
-    private var viewModel = Injection.provideWifiController(this)
+    private var viewModel = Injection.provideWifiViewModel(this)
 
     init {
         root.apply {

@@ -28,18 +28,72 @@ import ru.shadowsparky.client.objects.Constants.PORT
 import ru.shadowsparky.client.projection.ProjectionWorker
 import java.util.concurrent.LinkedBlockingQueue
 
+/**
+ * Singleton с инъекциями
+ */
 object Injection {
+    /**
+     * @see Logger
+     */
     private val logger = Logger()
+
+    /**
+     * @see Logger
+     */
     fun provideLogger() = logger
+
+    /**
+     * @see ADBWorker
+     */
     fun provideAdb() = ADBWorker()
+
+    /**
+     * @see Styles
+     */
     fun provideStyles() = Styles()
+
+    /**
+     * @return очередь с ByteArray
+     */
     fun provideQueue() = LinkedBlockingQueue<ByteArray>()
+
+    /**
+     * @see AdbModel
+     */
     fun provideAdbModel() = AdbModel()
+
+    /**
+     * @see VideoModel
+     */
     fun provideVideoModel() = VideoModel()
+
+    /**
+     * @see WifiModel
+     */
     fun provideWifiModel() = WifiModel()
-    fun provideAdbController(view: AdbView) = AdbViewModel(view)
-    fun provideVideoController(view: VideoView, type: ConnectionType) = VideoViewModel(view, type)
-    fun provideWifiController(view: WifiView) = WifiViewModel(view)
+
+    /**
+     * @see AdbViewModel
+     */
+    fun provideAdbViewModel(view: AdbView) = AdbViewModel(view)
+
+    /**
+     * @see VideoViewModel
+     */
+    fun provideVideoViewModel(view: VideoView, type: ConnectionType) = VideoViewModel(view, type)
+
+    /**
+     * @see WifiViewModel
+     */
+    fun provideWifiViewModel(view: WifiView) = WifiViewModel(view)
+
+    /**
+     * @see ProjectionWorker
+     */
     fun provideProjectionWorker(handler: Resultable, addr: String, port: Int = PORT) = ProjectionWorker(handler, addr, port)
+
+    /**
+     * @see ConsoleExecutor
+     */
     fun provideExecutor() = ConsoleExecutor()
 }

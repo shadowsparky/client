@@ -14,18 +14,27 @@ import tornadofx.App
 import tornadofx.reloadStylesheetsOnFocus
 import java.io.IOException
 
+/**
+ * Точка входа приложения
+ */
 class Main : App(MainView::class, Styles::class) {
+
+    /**
+     * Выполняется во время запуска приложения
+     */
     override fun start(stage: Stage) {
         stage.apply {
-            try {
-                NativeLoader.loadLibrary(DEFAULT_LIB);
-                minWidthProperty().set(600.0)
-                minHeightProperty().set(500.0)
-                super.start(this)
-            } catch(e : IOException) {
-                Alert(Alert.AlertType.ERROR, "Невозможно загрузить библиотеку\nдля работы с видео!").show()
-                return@apply
-            }
+            minWidthProperty().set(600.0)
+            minHeightProperty().set(500.0)
+        }
+        try {
+            NativeLoader.loadLibrary(DEFAULT_LIB) // Загрузка OpenCV
+            super.start(stage)
+        } catch(e : IOException) {
+            // Если Java не находит библиотеку, то выводится сообщение о невозможности работы
+            // приложения
+            Alert(Alert.AlertType.ERROR, "Невозможно загрузить библиотеку\nдля работы с видео!").show()
+            return
         }
     }
 
