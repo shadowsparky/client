@@ -5,4 +5,7 @@
 
 package ru.shadowsparky.client.interfaces
 
+/**
+ * Класс, имплементирующий этот интерфейс, является Model из MVVM
+ */
 interface Modelable

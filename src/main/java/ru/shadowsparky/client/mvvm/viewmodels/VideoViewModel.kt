@@ -9,7 +9,7 @@ import ru.shadowsparky.client.ConnectionType
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.adb.ADBStatus
 import ru.shadowsparky.client.mvvm.views.VideoView
-import ru.shadowsparky.client.interfaces.Controllerable
+import ru.shadowsparky.client.interfaces.ViewModelable
 import ru.shadowsparky.client.mvvm.models.VideoModel
 import tornadofx.Controller
 import java.awt.Dimension
@@ -20,7 +20,7 @@ open class VideoViewModel(
         private val view: VideoView,
         val type: ConnectionType,
         private val model: VideoModel = Injection.provideVideoModel()
-) : Controller(), Controllerable {
+) : Controller(), ViewModelable {
     private var infelicity_width: Double = 0.0
     private var infelicity_height: Double = 0.0
     private val _log = Injection.provideLogger()

@@ -10,7 +10,7 @@ import ru.shadowsparky.client.exceptions.EmptyAddressException
 import ru.shadowsparky.client.mvvm.views.BaseView
 import ru.shadowsparky.client.mvvm.views.WifiView
 import ru.shadowsparky.client.exceptions.ProjectionAlreadyStartedException
-import ru.shadowsparky.client.interfaces.Controllerable
+import ru.shadowsparky.client.interfaces.ViewModelable
 import ru.shadowsparky.client.mvvm.models.WifiModel
 import ru.shadowsparky.client.objects.Injection
 import tornadofx.Controller
@@ -18,7 +18,7 @@ import tornadofx.Controller
 class WifiViewModel(
         private val view: WifiView,
         private val model: WifiModel = WifiModel()
-) : Controller(), Controllerable {
+) : Controller(), ViewModelable {
     val mDeviceAddr = SimpleStringProperty("192.168.31.221")
 
     fun startProjection() {

@@ -10,36 +10,24 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.scene.control.Label
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import ru.shadowsparky.client.adb.ADBDevice
-import ru.shadowsparky.client.exceptions.ADBDevicesNotFoundException
-import ru.shadowsparky.client.exceptions.ADBMissingException
 import ru.shadowsparky.client.mvvm.views.AdbView
 import ru.shadowsparky.client.mvvm.views.BaseView
-import ru.shadowsparky.client.interfaces.Controllerable
+import ru.shadowsparky.client.interfaces.ViewModelable
 import ru.shadowsparky.client.mvvm.models.AdbModel
-import ru.shadowsparky.client.objects.Constants.ADB_NOT_FOUND
-import ru.shadowsparky.client.objects.Constants.CHOOSE_DEVICE_ERROR
-import ru.shadowsparky.client.objects.Constants.ERROR
 import ru.shadowsparky.client.objects.Constants.FAQ
 import ru.shadowsparky.client.objects.Constants.FAQ_MESSAGE
-import ru.shadowsparky.client.objects.Constants.FORWARD_ERROR
 import ru.shadowsparky.client.objects.Constants.FORWARD_PORT
 import ru.shadowsparky.client.objects.Constants.LOCALHOST
-import ru.shadowsparky.client.objects.Constants.NO_CONNECTED_DEVICES
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.projection.ProjectionWorker
 import tornadofx.Controller
-import tornadofx.asyncItems
 import tornadofx.fail
 import tornadofx.success
 
 open class AdbViewModel(
         private val view: AdbView,
         private val model: AdbModel = Injection.provideAdbModel()
-) : Controller(), Controllerable {
+) : Controller(), ViewModelable {
     private val _log = Injection.provideLogger()
     private val styles = Injection.provideStyles()
     val isDisable = SimpleBooleanProperty(false)
