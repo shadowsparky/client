@@ -30,7 +30,7 @@ open class WifiModel {
      * @exception ProjectionAlreadyStartedException вызывается, если проецирование уже запущено
      */
     fun checkProjection(projection: ProjectionWorker?) {
-        if ((projection != null) or (projection?.handling != false))
+        if ((projection != null) and (projection?.handling != false))
             throw ProjectionAlreadyStartedException()
     }
 }

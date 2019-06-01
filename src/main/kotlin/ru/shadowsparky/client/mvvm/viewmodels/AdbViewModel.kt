@@ -10,21 +10,26 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.scene.control.Label
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import ru.shadowsparky.client.Dialog
+import ru.shadowsparky.client.mvvm.models.AdbModel
 import ru.shadowsparky.client.mvvm.views.AdbView
 import ru.shadowsparky.client.mvvm.views.BaseView
-import ru.shadowsparky.client.interfaces.ViewModelable
-import ru.shadowsparky.client.mvvm.models.AdbModel
 import ru.shadowsparky.client.objects.Constants.FAQ
 import ru.shadowsparky.client.objects.Constants.FAQ_MESSAGE
 import ru.shadowsparky.client.objects.Constants.FORWARD_PORT
 import ru.shadowsparky.client.objects.Constants.LOCALHOST
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.projection.ProjectionWorker
-import tornadofx.Controller
 import tornadofx.ViewModel
 import tornadofx.fail
 import tornadofx.success
+import java.util.*
+import kotlin.concurrent.schedule
 
 /**
  * ViewModel из MVVM для работы с ADB
@@ -35,6 +40,7 @@ import tornadofx.success
  * @property device наименование выбранного устройства в ListView
  * @property items проперти, к которому привязываются элементы из списка ListView
  */
+@UseExperimental(ObsoleteCoroutinesApi::class)
 open class AdbViewModel(
         private val view: AdbView,
         private val model: AdbModel = Injection.provideAdbModel()

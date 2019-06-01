@@ -150,9 +150,11 @@ open class ProjectionWorker(
         try {
             while (handling) {
                 if (stream.available() > 0) {
-                    val picture = HandledPicture.parseDelimitedFrom(socket!!.getInputStream())
+                    val picture = HandledPicture.parseDelimitedFrom(stream)
                     val buffer = picture.encodedPicture.toByteArray()
                     saved_data.add(buffer)
+                } else {
+                   // log.printError("${socket?.isBound} ${socket?.isClosed} ${socket?.isConnected} ${socket?.isInputShutdown} ${stream.available()}")
                 }
             }
         } catch (e: Exception) {

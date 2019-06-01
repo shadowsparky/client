@@ -40,7 +40,7 @@ import java.nio.ByteBuffer
  */
 class Decoder(val handler: OrientationHandler) : Closeable {
     private val log = Injection.provideLogger()
-    private var codec = avcodec_find_decoder(AV_CODEC_ID_H264)
+    private var codec = avcodec_find_decoder(AV_CODEC_ID_VP8)
     private var c = AVCodecContext()
     private var picture = av_frame_alloc()
     private var RGBPicture = av_frame_alloc()
