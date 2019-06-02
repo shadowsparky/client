@@ -5,32 +5,51 @@
 
 package unit
 
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import org.junit.Before
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers
-import org.mockito.Mockito
-import org.mockito.Mockito.*
-import ru.shadowsparky.client.adb.ADBDevice
-import ru.shadowsparky.client.mvvm.viewmodels.AdbViewModel
+import io.mockk.*
+import javafx.application.Platform
+import kotlinx.coroutines.runBlocking
+import org.testfx.api.FxToolkit
 import ru.shadowsparky.client.mvvm.models.AdbModel
+import ru.shadowsparky.client.mvvm.viewmodels.AdbViewModel
 import ru.shadowsparky.client.mvvm.views.AdbView
-import ru.shadowsparky.client.mvvm.views.BaseView
-import ru.shadowsparky.client.objects.Constants.ADB_NOT_FOUND
-import ru.shadowsparky.client.objects.Constants.CHOOSE_DEVICE_ERROR
-import ru.shadowsparky.client.objects.Constants.ERROR
 import ru.shadowsparky.client.objects.Constants.FAQ
 import ru.shadowsparky.client.objects.Constants.FAQ_MESSAGE
-import ru.shadowsparky.client.objects.Constants.FORWARD_ERROR
-import ru.shadowsparky.client.objects.Constants.LOCALHOST
-import ru.shadowsparky.client.objects.Constants.MOCKED_DEVICE
-import ru.shadowsparky.client.objects.Constants.NO_CONNECTED_DEVICES
-import ru.shadowsparky.client.objects.Parser
-import ru.shadowsparky.client.projection.ProjectionWorker
 
 class TestAdbController {
+    init {
+        FxToolkit.registerPrimaryStage()
+    }
+    private val view: AdbView = mockk()
+    private val model: AdbModel = mockk()
+    private var vm = AdbViewModel(view, model)
+
+    fun createVM() {
+        vm = AdbViewModel(view, model)
+    }
+
+    @org.junit.Test()
+    fun showDialogTest() {
+        createVM()
+        every { view.dialog } answers { mockk() }
+        every { vm.showHelp() } answers { nothing }
+        vm.showHelp()
+        verify {
+            view.dialog.showDialog(FAQ, FAQ_MESSAGE, true)
+        }
+    }
+
+    @org.junit.Test
+    fun updateDevicesTest() = runBlocking {
+        createVM()
+        every { vm.updateDevices() } answers { mockk() }
+        coEvery { model.getDevicesRequest() } answers { throw Exception("asdasdasd") }
+        vm.updateDevices()
+        coVerify {
+            model.getDevicesRequest()
+            vm.isDisable.set(true)
+        }
+
+    }
 //    private lateinit var view: AdbView
 //    private lateinit var model: AdbModel
 //    private lateinit var controller: AdbViewModel

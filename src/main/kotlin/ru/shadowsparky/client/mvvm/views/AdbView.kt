@@ -6,6 +6,7 @@
 package ru.shadowsparky.client.mvvm.views
 
 import javafx.application.Platform
+import javafx.application.Platform.runLater
 import javafx.geometry.Pos
 import javafx.scene.control.Label
 import ru.shadowsparky.client.Dialog
@@ -65,7 +66,7 @@ open class AdbView : BaseView() {
     /**
      * @see AdbViewModel.updateDevices
      */
-    open fun updateDevices() = Platform.runLater {
+    fun updateDevices() = runLater {
         viewModel.updateDevices()
     }
 }

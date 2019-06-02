@@ -5,7 +5,6 @@
 
 package unit
 
-import com.nhaarman.mockitokotlin2.*
 import org.junit.Test
 import ru.shadowsparky.client.ConnectionType
 import ru.shadowsparky.client.mvvm.models.VideoModel

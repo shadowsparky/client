@@ -5,7 +5,6 @@
 
 package unit
 
-import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
 import ru.shadowsparky.client.mvvm.models.WifiModel
 import ru.shadowsparky.client.mvvm.viewmodels.WifiViewModel

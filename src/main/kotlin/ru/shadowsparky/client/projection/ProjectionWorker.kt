@@ -21,6 +21,7 @@ import ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture 
 import ru.shadowsparky.screencast.proto.PreparingDataOuterClass.PreparingData
 import java.io.Closeable
 import java.net.Socket
+import java.net.SocketTimeoutException
 
 /**
  * Класс, реализующий функции клиента.
@@ -99,7 +100,7 @@ open class ProjectionWorker(
     open fun connectToServer() : Boolean {
         try {
             socket = Socket(addr, port)
-            socket!!.soTimeout = 5000
+            socket!!.soTimeout = 1000
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
@@ -125,6 +126,7 @@ open class ProjectionWorker(
                 decode()
                 log.printInfo("Data Handling enabled")
                 handler.onSuccess()
+                socket?.soTimeout = 0
                 return true
             } else {
                 handling = false
@@ -149,13 +151,9 @@ open class ProjectionWorker(
             return@launch
         try {
             while (handling) {
-                if (stream.available() > 0) {
-                    val picture = HandledPicture.parseDelimitedFrom(stream)
-                    val buffer = picture.encodedPicture.toByteArray()
-                    saved_data.add(buffer)
-                } else {
-                   // log.printError("${socket?.isBound} ${socket?.isClosed} ${socket?.isConnected} ${socket?.isInputShutdown} ${stream.available()}")
-                }
+                val picture = HandledPicture.parseDelimitedFrom(stream)
+                val buffer = picture.encodedPicture.toByteArray()
+                saved_data.add(buffer)
             }
         } catch (e: Exception) {
             handler.onError(e)

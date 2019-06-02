@@ -5,6 +5,9 @@
 
 package ru.shadowsparky.client.mvvm.models
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import ru.shadowsparky.client.Logger
 import ru.shadowsparky.client.adb.ADBDevice
 import ru.shadowsparky.client.adb.ADBStatus
@@ -15,6 +18,8 @@ import ru.shadowsparky.client.exceptions.ForwardException
 import ru.shadowsparky.client.exceptions.MissingDeviceException
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.objects.Parser
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * Model из MVVM для работы с ADB
@@ -22,7 +27,7 @@ import ru.shadowsparky.client.objects.Parser
  * @property adb подробнее: [ADBWorker]
  * @property log подробнее: [Logger]
  */
-open class AdbModel {
+class AdbModel {
     private val adb = Injection.provideAdb()
     private val log = Injection.provideLogger()
 
@@ -36,16 +41,16 @@ open class AdbModel {
      * @exception ADBMissingException срабатывает, если на компьютере
      * пользователя не установлен ADB
      */
-    open fun getDevicesRequest() : ArrayList<ADBDevice> {
+    suspend fun getDevicesRequest() = GlobalScope.async(Dispatchers.IO) {
         val request = adb.adbDevices()
         if (request.status == ADBStatus.OK) {
             val devices = Parser.strToDevices(request.info)
             if (devices.isEmpty()) throw ADBDevicesNotFoundException()
-            return devices
+            return@async devices
         } else {
             throw ADBMissingException()
         }
-    }
+    }.await()
 
     /**
      * Отправка запроса на переопределение порта
@@ -55,7 +60,7 @@ open class AdbModel {
      * @return всегда true
      * @exception ForwardException срабатыает, если во время переопределения порта произошла ошибка
      */
-    open fun forwardPort(addr: String) : Boolean {
+    fun forwardPort(addr: String) : Boolean {
         val device = Parser.strToDevice(addr)
         if (device != null) {
             val result = adb.forwardPort(device.id)
@@ -72,5 +77,5 @@ open class AdbModel {
      * @return данные об устройстве
      * @exception MissingDeviceException срабатывает, если устройство не выбрано
      */
-    open fun checkDevice(device: String?) = device ?: throw MissingDeviceException()
+    fun checkDevice(device: String?) = device ?: throw MissingDeviceException()
 }
