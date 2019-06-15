@@ -5,6 +5,7 @@
 
 package ru.shadowsparky.client.mvvm.views
 
+import javafx.scene.layout.StackPane
 import org.bytedeco.javacv.OpenCVFrameConverter
 import org.bytedeco.javacv.CanvasFrame
 import org.bytedeco.javacv.Frame
@@ -15,6 +16,7 @@ import ru.shadowsparky.client.ConnectionType
 import ru.shadowsparky.client.Logger
 import ru.shadowsparky.client.interfaces.handlers.OrientationHandler
 import ru.shadowsparky.client.objects.Injection
+import java.awt.Dialog
 import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
@@ -31,7 +33,7 @@ import java.awt.event.MouseListener
  * @property log подробнее: [Logger]
  * @property converter позволяет преобразовывать в [Mat] из [Frame]
  */
-open class VideoView (
+class VideoView (
         private val projection: ProjectionWorker,
         title: String = "test",
         type: ConnectionType = ConnectionType.wifi
@@ -65,6 +67,7 @@ open class VideoView (
      * Вывод [Mat] изображения
      */
     fun showImage(image: Mat) = super.showImage(converter.convert(image))
+
 
     /**
      * @see OrientationHandler

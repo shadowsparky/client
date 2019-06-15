@@ -5,12 +5,14 @@
 
 package ru.shadowsparky.client.projection
 
+import com.google.common.base.Stopwatch
+import com.google.protobuf.CodedInputStream
+import jdk.internal.util.xml.impl.Input
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.shadowsparky.client.ConnectionType
-import ru.shadowsparky.client.Logger
 import ru.shadowsparky.client.exceptions.CorruptedDataException
 import ru.shadowsparky.client.interfaces.Resultable
 import ru.shadowsparky.client.mvvm.views.VideoView
@@ -19,9 +21,13 @@ import ru.shadowsparky.client.objects.Constants.PORT
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture as HandledPicture
 import ru.shadowsparky.screencast.proto.PreparingDataOuterClass.PreparingData
+import tornadofx.observable
+import java.io.BufferedInputStream
 import java.io.Closeable
+import java.io.InputStream
 import java.net.Socket
-import java.net.SocketTimeoutException
+import java.util.*
+import kotlin.concurrent.scheduleAtFixedRate
 
 /**
  * Класс, реализующий функции клиента.
@@ -43,6 +49,7 @@ open class ProjectionWorker(
         val addr: String,
         private val port: Int = PORT
 ) : Closeable {
+    private val timer = Timer("Finalizer")
     private var video: VideoView? = null
     private var socket: Socket? = null
     private val log = Injection.provideLogger()
@@ -61,6 +68,7 @@ open class ProjectionWorker(
             }
             field = value
         }
+    private var stream: InputStream? = null
 
     /**
      * Запуск процесса подключения
@@ -88,6 +96,7 @@ open class ProjectionWorker(
         saved_data.clear()
         decoder = null
         video?.dispose()
+        timer.cancel()
         System.gc()
         System.runFinalization()
     }
@@ -100,7 +109,8 @@ open class ProjectionWorker(
     open fun connectToServer() : Boolean {
         try {
             socket = Socket(addr, port)
-            socket!!.soTimeout = 1000
+            stream = socket!!.getInputStream()
+            socket!!.soTimeout = 2000
             socket!!.tcpNoDelay = true
         } catch (e: Exception) {
             handler.onError(e)
@@ -118,25 +128,34 @@ open class ProjectionWorker(
      */
     private fun handlePreparingData() : Boolean {
         try {
-            val pData = PreparingData.parseDelimitedFrom(socket?.getInputStream())
-            if (pData?.password == "") {
-                this@ProjectionWorker.pData = pData
-                log.printInfo("True Password")
-                video = VideoView(this@ProjectionWorker, "Проецирование", type)
-                decode()
-                log.printInfo("Data Handling enabled")
-                handler.onSuccess()
-                socket?.soTimeout = 0
-                return true
-            } else {
-                handling = false
-                handler.onError(CorruptedDataException("Corrupted pData"))
-            }
+            val pData = PreparingData.parseDelimitedFrom(stream)
+            if (checkPassword(pData)) return correctPasswordCallback(pData)
         } catch(e: Exception){
             handler.onError(e)
             handling = false
         }
         return false
+    }
+
+    private fun checkPassword(pData: PreparingData): Boolean {
+        if (pData.password == "") {
+            return true
+        } else {
+            handling = false
+            handler.onError(CorruptedDataException("Corrupted pData"))
+        }
+        return false
+    }
+
+    private fun correctPasswordCallback(pData: PreparingData): Boolean {
+        this@ProjectionWorker.pData = pData
+        log.printInfo("True Password")
+        video = VideoView(this@ProjectionWorker, "Проецирование", type)
+        decode()
+        log.printInfo("Data Handling enabled")
+        handler.onSuccess()
+        socket?.soTimeout = 0
+        return true
     }
 
     /**
@@ -146,19 +165,44 @@ open class ProjectionWorker(
      */
     private fun upstream() = GlobalScope.launch(Dispatchers.IO) {
         handling = true
-        val stream = socket!!.getInputStream()
+        gcWorker()
         if (!handlePreparingData())
             return@launch
         try {
-            while (handling) {
-                val picture = HandledPicture.parseDelimitedFrom(stream)
-                val buffer = picture.encodedPicture.toByteArray()
-                saved_data.add(buffer)
-            }
+            handleImage(stream)
         } catch (e: Exception) {
             handler.onError(e)
         } finally {
             handling = false
+        }
+    }
+
+    private fun gcWorker() {
+        timer.scheduleAtFixedRate(0, 30000) {
+            System.gc()
+            System.runFinalization()
+        }
+    }
+
+    private fun handleImage(stream: InputStream?) {
+        socket?.receiveBufferSize = 50000
+        socket?.sendBufferSize = 50000
+        var slowCount = 0
+        val timer = Stopwatch.createUnstarted()
+        while (handling) {
+            timer.start()
+            val picture = HandledPicture.parseDelimitedFrom(stream)
+            saved_data.add(picture.encodedPicture.toByteArray())
+            timer.stop()
+            val elapsed = timer.elapsed().seconds
+            if (elapsed > 1) {
+                slowCount++
+                log.printInfo("Detected slow internet connection $elapsed")
+            }
+            if (slowCount >= 3) {
+                video?.raiseError("hgfhjklqweqweqweqweqwe")
+            }
+            timer.reset()
         }
     }
 

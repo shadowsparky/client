@@ -37,7 +37,6 @@ import kotlin.concurrent.schedule
  * @property device наименование выбранного устройства в ListView
  * @property items проперти, к которому привязываются элементы из списка ListView
  */
-@UseExperimental(ObsoleteCoroutinesApi::class)
 open class AdbViewModel(
         private val view: AdbView,
         private val model: AdbModel = Injection.provideAdbModel()
@@ -53,11 +52,13 @@ open class AdbViewModel(
     /**
      * Получение списка устройств, подключенных по ADB
      */
-    fun updateDevices() = runBlocking {
+    open fun updateDevices() = runBlocking {
         try {
             items.get().clear()
             val devices = model.getDevicesRequest()
-            devices.forEach { items.get().add(Label("$it")) }
+            devices.forEach {
+                items.get().add(Label("$it"))
+            }
             isDisable.set(false)
         } catch (e: Exception) {
             items.get().add(Label(e.message))
@@ -68,12 +69,10 @@ open class AdbViewModel(
 //        model.getDevicesRequest()
 //    }.apply {
 //        setOnRunning {
-//             очистка предыдущего списка
 //            items.get().clear()
 //        }
 //        success {
-//             добавление полученных устройств в ListView
-//         /   it.forEach { items.get().add(Label("$it")) }
+//            it.forEach { items.get().add(Label("$it")) }
 //            isDisable.set(false) // включение взаимодействия с ListView
 //        } fail {
 //            items.get().add(Label(it.message)) // добавление ошибки в ListView

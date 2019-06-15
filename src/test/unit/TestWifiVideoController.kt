@@ -5,7 +5,7 @@
 
 package unit
 
-import org.junit.Test
+//import org.junit.Test
 import ru.shadowsparky.client.ConnectionType
 import ru.shadowsparky.client.mvvm.models.VideoModel
 import ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel

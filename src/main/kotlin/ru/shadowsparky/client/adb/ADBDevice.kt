@@ -10,7 +10,7 @@ package ru.shadowsparky.client.adb
  * @param id идентификатор устройства (локальный ipv4 адрес)
  * @param model название устройства
  */
-data class ADBDevice(
+data class ADBDevice (
     val id: String,
     val model: String
 ) {

@@ -5,9 +5,6 @@
 
 package ru.shadowsparky.client.mvvm.models
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import ru.shadowsparky.client.Logger
 import ru.shadowsparky.client.adb.ADBDevice
 import ru.shadowsparky.client.adb.ADBStatus
@@ -18,8 +15,6 @@ import ru.shadowsparky.client.exceptions.ForwardException
 import ru.shadowsparky.client.exceptions.MissingDeviceException
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.objects.Parser
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * Model из MVVM для работы с ADB
@@ -27,7 +22,7 @@ import kotlin.coroutines.suspendCoroutine
  * @property adb подробнее: [ADBWorker]
  * @property log подробнее: [Logger]
  */
-class AdbModel {
+open class AdbModel {
     private val adb = Injection.provideAdb()
     private val log = Injection.provideLogger()
 
@@ -41,16 +36,16 @@ class AdbModel {
      * @exception ADBMissingException срабатывает, если на компьютере
      * пользователя не установлен ADB
      */
-    suspend fun getDevicesRequest() = GlobalScope.async(Dispatchers.IO) {
+    open fun getDevicesRequest() : ArrayList<ADBDevice>  {
         val request = adb.adbDevices()
         if (request.status == ADBStatus.OK) {
             val devices = Parser.strToDevices(request.info)
             if (devices.isEmpty()) throw ADBDevicesNotFoundException()
-            return@async devices
+            return devices
         } else {
             throw ADBMissingException()
         }
-    }.await()
+    }
 
     /**
      * Отправка запроса на переопределение порта

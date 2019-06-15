@@ -6,6 +6,7 @@
 package ru.shadowsparky.client.projection
 
 import org.bytedeco.ffmpeg.avcodec.AVCodecContext
+import org.bytedeco.ffmpeg.avcodec.AVPacket
 import org.bytedeco.ffmpeg.avutil.AVDictionary
 import org.bytedeco.ffmpeg.global.avcodec.*
 import org.bytedeco.ffmpeg.global.avutil.*
@@ -44,12 +45,13 @@ class Decoder(val handler: OrientationHandler) : Closeable {
     private var c = AVCodecContext()
     private var picture = av_frame_alloc()
     private var RGBPicture = av_frame_alloc()
-    private var packet = av_packet_alloc()
     private var bytes: Int? = null
     private var buffer: BytePointer? = null
     private var convert_ctx: SwsContext? = null
     private var saved_width: Int = 0
     private var saved_height: Int = 0
+    private val packet = av_packet_alloc()
+
 
     init {
         c = avcodec_alloc_context3(codec)
@@ -132,7 +134,16 @@ class Decoder(val handler: OrientationHandler) : Closeable {
         checkOrientation()
         convert_ctx = getConvertContext()
         fillRGBPicture()
-        return Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer())
+        release()
+        val mat = Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer())
+        return mat
+    }
+
+    private fun release() {
+        RGBPicture.deallocate()
+        picture.deallocate()
+        av_packet_unref(packet)
+        convert_ctx?.deallocate()
     }
 
     /**
@@ -143,7 +154,8 @@ class Decoder(val handler: OrientationHandler) : Closeable {
         c.close()
         picture.close()
         RGBPicture.close()
-        packet.close()
+        avcodec_free_context(c)
+//        packet.close()
         buffer?.close()
         convert_ctx?.close()
     }

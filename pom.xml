@@ -111,18 +111,6 @@
         </dependency>
 
         <dependency>
-            <groupId>de.saxsys</groupId>
-            <artifactId>jfx-testrunner</artifactId>
-            <version>1.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.mockk</groupId>
-            <artifactId>mockk</artifactId>
-            <version>1.9.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
@@ -134,11 +122,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.nhaarman.mockitokotlin2</groupId>-->
-            <!--<artifactId>mockito-kotlin</artifactId>-->
-            <!--<version>2.1.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.nhaarman.mockitokotlin2</groupId>
+            <artifactId>mockito-kotlin</artifactId>
+            <version>2.1.0</version>
+        </dependency>
 
     </dependencies>
     <build>

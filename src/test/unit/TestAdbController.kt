@@ -5,7 +5,7 @@
 
 package unit
 
-import io.mockk.*
+//import io.mockk.*
 import javafx.application.Platform
 import kotlinx.coroutines.runBlocking
 import org.testfx.api.FxToolkit
@@ -16,40 +16,48 @@ import ru.shadowsparky.client.objects.Constants.FAQ
 import ru.shadowsparky.client.objects.Constants.FAQ_MESSAGE
 
 class TestAdbController {
-    init {
-        FxToolkit.registerPrimaryStage()
-    }
-    private val view: AdbView = mockk()
-    private val model: AdbModel = mockk()
-    private var vm = AdbViewModel(view, model)
-
-    fun createVM() {
-        vm = AdbViewModel(view, model)
-    }
-
-    @org.junit.Test()
-    fun showDialogTest() {
-        createVM()
-        every { view.dialog } answers { mockk() }
-        every { vm.showHelp() } answers { nothing }
-        vm.showHelp()
-        verify {
-            view.dialog.showDialog(FAQ, FAQ_MESSAGE, true)
-        }
-    }
-
-    @org.junit.Test
-    fun updateDevicesTest() = runBlocking {
-        createVM()
-        every { vm.updateDevices() } answers { mockk() }
-        coEvery { model.getDevicesRequest() } answers { throw Exception("asdasdasd") }
-        vm.updateDevices()
-        coVerify {
-            model.getDevicesRequest()
-            vm.isDisable.set(true)
-        }
-
-    }
+//    init {
+//        FxToolkit.registerPrimaryStage()
+//    }
+//    private val view: AdbView = mockk()
+//    private val model: AdbModel = mockk()
+//    private var vm = AdbViewModel(view, model)
+//
+//    fun createVM() {
+//        vm = AdbViewModel(view, model)
+//    }
+//
+//    @org.junit.Test()
+//    fun showDialogTest() {
+//        createVM()
+//        every { view.dialog } answers { mockk() }
+//        every { vm.showHelp() } answers { nothing }
+//        vm.showHelp()
+//        verify {
+//            view.dialog.showDialog(FAQ, FAQ_MESSAGE, true)
+//        }
+//    }
+//
+//    @org.junit.Test
+//    fun updateDevicesTest() = runBlocking {
+//        createVM()
+//        every { vm.updateDevices() } answers { mockk() }
+//        coEvery { model.getDevicesRequest() } answers { throw Exception("asdasdasd") }
+//        vm.updateDevices()
+//        coVerify {
+//            model.getDevicesRequest()
+//            vm.isDisable.set(true)
+//            model.getDevicesRequest()
+//            vm.isDisable.set(true)
+//            model.getDevicesRequest()
+//            vm.isDisable.set(true)
+//            model.getDevicesRequest()
+//            vm.isDisable.set(true)
+//            model.getDevicesRequest()
+//            vm.isDisable.set(true)
+//        }
+//
+//    }
 //    private lateinit var view: AdbView
 //    private lateinit var model: AdbModel
 //    private lateinit var controller: AdbViewModel
