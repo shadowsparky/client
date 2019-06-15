@@ -23,7 +23,7 @@ class WifiView : BaseView() {
     init {
         root.apply {
             vbox {
-                this += styles.getLabel("Введите IP адрес")
+                this += styles.getLabel(FX.messages["enter_ip"])
                 this += styles.getDefaultTextField().apply {
                     bind(viewModel.mDeviceAddr)
                 }

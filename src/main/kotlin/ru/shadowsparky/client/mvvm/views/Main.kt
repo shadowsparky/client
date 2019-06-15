@@ -10,9 +10,9 @@ import javafx.stage.Stage
 import org.scijava.nativelib.NativeLoader
 import ru.shadowsparky.client.mvvm.Styles
 import ru.shadowsparky.client.objects.Constants.DEFAULT_LIB
-import tornadofx.App
-import tornadofx.reloadStylesheetsOnFocus
+import tornadofx.*
 import java.io.IOException
+import java.util.*
 
 /**
  * Точка входа приложения
@@ -26,6 +26,7 @@ class Main : App(MainView::class, Styles::class) {
         stage.apply {
             minWidthProperty().set(600.0)
             minHeightProperty().set(500.0)
+            FX.locale = Locale(Locale.getDefault().language)
         }
         try {
             NativeLoader.loadLibrary(DEFAULT_LIB) // Загрузка OpenCV
@@ -33,7 +34,7 @@ class Main : App(MainView::class, Styles::class) {
         } catch(e : IOException) {
             // Если Java не находит библиотеку, то выводится сообщение о невозможности работы
             // приложения
-            Alert(Alert.AlertType.ERROR, "Невозможно загрузить библиотеку\nдля работы с видео!").show()
+            Alert(Alert.AlertType.ERROR, FX.messages["unable_to_load_lib"]).show()
             return
         }
     }

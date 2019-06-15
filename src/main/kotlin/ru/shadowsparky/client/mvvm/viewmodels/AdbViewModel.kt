@@ -16,15 +16,11 @@ import ru.shadowsparky.client.Dialog
 import ru.shadowsparky.client.mvvm.models.AdbModel
 import ru.shadowsparky.client.mvvm.views.AdbView
 import ru.shadowsparky.client.mvvm.views.BaseView
-import ru.shadowsparky.client.objects.Constants.FAQ
-import ru.shadowsparky.client.objects.Constants.FAQ_MESSAGE
 import ru.shadowsparky.client.objects.Constants.FORWARD_PORT
 import ru.shadowsparky.client.objects.Constants.LOCALHOST
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.client.projection.ProjectionWorker
-import tornadofx.ViewModel
-import tornadofx.fail
-import tornadofx.success
+import tornadofx.*
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -85,7 +81,7 @@ open class AdbViewModel(
      *
      * @see [Dialog]
      */
-    fun showHelp() = view.dialog.showDialog(FAQ, FAQ_MESSAGE, true)
+    fun showHelp() = view.dialog.showDialog(FX.messages["hint"], FX.messages["faq_message"], true)
 
     /**
      * Переопределение порта

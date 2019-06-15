@@ -8,10 +8,7 @@ package ru.shadowsparky.client.mvvm.views
 import jfxtras.styles.jmetro8.JMetro
 import ru.shadowsparky.client.mvvm.Styles
 import ru.shadowsparky.client.objects.Injection
-import tornadofx.View
-import tornadofx.addClass
-import tornadofx.plusAssign
-import tornadofx.tab
+import tornadofx.*
 
 /**
  * Основное окно приложение с TabPane из JavaFX
@@ -20,7 +17,7 @@ import tornadofx.tab
  * @property root главный layout
  * @property tabPane компонент TabPane
  */
-open class MainView : View("Главное меню"){
+open class MainView : View(FX.messages["main_menu"]){
     private val styles = Injection.provideStyles()
     override val root = styles.getDefaultStackPane()
     val tabPane = styles.getDefaultTabPane()
@@ -36,13 +33,13 @@ open class MainView : View("Главное меню"){
 
             this += tabPane.apply {
                 id = "tabs"
-                tab("WIFI") {
+                tab(FX.messages["wifi"]) {
                     id = "wifi_tab"
                     log.info("Wifi attached")
                     add(wifi.root)
                 }
 
-                tab("ADB") {
+                tab(FX.messages["adb"]) {
                     id = "adb_tab"
                     log.info("ADB attached")
                     add(adb.root)
@@ -52,7 +49,7 @@ open class MainView : View("Главное меню"){
                     adb.updateDevices()
                 }
             }
-            addClass(styles.test)
+            addClass(styles.css)
         }
         setStyle()
     }

@@ -10,6 +10,8 @@ import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.StackPane
 import javafx.scene.text.Font
+import tornadofx.FX
+import tornadofx.get
 
 /**
  * Диалог. Просто диалог.
@@ -33,7 +35,7 @@ open class Dialog(private val root: StackPane) {
             content.setHeading(title_lab)
         content.setBody(Label(text))
         val diag = JFXDialog(root, content, JFXDialog.DialogTransition.CENTER, true)
-        val button = Button("Хорошо")
+        val button = Button(FX.messages["ok"])
         button.setOnAction { diag.close() }
         content.setActions(button)
         button.requestFocus()

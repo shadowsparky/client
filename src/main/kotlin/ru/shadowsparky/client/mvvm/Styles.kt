@@ -58,7 +58,7 @@ class Styles : Stylesheet() {
     fun getDefaultButton() = JFXButton().apply {
         style {
             backgroundColor += Color.web("#5B5B5D")
-            text = "Подключиться"
+            text = FX.messages["connect"]
             textFill = Color.WHITE
         }
         maxWidth = 400.0
@@ -106,7 +106,7 @@ class Styles : Stylesheet() {
 //        minHeight = 500.0
     }
 
-    val test by cssclass()
+    val css by cssclass()
 
     val defaultColor = c("#1B1B22")
 
@@ -116,7 +116,7 @@ class Styles : Stylesheet() {
             spacing = 10.px
         }
 
-        test {
+        css {
             fontSize = Dimension(16.0, Dimension.LinearUnits.px)
             backgroundColor += defaultColor
         }

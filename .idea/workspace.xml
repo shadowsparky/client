@@ -6,119 +6,36 @@
     </artifacts-to-build>
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/ProjectionWorker.kt" line="187" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/ProjectionWorker.kt" line="189" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c0361405-a365-4f7e-bce0-67247968acac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__de_saxsys_jfx_testrunner_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/screencast_client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/screencast_client.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/resourceBundles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Messages_ru.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBDevice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBDevice.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/AdbModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/AdbModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Dialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Dialog.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ADBDevicesNotFoundException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ADBDevicesNotFoundException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ADBMissingException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ADBMissingException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/EmptyAddressException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/EmptyAddressException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ForwardException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ForwardException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/IncorrectPasswordException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/IncorrectPasswordException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/MissingDeviceException.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/MissingDeviceException.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/Styles.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/Styles.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/VideoView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/VideoView.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/Decoder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/Decoder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/AdbView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/AdbView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/BaseView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/BaseView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/MainView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/WifiView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/WifiView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/objects/Constants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/objects/Constants.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/ProjectionWorker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/ProjectionWorker.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/ru/shadowsparky/client/mvvm/viewmodels/VideoViewModelTest.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/unit/TestAdbController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/unit/TestAdbController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/unit/TestWifiVideoController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/unit/TestWifiVideoController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/screencast_client.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/screencast_client.kotlin_module" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/ConnectionType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/ConnectionType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/ConsoleExecutor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/ConsoleExecutor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/Dialog$showDialog$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/Dialog$showDialog$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/Dialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/Dialog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/Logger.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/adb/ADBDevice.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/adb/ADBDevice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/adb/ADBResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/adb/ADBResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/adb/ADBStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/adb/ADBStatus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/adb/ADBWorker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/adb/ADBWorker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ADBDevicesNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ADBDevicesNotFoundException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ADBMissingException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ADBMissingException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ConsoleExecutorException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ConsoleExecutorException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/CorruptedDataException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/CorruptedDataException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/EmptyAddressException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/EmptyAddressException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ForwardException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ForwardException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/IncorrectPasswordException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/IncorrectPasswordException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/MissingDeviceException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/MissingDeviceException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ProjectionAlreadyStartedException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/exceptions/ProjectionAlreadyStartedException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/Loadingable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/Loadingable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/Modelable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/Modelable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/Resultable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/Resultable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/ViewModelable.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/ViewModelable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/handlers/OrientationHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/interfaces/handlers/OrientationHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$getDefaultButton$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$getDefaultButton$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$getDefaultList$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$getDefaultList$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$getDefaultTextField$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$getDefaultTextField$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$getLabel$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles$getLabel$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/Styles.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/models/AdbModel$getDevicesRequest$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/unit/TestWifiController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/unit/TestWifiController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/models/AdbModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/models/AdbModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/models/VideoModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/models/VideoModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/models/WifiModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/models/WifiModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$forwardPort$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$forwardPort$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$forwardPort$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$forwardPort$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$forwardPort$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$forwardPort$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$startProjection$$inlined$apply$lambda$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$startProjection$$inlined$apply$lambda$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$startProjection$$inlined$apply$lambda$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$startProjection$$inlined$apply$lambda$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$startProjection$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$startProjection$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$startProjection$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$startProjection$2$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$updateDevices$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel$updateDevices$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/VideoViewModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/VideoViewModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/WifiViewModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/viewmodels/WifiViewModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$$special$$inlined$with$lambda$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$updateDevices$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView$updateDevices$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/AdbView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/BaseView$Companion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/BaseView$Companion.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/BaseView$onError$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/BaseView$onError$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/BaseView$onSuccess$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/BaseView$onSuccess$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/BaseView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/BaseView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/MainView$$special$$inlined$apply$lambda$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/MainView$$special$$inlined$apply$lambda$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/MainView$$special$$inlined$apply$lambda$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/MainView$$special$$inlined$apply$lambda$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/MainView$$special$$inlined$apply$lambda$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/MainView$$special$$inlined$apply$lambda$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/MainView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/MainView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/VideoView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/VideoView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView$$special$$inlined$apply$lambda$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView$$special$$inlined$apply$lambda$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView$$special$$inlined$apply$lambda$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView$$special$$inlined$apply$lambda$1$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView$$special$$inlined$apply$lambda$1$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView$$special$$inlined$apply$lambda$1$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView$$special$$inlined$apply$lambda$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView$$special$$inlined$apply$lambda$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/mvvm/views/WifiView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/objects/Constants.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/objects/Constants.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/objects/Injection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/objects/Injection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/objects/Parser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/objects/Parser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/Decoder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/Decoder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/ProjectionWorker$decode$1$image$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/ProjectionWorker$decode$1$image$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/ProjectionWorker$decode$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/ProjectionWorker$decode$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/ProjectionWorker$upstream$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/ProjectionWorker$upstream$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/ProjectionWorker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/shadowsparky/client/projection/ProjectionWorker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/META-INF/screencast_client.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/META-INF/screencast_client.kotlin_module" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ru/shadowsparky/client/mvvm/viewmodels/VideoViewModelTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ui/TestTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ui/TestTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$showDialogTest$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$showDialogTest$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$showDialogTest$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$showDialogTest$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$showDialogTest$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$updateDevicesTest$1$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$updateDevicesTest$1$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$updateDevicesTest$1$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$updateDevicesTest$1$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$updateDevicesTest$1$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController$updateDevicesTest$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/unit/TestAdbController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestWifiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/unit/TestWifiController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/unit/TestWifiVideoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/unit/TestWifiVideoController.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -137,73 +54,7 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/ProjectionWorker.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="202" column="28" selection-start-line="202" selection-start-column="28" selection-end-line="202" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/VideoView.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="49" column="5" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
-              <folding>
-                <element signature="e#89#785#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/awt/Dialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2397">
-              <caret line="377" column="12" selection-start-line="377" selection-start-column="12" selection-end-line="377" selection-end-column="12" />
-              <folding>
-                <element signature="e#13922#13923#0" expanded="true" />
-                <element signature="e#13965#13966#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Dialog.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/Decoder.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2200">
-              <caret line="136" column="16" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/screencast/proto/HandledPictureOuterClass.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10718">
-              <caret line="487" column="8" selection-start-line="487" selection-start-column="8" selection-end-line="487" selection-end-column="8" />
-              <folding>
-                <element signature="e#18935#18936#0" expanded="true" />
-                <element signature="e#18962#18963#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -231,22 +82,17 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="shadowsparky &lt;shadowsparky@github.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/adb/ADBResult.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/adb/ADBStatus.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/ADBDevicesNotFoundException.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/ADBMissingException.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/ConsoleExecutorException.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/CorruptedDataException.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/EmptyAddressException.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/ForwardException.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/IncorrectPasswordException.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/MissingDeviceException.kt" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/ProjectionAlreadyStartedException.kt" />
         <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/exceptions/StartProjectionException.kt" />
         <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/interfaces/handlers/OrientationHandler.kt" />
         <option value="$PROJECT_DIR$/src/main/java/ru/shadowsparky/client/interfaces/Controllerable.kt" />
@@ -261,32 +107,43 @@
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/ConnectionType.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/VideoViewModel.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/WifiViewModel.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/BaseView.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/Main.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/MainView.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/WifiView.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/Styles.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/objects/Injection.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/objects/Parser.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/ConsoleExecutor.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Dialog.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Logger.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/WifiModel.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/VideoModel.kt" />
         <option value="$PROJECT_DIR$/src/test/ru/shadowsparky/client/mvvm/viewmodels/VideoViewModelTest.kt" />
-        <option value="$PROJECT_DIR$/src/test/unit/TestWifiController.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/AdbView.kt" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/test/unit/TestAdbController.kt" />
         <option value="$PROJECT_DIR$/src/test/unit/TestWifiVideoController.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel.kt" />
         <option value="$PROJECT_DIR$/src/test/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModelTest.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/Decoder.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/screencast/proto/PreparingDataOuterClass.java" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBDevice.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/AdbModel.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/ProjectionWorker.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/VideoView.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/AdbModel.kt" />
+        <option value="$PROJECT_DIR$/src/main/resources/Localisation.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/Localisation_EN.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/Messages_ru.properties" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/AdbView.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/BaseView.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/WifiView.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/Styles.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/MainView.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/ProjectionWorker.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Dialog.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ADBDevicesNotFoundException.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ADBMissingException.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/EmptyAddressException.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ForwardException.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/IncorrectPasswordException.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/MissingDeviceException.kt" />
+        <option value="$PROJECT_DIR$/src/main/resources/Messages_en.properties" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/objects/Constants.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel.kt" />
+        <option value="$PROJECT_DIR$/src/test/unit/TestAdbController.kt" />
+        <option value="$PROJECT_DIR$/src/test/unit/TestWifiController.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/Main.kt" />
       </list>
     </option>
   </component>
@@ -336,10 +193,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="437" />
+    <option name="x" value="443" />
     <option name="y" value="138" />
-    <option name="width" value="1116" />
-    <option name="height" value="849" />
+    <option name="width" value="1106" />
+    <option name="height" value="856" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -492,6 +349,21 @@
               <item name="shadowsparky" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="projection" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="screencast_client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="screencast_client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="screencast_client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="screencast_client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="Resource Bundle 'Messages'" type="a6c14932:ResourceBundleNode" />
             </path>
             <path>
               <item name="screencast_client" type="b2602c69:ProjectViewProjectNode" />
@@ -688,7 +560,16 @@
       <workItem from="1560440961494" duration="637000" />
       <workItem from="1560503275595" duration="10218000" />
       <workItem from="1560542839370" duration="1961000" />
+      <workItem from="1560595212828" duration="4800000" />
     </task>
+    <task id="LOCAL-00001" summary="bugfix">
+      <created>1560595461271</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1560595461271</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -724,7 +605,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13460000" />
+    <option name="totallyTimeSpent" value="18260000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -736,9 +617,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="0" width="1932" height="1086" extended-state="6" />
+    <frame x="443" y="138" width="1106" height="856" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.237581" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.43159923" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -746,9 +627,9 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32922733" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946237" weight="0.34714445" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.43555555" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.43449047" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946237" weight="0.32925472" />
@@ -772,7 +653,7 @@
       <window_info anchor="right" id="Database" order="10" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23060344" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24190065" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -780,16 +661,16 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946237" weight="0.34777778" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.43604004" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32922733" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946237" weight="0.34714445" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.43555555" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946237" weight="0.32925472" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.57508343" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50053763" side_tool="true" weight="0.32925472" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32925472" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32444444" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32362822" />
       <window_info anchor="bottom" id="JProfiler" order="11" weight="0.32925472" />
       <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="13" />
@@ -809,6 +690,10 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="bugfix" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -826,283 +711,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/ru/shadowsparky/client/mvvm/viewmodels/VideoViewModelTest.kt" />
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/VideoModel.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1408">
-          <caret line="70" column="56" selection-start-line="70" selection-start-column="56" selection-end-line="70" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/io/InputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7106">
-          <caret line="346" column="29" selection-start-line="346" selection-start-column="29" selection-end-line="346" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.1.1/kotlinx-coroutines-core-1.1.1.jar!/kotlinx/coroutines/BuildersKt.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/1.3.20/kotlin-stdlib-1.3.20-sources.jar!/kotlin/Collections.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="219" column="17" selection-start-line="219" selection-start-column="17" selection-end-line="219" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/unit/TestAdbController.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1078">
-          <caret line="59" column="7" selection-start-line="18" selection-start-column="5" selection-end-line="59" selection-end-column="7" />
-          <folding>
-            <element signature="e#80#455#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModelTest.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/opencv/lib/ffmpeg.jar!/org/bytedeco/ffmpeg/global/avcodec.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="948" column="30" selection-start-line="948" selection-start-column="30" selection-end-line="948" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/unit/TestWifiVideoController.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-          <folding>
-            <element signature="e#84#293#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/ui/TestTest.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="13" selection-start-line="13" selection-end-line="16" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="123" selection-start-line="123" selection-end-line="128" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/AdbView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="3" column="3" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/MainView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/screencast/proto/PreparingDataOuterClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="438" column="27" selection-start-line="438" selection-start-column="27" selection-end-line="438" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/WifiModel.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="32" column="50" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBResult.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBStatus.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBWorker.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="26" column="42" lean-forward="true" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/objects/Injection.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="733">
-          <caret line="97" column="33" selection-start-line="97" selection-start-column="33" selection-end-line="97" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/lang/ProcessBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="1028" column="22" lean-forward="true" selection-start-line="1028" selection-start-column="22" selection-end-line="1028" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/lang/ProcessImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="36" column="2" lean-forward="true" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ConsoleExecutorException.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="11" column="68" selection-start-line="11" selection-start-column="68" selection-end-line="11" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/1.3.20/kotlin-stdlib-1.3.20-sources.jar!/kotlin/TypeAliases.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="11" column="66" lean-forward="true" selection-start-line="11" selection-start-column="66" selection-end-line="11" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/lang/Exception.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="44" column="34" lean-forward="true" selection-start-line="44" selection-start-column="34" selection-end-line="44" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/lang/Throwable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9649">
-          <caret line="120" column="16" selection-start-line="120" selection-start-column="16" selection-end-line="120" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBDevice.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-common/1.3.20/kotlin-stdlib-common-1.3.20-sources.jar!/kotlin/collections/Collections.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8671">
-          <caret line="380" column="10" selection-start-line="380" selection-start-column="10" selection-end-line="380" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/AdbModel.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="68" column="9" selection-start-line="68" selection-start-column="9" selection-end-line="68" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-169">
-          <caret line="84" column="6" selection-start-line="84" selection-start-column="6" selection-end-line="84" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/BaseView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1242">
-          <caret line="73" column="1" selection-start-line="73" selection-start-column="1" selection-end-line="73" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/ConsoleExecutor.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Logger.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/Styles.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/WifiView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/Main.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/VideoViewModel.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="102" column="69" selection-start-line="102" selection-start-column="69" selection-end-line="102" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/net/InetAddress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2336">
-          <caret line="307" column="4" selection-start-line="307" selection-start-column="4" selection-end-line="307" selection-end-column="4" />
-          <folding>
-            <element signature="e#10628#10629#0" expanded="true" />
-            <element signature="e#10676#10677#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/net/SocketAddress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/objects/Parser.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-215">
-          <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/net/Socket.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -1114,35 +722,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/screencast/proto/HandledPictureOuterClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10718">
-          <caret line="487" column="8" selection-start-line="487" selection-start-column="8" selection-end-line="487" selection-end-column="8" />
-          <folding>
-            <element signature="e#18935#18936#0" expanded="true" />
-            <element signature="e#18962#18963#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/Decoder.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2200">
-          <caret line="136" column="16" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/opencv/lib/javacv.jar!/org/bytedeco/javacv/CanvasFrame.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Dialog.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -1178,16 +761,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/ProjectionWorker.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="202" column="28" selection-start-line="202" selection-start-column="28" selection-end-line="202" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/src.zip!/java/awt/Dialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2397">
+        <state relative-caret-position="7705">
           <caret line="377" column="12" selection-start-line="377" selection-start-column="12" selection-end-line="377" selection-end-column="12" />
           <folding>
             <element signature="e#13922#13923#0" expanded="true" />
@@ -1196,13 +772,329 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/screencast/proto/HandledPictureOuterClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10718">
+          <caret line="487" column="8" selection-start-line="487" selection-start-column="8" selection-end-line="487" selection-end-column="8" />
+          <folding>
+            <element signature="e#18935#18936#0" expanded="true" />
+            <element signature="e#18962#18963#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/Localisation.properties">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" column="1" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="ResourceBundle" />
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/no/tornado/tornadofx/1.7.17/tornadofx-1.7.17.jar!/tornadofx/ResourceLookup.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Downloads/jdk1.8.0_201/javafx-src.zip!/com/sun/javafx/application/LauncherImpl.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/Messages_ru.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/VideoView.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
+        <state relative-caret-position="690">
           <caret line="49" column="5" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/BaseView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="3" column="3" lean-forward="true" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/objects/Parser.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-222">
+          <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/Decoder.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2691">
+          <caret line="136" column="16" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/Styles.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="617">
+          <caret line="118" column="11" selection-start-line="118" selection-start-column="11" selection-end-line="118" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/WifiView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/ConnectionType.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBWorker.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="26" column="42" selection-start-line="26" selection-start-column="42" selection-end-line="26" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBStatus.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBResult.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/adb/ADBDevice.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Logger.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/Dialog.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="37" column="43" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/ConsoleExecutor.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/projection/ProjectionWorker.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-684">
+          <caret line="154" column="72" selection-start-line="154" selection-start-column="72" selection-end-line="154" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ADBMissingException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="14" column="69" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
           <folding>
-            <element signature="e#89#785#0" expanded="true" />
+            <element signature="e#89#135#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ConsoleExecutorException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="11" column="68" selection-start-line="11" selection-start-column="68" selection-end-line="11" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/CorruptedDataException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/EmptyAddressException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#89#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ForwardException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="13" column="61" selection-start-line="13" selection-start-column="61" selection-end-line="13" selection-end-column="61" />
+          <folding>
+            <element signature="e#89#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ADBDevicesNotFoundException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="12" column="3" lean-forward="true" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
+          <folding>
+            <element signature="e#89#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/IncorrectPasswordException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="12" column="58" lean-forward="true" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
+          <folding>
+            <element signature="e#86#126#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/MissingDeviceException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="15" column="76" lean-forward="true" selection-start-line="15" selection-start-column="76" selection-end-line="15" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/exceptions/ProjectionAlreadyStartedException.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/interfaces/Loadingable.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/interfaces/Modelable.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/AdbModel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-498">
+          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/VideoModel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="583">
+          <caret line="70" column="56" selection-start-line="70" selection-start-column="56" selection-end-line="70" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/models/WifiModel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/VideoViewModel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="102" column="69" selection-start-line="102" selection-start-column="69" selection-end-line="102" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/WifiViewModel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/Messages_en.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/AdbView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="51" column="45" selection-start-line="51" selection-start-column="45" selection-end-line="51" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/objects/Constants.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/unit/TestAdbController.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/unit/TestWifiController.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="11" column="49" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/MainView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/views/Main.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/ru/shadowsparky/client/mvvm/viewmodels/AdbViewModel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="17" column="49" selection-start-line="17" selection-start-column="49" selection-end-line="17" selection-end-column="49" />
         </state>
       </provider>
     </entry>

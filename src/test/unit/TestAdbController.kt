@@ -6,14 +6,6 @@
 package unit
 
 //import io.mockk.*
-import javafx.application.Platform
-import kotlinx.coroutines.runBlocking
-import org.testfx.api.FxToolkit
-import ru.shadowsparky.client.mvvm.models.AdbModel
-import ru.shadowsparky.client.mvvm.viewmodels.AdbViewModel
-import ru.shadowsparky.client.mvvm.views.AdbView
-import ru.shadowsparky.client.objects.Constants.FAQ
-import ru.shadowsparky.client.objects.Constants.FAQ_MESSAGE
 
 class TestAdbController {
 //    init {

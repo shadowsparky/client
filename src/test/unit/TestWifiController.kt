@@ -10,8 +10,6 @@ import ru.shadowsparky.client.mvvm.models.WifiModel
 import ru.shadowsparky.client.mvvm.viewmodels.WifiViewModel
 import ru.shadowsparky.client.mvvm.views.BaseView
 import ru.shadowsparky.client.mvvm.views.WifiView
-import ru.shadowsparky.client.objects.Constants.ERROR
-import ru.shadowsparky.client.objects.Constants.INCORRECT_IP
 import ru.shadowsparky.client.objects.Constants.LOCALHOST
 import ru.shadowsparky.client.objects.Injection
 

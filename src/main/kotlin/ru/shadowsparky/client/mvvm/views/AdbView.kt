@@ -30,7 +30,7 @@ open class AdbView : BaseView() {
         dialog = Dialog(root) // инициализация диалога
         with(root) {
             vbox {
-                this += styles.getLabel("Выберите устройство")
+                this += styles.getLabel(FX.messages["choose_device"])
                 this += devices.apply {
                     disableProperty().bind(viewModel.isDisable)
                     itemsProperty().bind(viewModel.items)
@@ -49,7 +49,7 @@ open class AdbView : BaseView() {
                 addClass(styles.wrapper)
                 // Добавление кнопки "Справка"
                 this += styles.getDefaultButton().apply {
-                    text = "Справка"
+                    text = FX.messages["hint"]
                     action {
                         viewModel.showHelp() // действие кнопки.
                     }

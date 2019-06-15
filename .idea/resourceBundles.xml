@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ResourceBundleManager">
+    <file url="file://$PROJECT_DIR$/src/main/resources/Localisation_EN.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/Localisation_RU.properties" />
+    <custom-resource-bundle>
+      <file value="file://$PROJECT_DIR$/src/main/resources/Localisation_EN.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/Localisation_RU.properties" />
+      <base-name>Localisation</base-name>
+    </custom-resource-bundle>
+  </component>
+</project>

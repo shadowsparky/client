@@ -6,9 +6,11 @@
 package ru.shadowsparky.client.exceptions
 
 import ru.shadowsparky.client.objects.Constants
+import tornadofx.FX
+import tornadofx.get
 import java.lang.Exception
 
 /**
  * Исключение, возникающее когда пользователь не выбрал устройство
  */
-class MissingDeviceException : Exception(Constants.CHOOSE_DEVICE_ERROR)
+class MissingDeviceException : Exception(FX.messages["choose_device_error"])

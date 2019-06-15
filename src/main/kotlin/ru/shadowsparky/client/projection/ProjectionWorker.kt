@@ -21,6 +21,8 @@ import ru.shadowsparky.client.objects.Constants.PORT
 import ru.shadowsparky.client.objects.Injection
 import ru.shadowsparky.screencast.proto.HandledPictureOuterClass.HandledPicture as HandledPicture
 import ru.shadowsparky.screencast.proto.PreparingDataOuterClass.PreparingData
+import tornadofx.FX
+import tornadofx.get
 import tornadofx.observable
 import java.io.BufferedInputStream
 import java.io.Closeable
@@ -150,7 +152,7 @@ open class ProjectionWorker(
     private fun correctPasswordCallback(pData: PreparingData): Boolean {
         this@ProjectionWorker.pData = pData
         log.printInfo("True Password")
-        video = VideoView(this@ProjectionWorker, "Проецирование", type)
+        video = VideoView(this@ProjectionWorker, FX.messages["projection"], type)
         decode()
         log.printInfo("Data Handling enabled")
         handler.onSuccess()
@@ -200,7 +202,7 @@ open class ProjectionWorker(
                 log.printInfo("Detected slow internet connection $elapsed")
             }
             if (slowCount >= 3) {
-                video?.raiseError("hgfhjklqweqweqweqweqwe")
+//                video?.raiseError("hgfhjklqweqweqweqweqwe")
             }
             timer.reset()
         }

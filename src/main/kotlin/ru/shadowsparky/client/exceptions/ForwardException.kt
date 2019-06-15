@@ -5,9 +5,10 @@
 
 package ru.shadowsparky.client.exceptions
 
-import ru.shadowsparky.client.objects.Constants.FORWARD_ERROR
+import tornadofx.FX
+import tornadofx.get
 
 /**
  * Исключение, возникающее когда переопределение порта невозможно
  */
-class ForwardException : Exception(FORWARD_ERROR)
+class ForwardException : Exception(FX.messages["forward_error"])
