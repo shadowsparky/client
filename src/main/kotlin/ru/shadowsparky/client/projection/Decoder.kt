@@ -6,7 +6,6 @@
 package ru.shadowsparky.client.projection
 
 import org.bytedeco.ffmpeg.avcodec.AVCodecContext
-import org.bytedeco.ffmpeg.avcodec.AVPacket
 import org.bytedeco.ffmpeg.avutil.AVDictionary
 import org.bytedeco.ffmpeg.global.avcodec.*
 import org.bytedeco.ffmpeg.global.avutil.*
@@ -15,7 +14,7 @@ import org.bytedeco.ffmpeg.global.swscale.SWS_BICUBIC
 import org.bytedeco.ffmpeg.swscale.SwsContext
 import org.bytedeco.javacpp.BytePointer
 import org.bytedeco.javacpp.DoublePointer
-import org.bytedeco.opencv.global.opencv_core.CV_8UC3
+import org.opencv.core.CvType.CV_8UC3
 import org.opencv.core.Mat
 import ru.shadowsparky.client.Logger
 import ru.shadowsparky.client.interfaces.handlers.OrientationHandler
@@ -135,8 +134,7 @@ class Decoder(val handler: OrientationHandler) : Closeable {
         convert_ctx = getConvertContext()
         fillRGBPicture()
         release()
-        val mat = Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer())
-        return mat
+        return Mat(c.height(), c.width(), CV_8UC3, RGBPicture.data(0).asByteBuffer())
     }
 
     private fun release() {

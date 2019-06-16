@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="opencv-4101">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/OPENCV/opencv/build/bin/opencv-410.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/OPENCV/opencv/build/bin/opencv-410.jar!/" />
+    </SOURCES>
+  </library>
+</component>

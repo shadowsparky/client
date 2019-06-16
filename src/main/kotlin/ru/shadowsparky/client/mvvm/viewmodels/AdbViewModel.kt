@@ -39,42 +39,44 @@ open class AdbViewModel(
 ) : ViewModel() {
     val isDisable = SimpleBooleanProperty(false)
     var device: String? = null
-    val items = SimpleObjectProperty<ObservableList<Label>>()
+    open val items = SimpleObjectProperty<ObservableList<Label>>()
 
     init {
         items.set(FXCollections.observableArrayList()) // инициализация списка
     }
 
+
+//    open fun updateDevices() = runBlocking {
+//        try {
+//            items.get().clear()
+//            val devices = model.getDevicesRequest()
+//            devices.forEach {
+//                items.get().add(Label("$it"))
+//            }
+//            isDisable.set(false)
+//        } catch (e: Exception) {
+//            items.get().add(Label(e.message))
+//            isDisable.set(true)
+//        }
+//    }
+
     /**
      * Получение списка устройств, подключенных по ADB
      */
-    open fun updateDevices() = runBlocking {
-        try {
+    open fun updateDevices() = runAsync {
+        model.getDevicesRequest()
+    }.apply {
+        setOnRunning {
             items.get().clear()
-            val devices = model.getDevicesRequest()
-            devices.forEach {
-                items.get().add(Label("$it"))
-            }
-            isDisable.set(false)
-        } catch (e: Exception) {
-            items.get().add(Label(e.message))
-            isDisable.set(true)
+        }
+        success {
+            it.forEach { items.get().add(Label("$it")) }
+            isDisable.set(false) // включение взаимодействия с ListView
+        } fail {
+            items.get().add(Label(it.message)) // добавление ошибки в ListView
+            isDisable.set(true) // отключение взаимодействия с ListView
         }
     }
-//    fun updateDevices() = runAsync {
-//        model.getDevicesRequest()
-//    }.apply {
-//        setOnRunning {
-//            items.get().clear()
-//        }
-//        success {
-//            it.forEach { items.get().add(Label("$it")) }
-//            isDisable.set(false) // включение взаимодействия с ListView
-//        } fail {
-//            items.get().add(Label(it.message)) // добавление ошибки в ListView
-//            isDisable.set(true) // отключение взаимодействия с ListView
-//        }
-//    }
 
     /**
      * Отображение справки

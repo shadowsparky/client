@@ -7,6 +7,7 @@ package ru.shadowsparky.client.mvvm.views
 
 import javafx.scene.control.Alert
 import javafx.stage.Stage
+import org.opencv.core.Core
 import org.scijava.nativelib.NativeLoader
 import ru.shadowsparky.client.mvvm.Styles
 import ru.shadowsparky.client.objects.Constants.DEFAULT_LIB
@@ -29,11 +30,12 @@ class Main : App(MainView::class, Styles::class) {
             FX.locale = Locale(Locale.getDefault().language)
         }
         try {
+//            Core.NATIVE_LIBRARY_NAME
             NativeLoader.loadLibrary(DEFAULT_LIB) // Загрузка OpenCV
             super.start(stage)
         } catch(e : IOException) {
-            // Если Java не находит библиотеку, то выводится сообщение о невозможности работы
-            // приложения
+//             Если Java не находит библиотеку, то выводится сообщение о невозможности работы
+//             приложения
             Alert(Alert.AlertType.ERROR, FX.messages["unable_to_load_lib"]).show()
             return
         }

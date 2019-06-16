@@ -5,18 +5,18 @@
 
 package ru.shadowsparky.client.mvvm.views
 
-import javafx.scene.layout.StackPane
-import org.bytedeco.javacv.OpenCVFrameConverter
 import org.bytedeco.javacv.CanvasFrame
 import org.bytedeco.javacv.Frame
+import org.bytedeco.javacv.OpenCVFrameConverter
 import org.opencv.core.Mat
-import ru.shadowsparky.client.projection.ProjectionWorker
-import ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel
 import ru.shadowsparky.client.ConnectionType
 import ru.shadowsparky.client.Logger
 import ru.shadowsparky.client.interfaces.handlers.OrientationHandler
+import ru.shadowsparky.client.mvvm.viewmodels.VideoViewModel
 import ru.shadowsparky.client.objects.Injection
-import java.awt.Dialog
+import ru.shadowsparky.client.projection.ProjectionWorker
+import tornadofx.FX
+import tornadofx.get
 import java.awt.Toolkit
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
@@ -35,7 +35,7 @@ import java.awt.event.MouseListener
  */
 class VideoView (
         private val projection: ProjectionWorker,
-        title: String = "test",
+        title: String = FX.messages["projection"],
         type: ConnectionType = ConnectionType.wifi
 ) : CanvasFrame(title, 0, null, 1.0), OrientationHandler, MouseListener, KeyListener {
     private val viewModel: VideoViewModel
